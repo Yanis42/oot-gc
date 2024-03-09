@@ -592,10 +592,11 @@ void simulatorResetAndPlayMovie(void) {
     simrmode = rmode;
     simulatorResetInit();
     xlCoreReset();
-    color.r = 0;
-    color.g = 0;
-    color.b = 0;
-    color.a = 1;
+    // Change the screen to purple if we don't have a movie to play
+    color.r = 0x65;
+    color.g = 0x45;
+    color.b = 0xB2;
+    color.a = 0xFF;
     DEMOInit(NULL);
     rmode = simrmode;
     VISetBlack(1);
