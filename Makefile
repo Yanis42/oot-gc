@@ -6,6 +6,8 @@ NON_MATCHING := 0
 # Files
 #-------------------------------------------------------------------------------
 
+EMU_VERSION := ce-j
+
 TARGET_COL := gamecube
 
 TARGET := SIM
@@ -27,7 +29,11 @@ DOL := $(ELF:.elf=.dol)
 COMPARE_TO := $(ELF:.elf=_S.elf)
 
 # Object files in link order
-include obj_files.mk
+ifeq ($(EMU_VERSION), ce-j)
+include obj_files_ce-j.mk
+else
+include obj_files_mq-j.mk
+endif
 
 #-------------------------------------------------------------------------------
 # Tools
