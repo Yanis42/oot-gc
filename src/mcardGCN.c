@@ -56,86 +56,86 @@ static s32 toggle2;
 static s32 checkFailCount;
 static s32 bWrite2Card;
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardGCErrorHandler.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardGCErrorHandler.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardCalculateChecksum.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardCalculateChecksum.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardCalculateChecksumFileBlock1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardCalculateChecksumFileBlock1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardCalculateChecksumFileBlock2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardCalculateChecksumFileBlock2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardSaveChecksumFileHeader.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardSaveChecksumFileHeader.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReplaceFileBlock.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReplaceFileBlock.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardCheckChecksumFileHeader.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardCheckChecksumFileHeader.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardVerifyChecksumFileHeader.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardVerifyChecksumFileHeader.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardPoll.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardPoll.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReadyCard.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReadyCard.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReadAnywhere.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReadAnywhere.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteAnywhere.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteAnywhere.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteAnywherePartial.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteAnywherePartial.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReadFileHeader.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReadFileHeader.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteFileHeader.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteFileHeader.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReadFileHeaderInitial.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReadFileHeaderInitial.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteFileHeaderInitial.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteFileHeaderInitial.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteBufferAsynch.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteBufferAsynch.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReadBufferAsynch.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReadBufferAsynch.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteConfigAsynch.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteConfigAsynch.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteTimeAsynch.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteTimeAsynch.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReadGameData.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReadGameData.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWriteGameDataReset.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWriteGameDataReset.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardReInit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardReInit.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardInit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardInit.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardFileSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardFileSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardGameSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardGameSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardFileCreate.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardFileCreate.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardGameCreate.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardGameCreate.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardCardErase.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardCardErase.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardFileErase.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardFileErase.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardGameErase.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardGameErase.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardGameRelease.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardGameRelease.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardRead.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardRead.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardMenu.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardMenu.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardOpenError.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardOpenError.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardOpenDuringGameError.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardOpenDuringGameError.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardWrite.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardWrite.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardOpen.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardOpen.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardOpenDuringGame.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardOpenDuringGame.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardStore.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardStore.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/mcardGCN/mcardUpdate.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/mcardGCN/mcardUpdate.s")

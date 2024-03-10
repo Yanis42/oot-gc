@@ -56,10 +56,10 @@ static char* strings[] = {
 
 char D_800F0450[] = "0x%08x = ( ";
 
-#pragma GLOBAL_ASM("asm/non_matchings/_frameGCNcc/SetTableTevStages.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_frameGCNcc/SetTableTevStages.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_frameGCNcc/SetNumTexGensChans.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_frameGCNcc/SetNumTexGensChans.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_frameGCNcc/SetTevStages.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_frameGCNcc/SetTevStages.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_frameGCNcc/SetTevStageTable.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_frameGCNcc/SetTevStageTable.s")

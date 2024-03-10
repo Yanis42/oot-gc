@@ -48,34 +48,34 @@ static s32 AudioSystem;
 const f32 D_80135D70 = 127.0;
 const f32 D_80135D74 = 100.0;
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/MixAudio.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/MixAudio.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPAudioMixCallback.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPAudioMixCallback.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerDrawDone.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerDrawDone.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/PushUsedTextureSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/PushUsedTextureSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerDrawCurrentFrame.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerDrawCurrentFrame.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/ProperTimingForGettingNextFrame.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/ProperTimingForGettingNextFrame.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/ProperTimingForStart.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/ProperTimingForStart.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/PlayControl.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/PlayControl.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerPlay.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerPlay.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerPrepare.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerPrepare.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/PrepareReady.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/PrepareReady.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/InitAllMessageQueue.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/InitAllMessageQueue.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerSetBuffer.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerSetBuffer.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerCalcNeedMemory.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerCalcNeedMemory.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerOpen.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerOpen.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPPlayer/THPPlayerInit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPPlayer/THPPlayerInit.s")

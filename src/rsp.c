@@ -159,196 +159,196 @@ const f32 D_8013606C = 65536.0;
 const f32 D_80136070 = 0.0009765625;
 const f32 D_80136074 = 1.52587890625e-05;
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspVMUDN.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspVMUDN.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspVMADN.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspVMADN.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspInitAudioDMEM1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspInitAudioDMEM1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspDotProduct8x15MatrixBy15x1Vector.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspDotProduct8x15MatrixBy15x1Vector.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspMultPolef.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspMultPolef.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspLoadADPCMCoefTable1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspLoadADPCMCoefTable1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspLoadADPCMCoefTable2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspLoadADPCMCoefTable2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAADPCMDec1Fast.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAADPCMDec1Fast.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAPoleFilter1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAPoleFilter1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAEnvMixer1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAEnvMixer1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAMix1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAMix1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAResample1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAResample1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspASetBuffer1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspASetBuffer1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspASetVolume1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspASetVolume1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseABI.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseABI.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseABI1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseABI1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspInitAudioDMEM2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspInitAudioDMEM2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAADPCMDec2Fast.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAADPCMDec2Fast.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspANoise2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspANoise2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspANMix2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspANMix2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAResample2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAResample2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAFirFilter2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAFirFilter2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAMix2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAMix2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAInterleave2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAInterleave2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspADistFilter2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspADistFilter2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAEnvMixer2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAEnvMixer2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAPCM8Dec2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAPCM8Dec2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseABI2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseABI2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspInitAudioDMEM3.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspInitAudioDMEM3.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAEnvMixer3.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAEnvMixer3.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspAMix3.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspAMix3.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseABI3.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseABI3.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspInitAudioDMEM4.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspInitAudioDMEM4.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseABI4.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseABI4.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspCreateJPEGArrays.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspCreateJPEGArrays.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspConvertRGBAtoYUV.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspConvertRGBAtoYUV.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspYUVtoDCTBuf.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspYUVtoDCTBuf.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspDCT.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspDCT.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspQuantize.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspQuantize.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoQuantize.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoQuantize.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoDCT.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoDCT.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoYUVtoDCTBuf.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoYUVtoDCTBuf.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFormatYUV.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFormatYUV.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseJPEG_Encode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseJPEG_Encode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseJPEG_Decode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseJPEG_Decode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspCreateJPEGArraysZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspCreateJPEGArraysZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspDCTZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspDCTZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspQuantizeZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspQuantizeZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspZigzagDataZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspZigzagDataZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoQuantizeZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoQuantizeZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoZigzagDataZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoZigzagDataZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoDCTZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoDCTZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoLoadColorBufferZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoLoadColorBufferZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUndoRecon420Z.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUndoRecon420Z.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspRecon420Z.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspRecon420Z.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseJPEG_EncodeZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseJPEG_EncodeZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseJPEG_DecodeZ.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseJPEG_DecodeZ.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/Matrix4by4Identity.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/Matrix4by4Identity.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFillObjSprite.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFillObjSprite.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFillObjBgScale.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFillObjBgScale.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFillObjBg.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFillObjBg.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspSetImage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspSetImage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/tmemLoad_B.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/tmemLoad_B.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/tmemLoad_A.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/tmemLoad_A.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/tmemLoad.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/tmemLoad.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/guS2DEmuBgRect1Cyc.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/guS2DEmuBgRect1Cyc.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFillObjTxtr.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFillObjTxtr.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspObjLoadTxtr.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspObjLoadTxtr.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspObjRectangle.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspObjRectangle.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspObjSprite.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspObjSprite.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspObjRectangleR.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspObjRectangleR.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspBgRectCopy.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspBgRectCopy.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspObjMatrix.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspObjMatrix.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspSetupS2DEX.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspSetupS2DEX.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspSetGeometryMode1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspSetGeometryMode1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseGBI_F3DEX1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseGBI_F3DEX1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspGeometryMode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspGeometryMode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseGBI_F3DEX2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseGBI_F3DEX2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspLoadMatrix.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspLoadMatrix.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFindUCode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFindUCode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspSaveYield.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspSaveYield.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspLoadYield.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspLoadYield.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseGBI_Setup.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseGBI_Setup.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspParseGBI.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspParseGBI.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspPut8.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspPut8.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspPut16.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspPut16.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspPut32.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspPut32.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspPut64.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspPut64.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspGet8.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspGet8.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspGet16.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspGet16.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspGet32.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspGet32.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspGet64.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspGet64.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspInvalidateCache.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspInvalidateCache.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspEnableABI.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspEnableABI.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspFrameComplete.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspFrameComplete.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspUpdate.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspUpdate.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rsp/rspEvent.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rsp/rspEvent.s")

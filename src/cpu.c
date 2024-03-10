@@ -1748,7 +1748,7 @@ static s32 cpuCompile_LWR(Cpu* pCPU, s32* addressGCN) {
 
 // Matches but data doesn't
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuCheckDelaySlot.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuCheckDelaySlot.s")
 #else
 static s32 cpuCheckDelaySlot(u32 opcode) {
     s32 flag = 0;
@@ -1867,7 +1867,7 @@ inline void cpuCompileNOP(s32* anCode, s32* iCode, s32 number) {
 }
 
 static s32 cpuGetPPC(Cpu* pCPU, s32* pnAddress, CpuFunction* pFunction, s32* anCode, s32* piCode, s32 bSlot);
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuGetPPC.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuGetPPC.s")
 
 s32 cpuMakeFunction(Cpu* pCPU, CpuFunction** ppFunction, s32 nAddressN64) {
     s32 iCode;
@@ -2212,7 +2212,7 @@ static s32 cpuExecuteUpdate(Cpu* pCPU, s32* pnAddressGCN, u32 nCount) {
 // Matches but data doesn't
 #ifndef NON_MATCHING
 static s32 cpuExecuteOpcode(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressGCN);
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuExecuteOpcode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuExecuteOpcode.s")
 #else
 inline s32 cpuCheckInterrupts(Cpu* pCPU) {
     System* pSystem;
@@ -3883,7 +3883,7 @@ static s32 cpuExecuteCall(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressGC
 // Matches but data doesn't
 #ifndef NON_MATCHING
 static s32 cpuExecuteLoadStore(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressGCN);
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuExecuteLoadStore.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuExecuteLoadStore.s")
 #else
 static s32 cpuExecuteLoadStore(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressGCN) {
     u32* opcode;
@@ -4160,7 +4160,7 @@ static s32 cpuExecuteLoadStore(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddr
 // Matches but data doesn't
 #ifndef NON_MATCHING
 static s32 cpuExecuteLoadStoreF(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressGCN);
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuExecuteLoadStoreF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuExecuteLoadStoreF.s")
 #else
 static s32 cpuExecuteLoadStoreF(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressGCN) {
     u32* opcode;
@@ -4668,7 +4668,7 @@ s32 cpuExecute(Cpu* pCPU) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuHackHandler.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuHackHandler.s")
 
 inline s32 cpuMakeCachedAddress(Cpu* pCPU, s32 nAddressN64, s32 nAddressHost, CpuFunction* pFunction) {
     s32 iAddress;
@@ -4691,16 +4691,16 @@ inline s32 cpuMakeCachedAddress(Cpu* pCPU, s32 nAddressN64, s32 nAddressHost, Cp
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuFreeCachedAddress.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuFreeCachedAddress.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuFindCachedAddress.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuFindCachedAddress.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuTestInterrupt.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuTestInterrupt.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuException.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuException.s")
 
 static s32 cpuMakeDevice(Cpu* pCPU, s32* piDevice, void* pObject, s32 nOffset, u32 nAddress0, u32 nAddress1, s32 nType);
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuMakeDevice.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuMakeDevice.s")
 
 s32 cpuFreeDevice(Cpu* pCPU, s32 iDevice) {
     if (!xlHeapFree((void**)&pCPU->apDevice[iDevice])) {
@@ -4756,7 +4756,7 @@ static s32 cpuMapAddress(Cpu* pCPU, s32* piDevice, u32 nVirtual, u32 nPhysical, 
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuSetTLB.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuSetTLB.s")
 
 static s32 cpuGetMode(u64 nStatus, CpuMode* peMode) {
     if (nStatus & 2) {
@@ -4818,11 +4818,11 @@ static s32 cpuGetSize(u64 nStatus, CpuSize* peSize, CpuMode* peMode) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuSetCP0_Status.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuSetCP0_Status.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuSetRegisterCP0.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuSetRegisterCP0.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuGetRegisterCP0.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuGetRegisterCP0.s")
 
 s32 __cpuERET(Cpu* pCPU) {
     if (pCPU->anCP0[12] & 4) {
@@ -4844,11 +4844,11 @@ s32 __cpuBreak(Cpu* pCPU) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuMapObject.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuMapObject.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuSetDeviceGet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuSetDeviceGet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuSetDevicePut.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuSetDevicePut.s")
 
 s32 cpuSetCodeHack(Cpu* pCPU, s32 nAddress, s32 nOpcodeOld, s32 nOpcodeNew) {
     s32 iHack;
@@ -4866,7 +4866,7 @@ s32 cpuSetCodeHack(Cpu* pCPU, s32 nAddress, s32 nOpcodeOld, s32 nOpcodeNew) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuReset.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuReset.s")
 
 s32 cpuSetXPC(Cpu* pCPU, s64 nPC, s64 nLo, s64 nHi) {
     if (!xlObjectTest(pCPU, &gClassCPU)) {
@@ -5256,7 +5256,7 @@ static s32 cpuTreeTake(void* heap, s32* where) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuFindFunction.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuFindFunction.s")
 
 static s32 cpuDMAUpdateFunction(Cpu* pCPU, s32 start, s32 end) {
     CpuTreeRoot* root = pCPU->gTree;
@@ -5315,37 +5315,37 @@ inline void treeCallerInit(CpuCallerID* block, s32 total) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeCallerCheck.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeCallerCheck.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeInit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeInit.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeInitNode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeInitNode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeKill.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeKill.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeKillNodes.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeKillNodes.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeDeleteNode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeDeleteNode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeInsert.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeInsert.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeInsertNode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeInsertNode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeBalance.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeBalance.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeAdjustRoot.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeAdjustRoot.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeSearchNode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeSearchNode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeKillRange.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeKillRange.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeKillReason.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeKillReason.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeTimerCheck.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeTimerCheck.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeCleanUp.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeCleanUp.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeCleanNodes.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeCleanNodes.s")
 
 inline s32 treeForceCleanUp(Cpu* pCPU, CpuFunction* tree, s32 kill_limit) {
     CpuTreeRoot* root = pCPU->gTree;
@@ -5369,8 +5369,8 @@ inline s32 treeForceCleanUp(Cpu* pCPU, CpuFunction* tree, s32 kill_limit) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treeForceCleanNodes.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treeForceCleanNodes.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/treePrintNode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/treePrintNode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/cpu/cpuOpcodeChecksum.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/cpu/cpuOpcodeChecksum.s")

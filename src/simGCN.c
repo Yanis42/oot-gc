@@ -334,7 +334,7 @@ const f32 D_80135D6C = 120.0;
 
 // matches but data doesn't
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorGXInit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorGXInit.s")
 #else
 s32 simulatorGXInit(void) {
     s32 i;
@@ -466,9 +466,9 @@ s32 simulatorGXInit(void) {
 }
 #endif
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorUnpackTexPalette.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorUnpackTexPalette.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDVDShowError.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDVDShowError.s")
 
 s32 simulatorDVDOpen(char* szNameFile, DVDFileInfo* pFileInfo) {
     s32 nStatus;
@@ -516,21 +516,21 @@ s32 simulatorPlayMovie(void) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawImage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawImage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawYesNoImage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawYesNoImage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawOKImage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawOKImage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawErrorMessage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawErrorMessage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorPrepareMessage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorPrepareMessage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawYesNoMessageLoop.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawYesNoMessageLoop.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawYesNoMessage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawYesNoMessage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawErrorMessageWait.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawErrorMessageWait.s")
 
 inline void simulatorResetInit() {
     mcardWriteGameDataReset(&mCard);
@@ -639,7 +639,7 @@ s32 simulatorCopyControllerMap(u32* mapDataOutput, u32* mapDataInput) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorReadController.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorReadController.s")
 
 s32 simulatorShowLoad(s32 /* unknown */, char* szNameFile, f32 rProgress) { return 1; }
 
@@ -733,7 +733,7 @@ s32 simulatorRumbleStop(s32 channel) {
 
 // matches but data doesn't
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorTestReset.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorTestReset.s")
 #else
 s32 simulatorTestReset(s32 IPL, s32 forceMenu, s32 allowReset, s32 usePreviousSettings) {
     u32 bFlag;
@@ -806,15 +806,15 @@ s32 simulatorTestReset(s32 IPL, s32 forceMenu, s32 allowReset, s32 usePreviousSe
 }
 #endif
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawMCardText.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawMCardText.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorMCardPollDrawBar.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorMCardPollDrawBar.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorMCardPollDrawFormatBar.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorMCardPollDrawFormatBar.s")
 
 // matches but data doesn't
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorDrawCursor.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorDrawCursor.s")
 #else
 static s32 simulatorDrawCursor(s32 nX, s32 nY) {
     GXColor color;
@@ -888,7 +888,7 @@ static s32 simulatorDrawCursor(s32 nX, s32 nY) {
 
 // matches but data doesn't
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/non_matchings/simGCN/simulatorParseArguments.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/simGCN/simulatorParseArguments.s")
 #else
 static s32 simulatorParseArguments(void) {
     s32 iArgument;

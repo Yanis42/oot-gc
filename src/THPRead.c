@@ -52,30 +52,30 @@ const f32 D_80135DCC = 160.0;
 const f32 D_80135DD0 = 120.0;
 const f32 D_80135DD4 = 1.0;
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieGXInit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieGXInit.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieDrawImage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieDrawImage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieDrawErrorMessage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieDrawErrorMessage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieDVDShowError.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieDVDShowError.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieDVDRead.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieDVDRead.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieTestReset.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieTestReset.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/movieReset.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/movieReset.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/CreateReadThread.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/CreateReadThread.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/ReadThreadStart.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/ReadThreadStart.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/Reader.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/Reader.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/PopReadedBuffer.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/PopReadedBuffer.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/PushFreeReadBuffer.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/PushFreeReadBuffer.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/PopReadedBuffer2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/PopReadedBuffer2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPRead/PushReadedBuffer2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPRead/PushReadedBuffer2.s")

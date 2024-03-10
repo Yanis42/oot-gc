@@ -14,8 +14,8 @@ const f32 D_80135D90 = -1.0;
 const f32 D_80135D94 = 1.0;
 const f64 D_80135D98 = 4503601774854144.0;
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPDraw/THPGXYuv2RgbDraw.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPDraw/THPGXYuv2RgbDraw.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPDraw/THPGXYuv2RgbSetup.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPDraw/THPGXYuv2RgbSetup.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPDraw/THPGXRestore.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPDraw/THPGXRestore.s")

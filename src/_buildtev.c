@@ -63,14 +63,14 @@ const s32 D_801360D8[2] = {
     0x00000000,
 };
 
-#pragma GLOBAL_ASM("asm/non_matchings/_buildtev/SetColor.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_buildtev/SetColor.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_buildtev/SetAlpha.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_buildtev/SetAlpha.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_buildtev/AddAlphaTevOrder.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_buildtev/AddAlphaTevOrder.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_buildtev/SetupStage.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_buildtev/SetupStage.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_buildtev/BuildCycle.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_buildtev/BuildCycle.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/_buildtev/BuildCombineModeTev.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/_buildtev/BuildCombineModeTev.s")

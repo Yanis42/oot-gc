@@ -69,38 +69,38 @@ const f32 D_80136020 = 240.0;
 const f64 D_80136028 = 4503599627370496.0;
 const f64 D_80136030 = 4503601774854144.0;
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpParseGBI.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpParseGBI.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPut8.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPut8.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPut16.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPut16.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPut32.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPut32.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPut64.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPut64.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGet8.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGet8.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGet16.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGet16.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGet32.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGet32.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGet64.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGet64.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPutSpan8.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPutSpan8.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPutSpan16.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPutSpan16.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPutSpan32.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPutSpan32.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpPutSpan64.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpPutSpan64.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGetSpan8.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGetSpan8.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGetSpan16.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGetSpan16.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGetSpan32.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGetSpan32.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpGetSpan64.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpGetSpan64.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/rdp/rdpEvent.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/rdp/rdpEvent.s")

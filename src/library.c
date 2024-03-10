@@ -1295,122 +1295,122 @@ const f64 D_801360C8 = 4503601774854144.0;
 const f32 D_801360D0 = 0.01745329238474369;
 const f32 D_801360D4 = -2.0;
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osException.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osException.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/send_mesg.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/send_mesg.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osEnqueueAndYield.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osEnqueueAndYield.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osEnqueueThread.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osEnqueueThread.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osPopThread.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osPopThread.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osDispatchThread.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osDispatchThread.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osGetMemSize.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osGetMemSize.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osInvalICache.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osInvalICache.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osDisableInt.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osDisableInt.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osRestoreInt.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osRestoreInt.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osSpSetStatus.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osSpSetStatus.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__cosf.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__cosf.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__sinf.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__sinf.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/_bzero.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/_bzero.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/_bcopy.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/_bcopy.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/_memcpy.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/_memcpy.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osPhysicalToVirtual.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osPhysicalToVirtual.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osVirtualToPhysical.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osVirtualToPhysical.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guMtxCatF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guMtxCatF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guMtxF2L.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guMtxF2L.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guMtxIdentF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guMtxIdentF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guMtxIdent.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guMtxIdent.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guOrthoF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guOrthoF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guOrtho.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guOrtho.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guPerspectiveF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guPerspectiveF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guPerspective.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guPerspective.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/GenPerspective_1080.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/GenPerspective_1080.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guScaleF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guScaleF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guScale.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guScale.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guTranslateF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guTranslateF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guTranslate.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guTranslate.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guRotateF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guRotateF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guRotate.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guRotate.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guLookAtF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guLookAtF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guLookAt.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guLookAt.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guLookAtHiliteF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guLookAtHiliteF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guLookAtHilite.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guLookAtHilite.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guLookAtReflectF.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guLookAtReflectF.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/guLookAtReflect.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/guLookAtReflect.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osAiSetFrequency.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osAiSetFrequency.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osAiSetNextBuffer.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osAiSetNextBuffer.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/__osEepStatus.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/__osEepStatus.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osEepromRead.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osEepromRead.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osEepromWrite.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osEepromWrite.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osEepromLongRead.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osEepromLongRead.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osEepromLongWrite.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osEepromLongWrite.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/starfoxCopy.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/starfoxCopy.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/pictureSnap_Zelda2.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/pictureSnap_Zelda2.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/dmaSoundRomHandler_ZELDA1.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/dmaSoundRomHandler_ZELDA1.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/osViSwapBuffer_Entry.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/osViSwapBuffer_Entry.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/zeldaLoadSZS_Entry.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/zeldaLoadSZS_Entry.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/zeldaLoadSZS_Exit.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/zeldaLoadSZS_Exit.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryFindException.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryFindException.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryFindVariables.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryFindVariables.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryFindFunctions.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryFindFunctions.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryTestFunction.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryTestFunction.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/librarySearch.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/librarySearch.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryFunctionReplaced.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryFunctionReplaced.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryCall.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryCall.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/library/libraryEvent.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/library/libraryEvent.s")

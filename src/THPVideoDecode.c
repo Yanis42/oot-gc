@@ -11,20 +11,20 @@ static void* DecodedTextureSetMessage[3];
 static s32 VideoDecodeThreadCreated;
 static s32 First;
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/PushDecodedTextureSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/PushDecodedTextureSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/PopDecodedTextureSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/PopDecodedTextureSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/PushFreeTextureSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/PushFreeTextureSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/PopFreeTextureSet.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/PopFreeTextureSet.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/VideoDecode.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/VideoDecode.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/VideoDecoderForOnMemory.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/VideoDecoderForOnMemory.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/VideoDecoder.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/VideoDecoder.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/VideoDecodeThreadStart.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/VideoDecodeThreadStart.s")
 
-#pragma GLOBAL_ASM("asm/non_matchings/THPVideoDecode/CreateVideoDecodeThread.s")
+#pragma GLOBAL_ASM("asm/ce-j/non_matchings/THPVideoDecode/CreateVideoDecodeThread.s")

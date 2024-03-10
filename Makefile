@@ -13,7 +13,7 @@ TARGET := SIM
 BUILD_DIR := build/$(TARGET)
 
 SRC_DIRS := $(shell find src -type d)
-ASM_DIRS := $(shell find asm -type d -not -path "asm/non_matchings*")
+ASM_DIRS := $(shell find asm -type d -not -path "asm/ce-j/non_matchings*")
 
 C_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 
