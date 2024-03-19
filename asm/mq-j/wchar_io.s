@@ -1,0 +1,49 @@
+# wchar_io.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x800CFBE0 - 0x800CFC60
+
+glabel fwide
+/* 0CCBE0 800CFBE0 A0030004 */  lhz       r0, 0x4(r3)
+/* 0CCBE4 800CFBE4 5400D77F */  extrwi.   r0, r0, 3, 23
+/* 0CCBE8 800CFBE8 4082000C */  bne       lbl_800CFBF4
+/* 0CCBEC 800CFBEC 38600000 */  li        r3, 0x0
+/* 0CCBF0 800CFBF0 4E800020 */  blr
+lbl_800CFBF4:
+/* 0CCBF4 800CFBF4 88A30005 */  lbz       r5, 0x5(r3)
+/* 0CCBF8 800CFBF8 54A0E7BE */  extrwi    r0, r5, 2, 26
+/* 0CCBFC 800CFBFC 2C000001 */  cmpwi     r0, 0x1
+/* 0CCC00 800CFC00 41820058 */  beq       lbl_800CFC58
+/* 0CCC04 800CFC04 40800010 */  bge       lbl_800CFC14
+/* 0CCC08 800CFC08 2C000000 */  cmpwi     r0, 0x0
+/* 0CCC0C 800CFC0C 40800014 */  bge       lbl_800CFC20
+/* 0CCC10 800CFC10 4E800020 */  blr
+lbl_800CFC14:
+/* 0CCC14 800CFC14 2C000003 */  cmpwi     r0, 0x3
+/* 0CCC18 800CFC18 4C800020 */  bgelr
+/* 0CCC1C 800CFC1C 48000034 */  b         lbl_800CFC50
+lbl_800CFC20:
+/* 0CCC20 800CFC20 2C040000 */  cmpwi     r4, 0x0
+/* 0CCC24 800CFC24 40810014 */  ble       lbl_800CFC38
+/* 0CCC28 800CFC28 38000002 */  li        r0, 0x2
+/* 0CCC2C 800CFC2C 500526B6 */  rlwimi    r5, r0, 4, 26, 27
+/* 0CCC30 800CFC30 98A30005 */  stb       r5, 0x5(r3)
+/* 0CCC34 800CFC34 48000014 */  b         lbl_800CFC48
+lbl_800CFC38:
+/* 0CCC38 800CFC38 40800010 */  bge       lbl_800CFC48
+/* 0CCC3C 800CFC3C 38000001 */  li        r0, 0x1
+/* 0CCC40 800CFC40 500526B6 */  rlwimi    r5, r0, 4, 26, 27
+/* 0CCC44 800CFC44 98A30005 */  stb       r5, 0x5(r3)
+lbl_800CFC48:
+/* 0CCC48 800CFC48 7C832378 */  mr        r3, r4
+/* 0CCC4C 800CFC4C 4E800020 */  blr
+lbl_800CFC50:
+/* 0CCC50 800CFC50 38600001 */  li        r3, 0x1
+/* 0CCC54 800CFC54 4E800020 */  blr
+lbl_800CFC58:
+/* 0CCC58 800CFC58 3860FFFF */  li        r3, -0x1
+/* 0CCC5C 800CFC5C 4E800020 */  blr

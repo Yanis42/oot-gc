@@ -1,0 +1,321 @@
+# OSReset.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x8009F204 - 0x8009F5E8
+
+glabel OSRegisterResetFunction
+/* 09C204 8009F204 80AD8B38 */  lwz       r5, ResetFunctionQueue@sda21(r0)
+/* 09C208 8009F208 48000008 */  b         lbl_8009F210
+lbl_8009F20C:
+/* 09C20C 8009F20C 80A50008 */  lwz       r5, 0x8(r5)
+lbl_8009F210:
+/* 09C210 8009F210 28050000 */  cmplwi    r5, 0x0
+/* 09C214 8009F214 41820014 */  beq       lbl_8009F228
+/* 09C218 8009F218 80850004 */  lwz       r4, 0x4(r5)
+/* 09C21C 8009F21C 80030004 */  lwz       r0, 0x4(r3)
+/* 09C220 8009F220 7C040040 */  cmplw     r4, r0
+/* 09C224 8009F224 4081FFE8 */  ble       lbl_8009F20C
+lbl_8009F228:
+/* 09C228 8009F228 28050000 */  cmplwi    r5, 0x0
+/* 09C22C 8009F22C 40820034 */  bne       lbl_8009F260
+/* 09C230 8009F230 38AD8B38 */  li        r5, ResetFunctionQueue@sda21
+/* 09C234 8009F234 84850004 */  lwzu      r4, 0x4(r5)
+/* 09C238 8009F238 28040000 */  cmplwi    r4, 0x0
+/* 09C23C 8009F23C 4082000C */  bne       lbl_8009F248
+/* 09C240 8009F240 906D8B38 */  stw       r3, ResetFunctionQueue@sda21(r0)
+/* 09C244 8009F244 48000008 */  b         lbl_8009F24C
+lbl_8009F248:
+/* 09C248 8009F248 90640008 */  stw       r3, 0x8(r4)
+lbl_8009F24C:
+/* 09C24C 8009F24C 9083000C */  stw       r4, 0xc(r3)
+/* 09C250 8009F250 38000000 */  li        r0, 0x0
+/* 09C254 8009F254 90030008 */  stw       r0, 0x8(r3)
+/* 09C258 8009F258 90650000 */  stw       r3, 0x0(r5)
+/* 09C25C 8009F25C 4E800020 */  blr
+lbl_8009F260:
+/* 09C260 8009F260 90A30008 */  stw       r5, 0x8(r3)
+/* 09C264 8009F264 8085000C */  lwz       r4, 0xc(r5)
+/* 09C268 8009F268 9065000C */  stw       r3, 0xc(r5)
+/* 09C26C 8009F26C 28040000 */  cmplwi    r4, 0x0
+/* 09C270 8009F270 9083000C */  stw       r4, 0xc(r3)
+/* 09C274 8009F274 4082000C */  bne       lbl_8009F280
+/* 09C278 8009F278 906D8B38 */  stw       r3, ResetFunctionQueue@sda21(r0)
+/* 09C27C 8009F27C 4E800020 */  blr
+lbl_8009F280:
+/* 09C280 8009F280 90640008 */  stw       r3, 0x8(r4)
+/* 09C284 8009F284 4E800020 */  blr
+
+Reset:
+/* 09C288 8009F288 48000020 */  b         lbl_8009F2A8
+lbl_8009F28C:
+/* 09C28C 8009F28C 7D10FAA6 */  mfspr     r8, HID0
+/* 09C290 8009F290 61080008 */  ori       r8, r8, 0x8
+/* 09C294 8009F294 7D10FBA6 */  mtspr     HID0, r8
+/* 09C298 8009F298 4C00012C */  isync
+/* 09C29C 8009F29C 7C0004AC */  sync
+/* 09C2A0 8009F2A0 60000000 */  nop
+/* 09C2A4 8009F2A4 48000008 */  b         lbl_8009F2AC
+lbl_8009F2A8:
+/* 09C2A8 8009F2A8 48000020 */  b         lbl_8009F2C8
+lbl_8009F2AC:
+/* 09C2AC 8009F2AC 7CAC42E6 */  mftb      r5, 268
+lbl_8009F2B0:
+/* 09C2B0 8009F2B0 7CCC42E6 */  mftb      r6, 268
+/* 09C2B4 8009F2B4 7CE53050 */  subf      r7, r5, r6
+/* 09C2B8 8009F2B8 28071124 */  cmplwi    r7, 0x1124
+/* 09C2BC 8009F2BC 4180FFF4 */  blt       lbl_8009F2B0
+/* 09C2C0 8009F2C0 60000000 */  nop
+/* 09C2C4 8009F2C4 48000008 */  b         lbl_8009F2CC
+lbl_8009F2C8:
+/* 09C2C8 8009F2C8 48000020 */  b         lbl_8009F2E8
+lbl_8009F2CC:
+/* 09C2CC 8009F2CC 3D00CC00 */  lis       r8, 0xcc00
+/* 09C2D0 8009F2D0 61083000 */  ori       r8, r8, 0x3000
+/* 09C2D4 8009F2D4 38800003 */  li        r4, 0x3
+/* 09C2D8 8009F2D8 90880024 */  stw       r4, 0x24(r8)
+/* 09C2DC 8009F2DC 90680024 */  stw       r3, 0x24(r8)
+/* 09C2E0 8009F2E0 60000000 */  nop
+/* 09C2E4 8009F2E4 48000008 */  b         lbl_8009F2EC
+lbl_8009F2E8:
+/* 09C2E8 8009F2E8 4800000C */  b         lbl_8009F2F4
+lbl_8009F2EC:
+/* 09C2EC 8009F2EC 60000000 */  nop
+/* 09C2F0 8009F2F0 4BFFFFFC */  b         lbl_8009F2EC
+lbl_8009F2F4:
+/* 09C2F4 8009F2F4 4BFFFF98 */  b         lbl_8009F28C
+
+glabel __OSDoHotReset
+/* 09C2F8 8009F2F8 7C0802A6 */  mflr      r0
+/* 09C2FC 8009F2FC 90010004 */  stw       r0, 0x4(r1)
+/* 09C300 8009F300 9421FFE8 */  stwu      r1, -0x18(r1)
+/* 09C304 8009F304 93E10014 */  stw       r31, 0x14(r1)
+/* 09C308 8009F308 7C7F1B78 */  mr        r31, r3
+/* 09C30C 8009F30C 4BFFEF3D */  bl        OSDisableInterrupts
+/* 09C310 8009F310 3C60CC00 */  lis       r3, 0xcc00
+/* 09C314 8009F314 38632000 */  addi      r3, r3, 0x2000
+/* 09C318 8009F318 38000000 */  li        r0, 0x0
+/* 09C31C 8009F31C B0030002 */  sth       r0, 0x2(r3)
+/* 09C320 8009F320 4BFFDA91 */  bl        ICFlashInvalidate
+/* 09C324 8009F324 57E31838 */  slwi      r3, r31, 3
+/* 09C328 8009F328 4BFFFF61 */  bl        Reset
+/* 09C32C 8009F32C 8001001C */  lwz       r0, 0x1c(r1)
+/* 09C330 8009F330 83E10014 */  lwz       r31, 0x14(r1)
+/* 09C334 8009F334 38210018 */  addi      r1, r1, 0x18
+/* 09C338 8009F338 7C0803A6 */  mtlr      r0
+/* 09C33C 8009F33C 4E800020 */  blr
+
+glabel OSResetSystem
+/* 09C340 8009F340 7C0802A6 */  mflr      r0
+/* 09C344 8009F344 90010004 */  stw       r0, 0x4(r1)
+/* 09C348 8009F348 9421FFC0 */  stwu      r1, -0x40(r1)
+/* 09C34C 8009F34C BF410028 */  stmw      r26, 0x28(r1)
+/* 09C350 8009F350 7C7A1B78 */  mr        r26, r3
+/* 09C354 8009F354 7C9D2378 */  mr        r29, r4
+/* 09C358 8009F358 7CBE2B78 */  mr        r30, r5
+/* 09C35C 8009F35C 4800112D */  bl        OSDisableScheduler
+/* 09C360 8009F360 4BFFD84D */  bl        __OSStopAudioSystem
+/* 09C364 8009F364 2C1A0002 */  cmpwi     r26, 0x2
+/* 09C368 8009F368 40820010 */  bne       lbl_8009F378
+/* 09C36C 8009F36C 38600001 */  li        r3, 0x1
+/* 09C370 8009F370 48011321 */  bl        __PADDisableRecalibration
+/* 09C374 8009F374 7C7F1B78 */  mr        r31, r3
+lbl_8009F378:
+/* 09C378 8009F378 48000004 */  b         lbl_8009F37C
+lbl_8009F37C:
+/* 09C37C 8009F37C 48000004 */  b         lbl_8009F380
+lbl_8009F380:
+/* 09C380 8009F380 836D8B38 */  lwz       r27, ResetFunctionQueue@sda21(r0)
+/* 09C384 8009F384 3B800000 */  li        r28, 0x0
+/* 09C388 8009F388 48000004 */  b         lbl_8009F38C
+lbl_8009F38C:
+/* 09C38C 8009F38C 48000004 */  b         lbl_8009F390
+lbl_8009F390:
+/* 09C390 8009F390 48000024 */  b         lbl_8009F3B4
+lbl_8009F394:
+/* 09C394 8009F394 38600000 */  li        r3, 0x0
+/* 09C398 8009F398 819B0000 */  lwz       r12, 0x0(r27)
+/* 09C39C 8009F39C 7D8803A6 */  mtlr      r12
+/* 09C3A0 8009F3A0 4E800021 */  blrl
+/* 09C3A4 8009F3A4 7C600034 */  cntlzw    r0, r3
+/* 09C3A8 8009F3A8 837B0008 */  lwz       r27, 0x8(r27)
+/* 09C3AC 8009F3AC 5400D97E */  srwi      r0, r0, 5
+/* 09C3B0 8009F3B0 7F9C0378 */  or        r28, r28, r0
+lbl_8009F3B4:
+/* 09C3B4 8009F3B4 281B0000 */  cmplwi    r27, 0x0
+/* 09C3B8 8009F3B8 4082FFDC */  bne       lbl_8009F394
+/* 09C3BC 8009F3BC 48000C6D */  bl        __OSSyncSram
+/* 09C3C0 8009F3C0 7C600034 */  cntlzw    r0, r3
+/* 09C3C4 8009F3C4 5400D97E */  srwi      r0, r0, 5
+/* 09C3C8 8009F3C8 7F9C0378 */  or        r28, r28, r0
+/* 09C3CC 8009F3CC 2C1C0000 */  cmpwi     r28, 0x0
+/* 09C3D0 8009F3D0 4182000C */  beq       lbl_8009F3DC
+/* 09C3D4 8009F3D4 38000000 */  li        r0, 0x0
+/* 09C3D8 8009F3D8 48000008 */  b         lbl_8009F3E0
+lbl_8009F3DC:
+/* 09C3DC 8009F3DC 38000001 */  li        r0, 0x1
+lbl_8009F3E0:
+/* 09C3E0 8009F3E0 2C000000 */  cmpwi     r0, 0x0
+/* 09C3E4 8009F3E4 4182FF9C */  beq       lbl_8009F380
+/* 09C3E8 8009F3E8 2C1A0001 */  cmpwi     r26, 0x1
+/* 09C3EC 8009F3EC 40820038 */  bne       lbl_8009F424
+/* 09C3F0 8009F3F0 2C1E0000 */  cmpwi     r30, 0x0
+/* 09C3F4 8009F3F4 41820030 */  beq       lbl_8009F424
+/* 09C3F8 8009F3F8 48000829 */  bl        __OSLockSram
+/* 09C3FC 8009F3FC 88030013 */  lbz       r0, 0x13(r3)
+/* 09C400 8009F400 60000040 */  ori       r0, r0, 0x40
+/* 09C404 8009F404 98030013 */  stb       r0, 0x13(r3)
+/* 09C408 8009F408 38600001 */  li        r3, 0x1
+/* 09C40C 8009F40C 48000BD5 */  bl        __OSUnlockSram
+/* 09C410 8009F410 48000004 */  b         lbl_8009F414
+lbl_8009F414:
+/* 09C414 8009F414 48000004 */  b         lbl_8009F418
+lbl_8009F418:
+/* 09C418 8009F418 48000C11 */  bl        __OSSyncSram
+/* 09C41C 8009F41C 2C030000 */  cmpwi     r3, 0x0
+/* 09C420 8009F420 4182FFF8 */  beq       lbl_8009F418
+lbl_8009F424:
+/* 09C424 8009F424 4BFFEE25 */  bl        OSDisableInterrupts
+/* 09C428 8009F428 838D8B38 */  lwz       r28, ResetFunctionQueue@sda21(r0)
+/* 09C42C 8009F42C 3B600000 */  li        r27, 0x0
+/* 09C430 8009F430 48000004 */  b         lbl_8009F434
+lbl_8009F434:
+/* 09C434 8009F434 48000004 */  b         lbl_8009F438
+lbl_8009F438:
+/* 09C438 8009F438 48000024 */  b         lbl_8009F45C
+lbl_8009F43C:
+/* 09C43C 8009F43C 38600001 */  li        r3, 0x1
+/* 09C440 8009F440 819C0000 */  lwz       r12, 0x0(r28)
+/* 09C444 8009F444 7D8803A6 */  mtlr      r12
+/* 09C448 8009F448 4E800021 */  blrl
+/* 09C44C 8009F44C 7C600034 */  cntlzw    r0, r3
+/* 09C450 8009F450 839C0008 */  lwz       r28, 0x8(r28)
+/* 09C454 8009F454 5400D97E */  srwi      r0, r0, 5
+/* 09C458 8009F458 7F7B0378 */  or        r27, r27, r0
+lbl_8009F45C:
+/* 09C45C 8009F45C 281C0000 */  cmplwi    r28, 0x0
+/* 09C460 8009F460 4082FFDC */  bne       lbl_8009F43C
+/* 09C464 8009F464 48000BC5 */  bl        __OSSyncSram
+/* 09C468 8009F468 4BFFDA71 */  bl        LCDisable
+/* 09C46C 8009F46C 2C1A0001 */  cmpwi     r26, 0x1
+/* 09C470 8009F470 40820028 */  bne       lbl_8009F498
+/* 09C474 8009F474 4BFFEDD5 */  bl        OSDisableInterrupts
+/* 09C478 8009F478 3C60CC00 */  lis       r3, 0xcc00
+/* 09C47C 8009F47C 38632000 */  addi      r3, r3, 0x2000
+/* 09C480 8009F480 38000000 */  li        r0, 0x0
+/* 09C484 8009F484 B0030002 */  sth       r0, 0x2(r3)
+/* 09C488 8009F488 4BFFD929 */  bl        ICFlashInvalidate
+/* 09C48C 8009F48C 57A31838 */  slwi      r3, r29, 3
+/* 09C490 8009F490 4BFFFDF9 */  bl        Reset
+/* 09C494 8009F494 48000060 */  b         lbl_8009F4F4
+lbl_8009F498:
+/* 09C498 8009F498 2C1A0000 */  cmpwi     r26, 0x0
+/* 09C49C 8009F49C 40820058 */  bne       lbl_8009F4F4
+/* 09C4A0 8009F4A0 3C608000 */  lis       r3, 0x8000
+/* 09C4A4 8009F4A4 806300DC */  lwz       r3, 0xdc(r3)
+/* 09C4A8 8009F4A8 48000004 */  b         lbl_8009F4AC
+lbl_8009F4AC:
+/* 09C4AC 8009F4AC 48000004 */  b         lbl_8009F4B0
+lbl_8009F4B0:
+/* 09C4B0 8009F4B0 4800002C */  b         lbl_8009F4DC
+lbl_8009F4B4:
+/* 09C4B4 8009F4B4 A00302C8 */  lhz       r0, 0x2c8(r3)
+/* 09C4B8 8009F4B8 836302FC */  lwz       r27, 0x2fc(r3)
+/* 09C4BC 8009F4BC 2C000004 */  cmpwi     r0, 0x4
+/* 09C4C0 8009F4C0 41820014 */  beq       lbl_8009F4D4
+/* 09C4C4 8009F4C4 40800014 */  bge       lbl_8009F4D8
+/* 09C4C8 8009F4C8 2C000001 */  cmpwi     r0, 0x1
+/* 09C4CC 8009F4CC 41820008 */  beq       lbl_8009F4D4
+/* 09C4D0 8009F4D0 48000008 */  b         lbl_8009F4D8
+lbl_8009F4D4:
+/* 09C4D4 8009F4D4 480017BD */  bl        OSCancelThread
+lbl_8009F4D8:
+/* 09C4D8 8009F4D8 7F63DB78 */  mr        r3, r27
+lbl_8009F4DC:
+/* 09C4DC 8009F4DC 28030000 */  cmplwi    r3, 0x0
+/* 09C4E0 8009F4E0 4082FFD4 */  bne       lbl_8009F4B4
+/* 09C4E4 8009F4E4 48000FE5 */  bl        OSEnableScheduler
+/* 09C4E8 8009F4E8 7FA3EB78 */  mr        r3, r29
+/* 09C4EC 8009F4EC 7FC4F378 */  mr        r4, r30
+/* 09C4F0 8009F4F0 4BFFFB4D */  bl        __OSReboot
+lbl_8009F4F4:
+/* 09C4F4 8009F4F4 3C608000 */  lis       r3, 0x8000
+/* 09C4F8 8009F4F8 806300DC */  lwz       r3, 0xdc(r3)
+/* 09C4FC 8009F4FC 48000004 */  b         lbl_8009F500
+lbl_8009F500:
+/* 09C500 8009F500 48000004 */  b         lbl_8009F504
+lbl_8009F504:
+/* 09C504 8009F504 4800002C */  b         lbl_8009F530
+lbl_8009F508:
+/* 09C508 8009F508 A00302C8 */  lhz       r0, 0x2c8(r3)
+/* 09C50C 8009F50C 836302FC */  lwz       r27, 0x2fc(r3)
+/* 09C510 8009F510 2C000004 */  cmpwi     r0, 0x4
+/* 09C514 8009F514 41820014 */  beq       lbl_8009F528
+/* 09C518 8009F518 40800014 */  bge       lbl_8009F52C
+/* 09C51C 8009F51C 2C000001 */  cmpwi     r0, 0x1
+/* 09C520 8009F520 41820008 */  beq       lbl_8009F528
+/* 09C524 8009F524 48000008 */  b         lbl_8009F52C
+lbl_8009F528:
+/* 09C528 8009F528 48001769 */  bl        OSCancelThread
+lbl_8009F52C:
+/* 09C52C 8009F52C 7F63DB78 */  mr        r3, r27
+lbl_8009F530:
+/* 09C530 8009F530 28030000 */  cmplwi    r3, 0x0
+/* 09C534 8009F534 4082FFD4 */  bne       lbl_8009F508
+/* 09C538 8009F538 3FA08000 */  lis       r29, 0x8000
+/* 09C53C 8009F53C 387D0040 */  addi      r3, r29, 0x40
+/* 09C540 8009F540 38800000 */  li        r4, 0x0
+/* 09C544 8009F544 38A0008C */  li        r5, 0x8c
+/* 09C548 8009F548 4BF65DD9 */  bl        memset
+/* 09C54C 8009F54C 387D00D4 */  addi      r3, r29, 0xd4
+/* 09C550 8009F550 38800000 */  li        r4, 0x0
+/* 09C554 8009F554 38A00014 */  li        r5, 0x14
+/* 09C558 8009F558 4BF65DC9 */  bl        memset
+/* 09C55C 8009F55C 387D00F4 */  addi      r3, r29, 0xf4
+/* 09C560 8009F560 38800000 */  li        r4, 0x0
+/* 09C564 8009F564 38A00004 */  li        r5, 0x4
+/* 09C568 8009F568 4BF65DB9 */  bl        memset
+/* 09C56C 8009F56C 387D3000 */  addi      r3, r29, 0x3000
+/* 09C570 8009F570 38800000 */  li        r4, 0x0
+/* 09C574 8009F574 38A000C0 */  li        r5, 0xc0
+/* 09C578 8009F578 4BF65DA9 */  bl        memset
+/* 09C57C 8009F57C 387D30C8 */  addi      r3, r29, 0x30c8
+/* 09C580 8009F580 38800000 */  li        r4, 0x0
+/* 09C584 8009F584 38A0000C */  li        r5, 0xc
+/* 09C588 8009F588 4BF65D99 */  bl        memset
+/* 09C58C 8009F58C 387D30E2 */  addi      r3, r29, 0x30e2
+/* 09C590 8009F590 38800000 */  li        r4, 0x0
+/* 09C594 8009F594 38A00001 */  li        r5, 0x1
+/* 09C598 8009F598 4BF65D89 */  bl        memset
+/* 09C59C 8009F59C 7FE3FB78 */  mr        r3, r31
+/* 09C5A0 8009F5A0 480110F1 */  bl        __PADDisableRecalibration
+/* 09C5A4 8009F5A4 BB410028 */  lmw       r26, 0x28(r1)
+/* 09C5A8 8009F5A8 80010044 */  lwz       r0, 0x44(r1)
+/* 09C5AC 8009F5AC 38210040 */  addi      r1, r1, 0x40
+/* 09C5B0 8009F5B0 7C0803A6 */  mtlr      r0
+/* 09C5B4 8009F5B4 4E800020 */  blr
+
+glabel OSGetResetCode
+/* 09C5B8 8009F5B8 3C608000 */  lis       r3, 0x8000
+/* 09C5BC 8009F5BC 880330E2 */  lbz       r0, 0x30e2(r3)
+/* 09C5C0 8009F5C0 28000000 */  cmplwi    r0, 0x0
+/* 09C5C4 8009F5C4 4182000C */  beq       lbl_8009F5D0
+/* 09C5C8 8009F5C8 3C608000 */  lis       r3, 0x8000
+/* 09C5CC 8009F5CC 48000018 */  b         lbl_8009F5E4
+lbl_8009F5D0:
+/* 09C5D0 8009F5D0 3C60CC00 */  lis       r3, 0xcc00
+/* 09C5D4 8009F5D4 38633000 */  addi      r3, r3, 0x3000
+/* 09C5D8 8009F5D8 80030024 */  lwz       r0, 0x24(r3)
+/* 09C5DC 8009F5DC 54000038 */  clrrwi    r0, r0, 3
+/* 09C5E0 8009F5E0 5403E8FE */  srwi      r3, r0, 3
+lbl_8009F5E4:
+/* 09C5E4 8009F5E4 4E800020 */  blr
+
+# 0x8018BAB8 - 0x8018BAC0
+.section .sbss, "wa"
+
+ResetFunctionQueue:
+	.skip 0x8

@@ -1,0 +1,709 @@
+# dsp_task.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x800B922C - 0x800B9AB0
+
+glabel __DSPHandler
+/* 0B622C 800B922C 7C0802A6 */  mflr      r0
+/* 0B6230 800B9230 3C60CC00 */  lis       r3, 0xcc00
+/* 0B6234 800B9234 90010004 */  stw       r0, 0x4(r1)
+/* 0B6238 800B9238 38635000 */  addi      r3, r3, 0x5000
+/* 0B623C 800B923C 3800FFD7 */  li        r0, -0x29
+/* 0B6240 800B9240 9421FD18 */  stwu      r1, -0x2e8(r1)
+/* 0B6244 800B9244 93E102E4 */  stw       r31, 0x2e4(r1)
+/* 0B6248 800B9248 3BE40000 */  addi      r31, r4, 0x0
+/* 0B624C 800B924C A0A3000A */  lhz       r5, 0xa(r3)
+/* 0B6250 800B9250 7CA00038 */  and       r0, r5, r0
+/* 0B6254 800B9254 60000080 */  ori       r0, r0, 0x80
+/* 0B6258 800B9258 B003000A */  sth       r0, 0xa(r3)
+/* 0B625C 800B925C 38610010 */  addi      r3, r1, 0x10
+/* 0B6260 800B9260 4BFE4491 */  bl        OSClearContext
+/* 0B6264 800B9264 38610010 */  addi      r3, r1, 0x10
+/* 0B6268 800B9268 4BFE42C1 */  bl        OSSetCurrentContext
+lbl_800B926C:
+/* 0B626C 800B926C 4BFFFE01 */  bl        DSPCheckMailFromDSP
+/* 0B6270 800B9270 28030000 */  cmplwi    r3, 0x0
+/* 0B6274 800B9274 4182FFF8 */  beq       lbl_800B926C
+/* 0B6278 800B9278 4BFFFE05 */  bl        DSPReadMailFromDSP
+/* 0B627C 800B927C 80AD8E4C */  lwz       r5, D_8018BDCC@sda21(r0)
+/* 0B6280 800B9280 80050008 */  lwz       r0, 0x8(r5)
+/* 0B6284 800B9284 540007BD */  rlwinm.   r0, r0, 0, 30, 30
+/* 0B6288 800B9288 41820018 */  beq       lbl_800B92A0
+/* 0B628C 800B928C 3C03232F */  addis     r0, r3, 0x232f
+/* 0B6290 800B9290 28000002 */  cmplwi    r0, 0x2
+/* 0B6294 800B9294 4082000C */  bne       lbl_800B92A0
+/* 0B6298 800B9298 3C60DCD1 */  lis       r3, 0xdcd1
+/* 0B629C 800B929C 38630003 */  addi      r3, r3, 0x3
+lbl_800B92A0:
+/* 0B62A0 800B92A0 3C80DCD1 */  lis       r4, 0xdcd1
+/* 0B62A4 800B92A4 38040002 */  addi      r0, r4, 0x2
+/* 0B62A8 800B92A8 7C030000 */  cmpw      r3, r0
+/* 0B62AC 800B92AC 41820074 */  beq       lbl_800B9320
+/* 0B62B0 800B92B0 40800014 */  bge       lbl_800B92C4
+/* 0B62B4 800B92B4 7C032000 */  cmpw      r3, r4
+/* 0B62B8 800B92B8 41820020 */  beq       lbl_800B92D8
+/* 0B62BC 800B92BC 40800040 */  bge       lbl_800B92FC
+/* 0B62C0 800B92C0 4800036C */  b         lbl_800B962C
+lbl_800B92C4:
+/* 0B62C4 800B92C4 38040004 */  addi      r0, r4, 0x4
+/* 0B62C8 800B92C8 7C030000 */  cmpw      r3, r0
+/* 0B62CC 800B92CC 41820348 */  beq       lbl_800B9614
+/* 0B62D0 800B92D0 4080035C */  bge       lbl_800B962C
+/* 0B62D4 800B92D4 480001B4 */  b         lbl_800B9488
+lbl_800B92D8:
+/* 0B62D8 800B92D8 38000001 */  li        r0, 0x1
+/* 0B62DC 800B92DC 90050000 */  stw       r0, 0x0(r5)
+/* 0B62E0 800B92E0 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B62E4 800B92E4 81830028 */  lwz       r12, 0x28(r3)
+/* 0B62E8 800B92E8 280C0000 */  cmplwi    r12, 0x0
+/* 0B62EC 800B92EC 41820340 */  beq       lbl_800B962C
+/* 0B62F0 800B92F0 7D8803A6 */  mtlr      r12
+/* 0B62F4 800B92F4 4E800021 */  blrl
+/* 0B62F8 800B92F8 48000334 */  b         lbl_800B962C
+lbl_800B92FC:
+/* 0B62FC 800B92FC 38000001 */  li        r0, 0x1
+/* 0B6300 800B9300 90050000 */  stw       r0, 0x0(r5)
+/* 0B6304 800B9304 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6308 800B9308 8183002C */  lwz       r12, 0x2c(r3)
+/* 0B630C 800B930C 280C0000 */  cmplwi    r12, 0x0
+/* 0B6310 800B9310 4182031C */  beq       lbl_800B962C
+/* 0B6314 800B9314 7D8803A6 */  mtlr      r12
+/* 0B6318 800B9318 4E800021 */  blrl
+/* 0B631C 800B931C 48000310 */  b         lbl_800B962C
+lbl_800B9320:
+/* 0B6320 800B9320 800D8E38 */  lwz       r0, D_8018BDB8@sda21(r0)
+/* 0B6324 800B9324 2C000000 */  cmpwi     r0, 0x0
+/* 0B6328 800B9328 41820098 */  beq       lbl_800B93C0
+/* 0B632C 800B932C 800D8E3C */  lwz       r0, D_8018BDBC@sda21(r0)
+/* 0B6330 800B9330 7C050040 */  cmplw     r5, r0
+/* 0B6334 800B9334 40820044 */  bne       lbl_800B9378
+/* 0B6338 800B9338 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B633C 800B933C 38630003 */  addi      r3, r3, 0x3
+/* 0B6340 800B9340 4BFFFD55 */  bl        DSPSendMailToDSP
+lbl_800B9344:
+/* 0B6344 800B9344 4BFFFD19 */  bl        DSPCheckMailToDSP
+/* 0B6348 800B9348 28030000 */  cmplwi    r3, 0x0
+/* 0B634C 800B934C 4082FFF8 */  bne       lbl_800B9344
+/* 0B6350 800B9350 38000000 */  li        r0, 0x0
+/* 0B6354 800B9354 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6358 800B9358 900D8E3C */  stw       r0, D_8018BDBC@sda21(r0)
+/* 0B635C 800B935C 900D8E38 */  stw       r0, D_8018BDB8@sda21(r0)
+/* 0B6360 800B9360 8183002C */  lwz       r12, 0x2c(r3)
+/* 0B6364 800B9364 280C0000 */  cmplwi    r12, 0x0
+/* 0B6368 800B9368 418202C4 */  beq       lbl_800B962C
+/* 0B636C 800B936C 7D8803A6 */  mtlr      r12
+/* 0B6370 800B9370 4E800021 */  blrl
+/* 0B6374 800B9374 480002B8 */  b         lbl_800B962C
+lbl_800B9378:
+/* 0B6378 800B9378 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B637C 800B937C 38630001 */  addi      r3, r3, 0x1
+/* 0B6380 800B9380 4BFFFD15 */  bl        DSPSendMailToDSP
+lbl_800B9384:
+/* 0B6384 800B9384 4BFFFCD9 */  bl        DSPCheckMailToDSP
+/* 0B6388 800B9388 28030000 */  cmplwi    r3, 0x0
+/* 0B638C 800B938C 4082FFF8 */  bne       lbl_800B9384
+/* 0B6390 800B9390 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6394 800B9394 808D8E3C */  lwz       r4, D_8018BDBC@sda21(r0)
+/* 0B6398 800B9398 480002B9 */  bl        __DSP_exec_task
+/* 0B639C 800B939C 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B63A0 800B93A0 38800002 */  li        r4, 0x2
+/* 0B63A4 800B93A4 38000000 */  li        r0, 0x0
+/* 0B63A8 800B93A8 90830000 */  stw       r4, 0x0(r3)
+/* 0B63AC 800B93AC 806D8E3C */  lwz       r3, D_8018BDBC@sda21(r0)
+/* 0B63B0 800B93B0 900D8E38 */  stw       r0, D_8018BDB8@sda21(r0)
+/* 0B63B4 800B93B4 906D8E4C */  stw       r3, D_8018BDCC@sda21(r0)
+/* 0B63B8 800B93B8 900D8E3C */  stw       r0, D_8018BDBC@sda21(r0)
+/* 0B63BC 800B93BC 48000270 */  b         lbl_800B962C
+lbl_800B93C0:
+/* 0B63C0 800B93C0 80050038 */  lwz       r0, 0x38(r5)
+/* 0B63C4 800B93C4 28000000 */  cmplwi    r0, 0x0
+/* 0B63C8 800B93C8 40820080 */  bne       lbl_800B9448
+/* 0B63CC 800B93CC 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B63D0 800B93D0 7C050040 */  cmplw     r5, r0
+/* 0B63D4 800B93D4 40820038 */  bne       lbl_800B940C
+/* 0B63D8 800B93D8 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B63DC 800B93DC 38630003 */  addi      r3, r3, 0x3
+/* 0B63E0 800B93E0 4BFFFCB5 */  bl        DSPSendMailToDSP
+lbl_800B93E4:
+/* 0B63E4 800B93E4 4BFFFC79 */  bl        DSPCheckMailToDSP
+/* 0B63E8 800B93E8 28030000 */  cmplwi    r3, 0x0
+/* 0B63EC 800B93EC 4082FFF8 */  bne       lbl_800B93E4
+/* 0B63F0 800B93F0 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B63F4 800B93F4 8183002C */  lwz       r12, 0x2c(r3)
+/* 0B63F8 800B93F8 280C0000 */  cmplwi    r12, 0x0
+/* 0B63FC 800B93FC 41820230 */  beq       lbl_800B962C
+/* 0B6400 800B9400 7D8803A6 */  mtlr      r12
+/* 0B6404 800B9404 4E800021 */  blrl
+/* 0B6408 800B9408 48000224 */  b         lbl_800B962C
+lbl_800B940C:
+/* 0B640C 800B940C 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B6410 800B9410 38630001 */  addi      r3, r3, 0x1
+/* 0B6414 800B9414 4BFFFC81 */  bl        DSPSendMailToDSP
+lbl_800B9418:
+/* 0B6418 800B9418 4BFFFC45 */  bl        DSPCheckMailToDSP
+/* 0B641C 800B941C 28030000 */  cmplwi    r3, 0x0
+/* 0B6420 800B9420 4082FFF8 */  bne       lbl_800B9418
+/* 0B6424 800B9424 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6428 800B9428 808D8E48 */  lwz       r4, D_8018BDC8@sda21(r0)
+/* 0B642C 800B942C 48000225 */  bl        __DSP_exec_task
+/* 0B6430 800B9430 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6434 800B9434 38000002 */  li        r0, 0x2
+/* 0B6438 800B9438 90030000 */  stw       r0, 0x0(r3)
+/* 0B643C 800B943C 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B6440 800B9440 900D8E4C */  stw       r0, D_8018BDCC@sda21(r0)
+/* 0B6444 800B9444 480001E8 */  b         lbl_800B962C
+lbl_800B9448:
+/* 0B6448 800B9448 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B644C 800B944C 38630001 */  addi      r3, r3, 0x1
+/* 0B6450 800B9450 4BFFFC45 */  bl        DSPSendMailToDSP
+lbl_800B9454:
+/* 0B6454 800B9454 4BFFFC09 */  bl        DSPCheckMailToDSP
+/* 0B6458 800B9458 28030000 */  cmplwi    r3, 0x0
+/* 0B645C 800B945C 4082FFF8 */  bne       lbl_800B9454
+/* 0B6460 800B9460 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6464 800B9464 80830038 */  lwz       r4, 0x38(r3)
+/* 0B6468 800B9468 480001E9 */  bl        __DSP_exec_task
+/* 0B646C 800B946C 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6470 800B9470 38000002 */  li        r0, 0x2
+/* 0B6474 800B9474 90030000 */  stw       r0, 0x0(r3)
+/* 0B6478 800B9478 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B647C 800B947C 80030038 */  lwz       r0, 0x38(r3)
+/* 0B6480 800B9480 900D8E4C */  stw       r0, D_8018BDCC@sda21(r0)
+/* 0B6484 800B9484 480001A8 */  b         lbl_800B962C
+lbl_800B9488:
+/* 0B6488 800B9488 800D8E38 */  lwz       r0, D_8018BDB8@sda21(r0)
+/* 0B648C 800B948C 2C000000 */  cmpwi     r0, 0x0
+/* 0B6490 800B9490 41820060 */  beq       lbl_800B94F0
+/* 0B6494 800B9494 81850030 */  lwz       r12, 0x30(r5)
+/* 0B6498 800B9498 280C0000 */  cmplwi    r12, 0x0
+/* 0B649C 800B949C 41820010 */  beq       lbl_800B94AC
+/* 0B64A0 800B94A0 7D8803A6 */  mtlr      r12
+/* 0B64A4 800B94A4 38650000 */  addi      r3, r5, 0x0
+/* 0B64A8 800B94A8 4E800021 */  blrl
+lbl_800B94AC:
+/* 0B64AC 800B94AC 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B64B0 800B94B0 38630001 */  addi      r3, r3, 0x1
+/* 0B64B4 800B94B4 4BFFFBE1 */  bl        DSPSendMailToDSP
+lbl_800B94B8:
+/* 0B64B8 800B94B8 4BFFFBA5 */  bl        DSPCheckMailToDSP
+/* 0B64BC 800B94BC 28030000 */  cmplwi    r3, 0x0
+/* 0B64C0 800B94C0 4082FFF8 */  bne       lbl_800B94B8
+/* 0B64C4 800B94C4 38600000 */  li        r3, 0x0
+/* 0B64C8 800B94C8 808D8E3C */  lwz       r4, D_8018BDBC@sda21(r0)
+/* 0B64CC 800B94CC 48000185 */  bl        __DSP_exec_task
+/* 0B64D0 800B94D0 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B64D4 800B94D4 48000549 */  bl        __DSP_remove_task
+/* 0B64D8 800B94D8 806D8E3C */  lwz       r3, D_8018BDBC@sda21(r0)
+/* 0B64DC 800B94DC 38000000 */  li        r0, 0x0
+/* 0B64E0 800B94E0 900D8E38 */  stw       r0, D_8018BDB8@sda21(r0)
+/* 0B64E4 800B94E4 906D8E4C */  stw       r3, D_8018BDCC@sda21(r0)
+/* 0B64E8 800B94E8 900D8E3C */  stw       r0, D_8018BDBC@sda21(r0)
+/* 0B64EC 800B94EC 48000140 */  b         lbl_800B962C
+lbl_800B94F0:
+/* 0B64F0 800B94F0 80050038 */  lwz       r0, 0x38(r5)
+/* 0B64F4 800B94F4 28000000 */  cmplwi    r0, 0x0
+/* 0B64F8 800B94F8 408200B4 */  bne       lbl_800B95AC
+/* 0B64FC 800B94FC 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B6500 800B9500 7C050040 */  cmplw     r5, r0
+/* 0B6504 800B9504 4082004C */  bne       lbl_800B9550
+/* 0B6508 800B9508 81850030 */  lwz       r12, 0x30(r5)
+/* 0B650C 800B950C 280C0000 */  cmplwi    r12, 0x0
+/* 0B6510 800B9510 41820010 */  beq       lbl_800B9520
+/* 0B6514 800B9514 7D8803A6 */  mtlr      r12
+/* 0B6518 800B9518 38650000 */  addi      r3, r5, 0x0
+/* 0B651C 800B951C 4E800021 */  blrl
+lbl_800B9520:
+/* 0B6520 800B9520 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B6524 800B9524 38630002 */  addi      r3, r3, 0x2
+/* 0B6528 800B9528 4BFFFB6D */  bl        DSPSendMailToDSP
+lbl_800B952C:
+/* 0B652C 800B952C 4BFFFB31 */  bl        DSPCheckMailToDSP
+/* 0B6530 800B9530 28030000 */  cmplwi    r3, 0x0
+/* 0B6534 800B9534 4082FFF8 */  bne       lbl_800B952C
+/* 0B6538 800B9538 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B653C 800B953C 38000003 */  li        r0, 0x3
+/* 0B6540 800B9540 90030000 */  stw       r0, 0x0(r3)
+/* 0B6544 800B9544 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6548 800B9548 480004D5 */  bl        __DSP_remove_task
+/* 0B654C 800B954C 480000E0 */  b         lbl_800B962C
+lbl_800B9550:
+/* 0B6550 800B9550 81850030 */  lwz       r12, 0x30(r5)
+/* 0B6554 800B9554 280C0000 */  cmplwi    r12, 0x0
+/* 0B6558 800B9558 41820010 */  beq       lbl_800B9568
+/* 0B655C 800B955C 7D8803A6 */  mtlr      r12
+/* 0B6560 800B9560 38650000 */  addi      r3, r5, 0x0
+/* 0B6564 800B9564 4E800021 */  blrl
+lbl_800B9568:
+/* 0B6568 800B9568 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B656C 800B956C 38630001 */  addi      r3, r3, 0x1
+/* 0B6570 800B9570 4BFFFB25 */  bl        DSPSendMailToDSP
+lbl_800B9574:
+/* 0B6574 800B9574 4BFFFAE9 */  bl        DSPCheckMailToDSP
+/* 0B6578 800B9578 28030000 */  cmplwi    r3, 0x0
+/* 0B657C 800B957C 4082FFF8 */  bne       lbl_800B9574
+/* 0B6580 800B9580 808D8E4C */  lwz       r4, D_8018BDCC@sda21(r0)
+/* 0B6584 800B9584 38000003 */  li        r0, 0x3
+/* 0B6588 800B9588 38600000 */  li        r3, 0x0
+/* 0B658C 800B958C 90040000 */  stw       r0, 0x0(r4)
+/* 0B6590 800B9590 808D8E48 */  lwz       r4, D_8018BDC8@sda21(r0)
+/* 0B6594 800B9594 480000BD */  bl        __DSP_exec_task
+/* 0B6598 800B9598 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B659C 800B959C 806D8E44 */  lwz       r3, D_8018BDC4@sda21(r0)
+/* 0B65A0 800B95A0 900D8E4C */  stw       r0, D_8018BDCC@sda21(r0)
+/* 0B65A4 800B95A4 48000479 */  bl        __DSP_remove_task
+/* 0B65A8 800B95A8 48000084 */  b         lbl_800B962C
+lbl_800B95AC:
+/* 0B65AC 800B95AC 81850030 */  lwz       r12, 0x30(r5)
+/* 0B65B0 800B95B0 280C0000 */  cmplwi    r12, 0x0
+/* 0B65B4 800B95B4 41820010 */  beq       lbl_800B95C4
+/* 0B65B8 800B95B8 7D8803A6 */  mtlr      r12
+/* 0B65BC 800B95BC 38650000 */  addi      r3, r5, 0x0
+/* 0B65C0 800B95C0 4E800021 */  blrl
+lbl_800B95C4:
+/* 0B65C4 800B95C4 3C60CDD1 */  lis       r3, 0xcdd1
+/* 0B65C8 800B95C8 38630001 */  addi      r3, r3, 0x1
+/* 0B65CC 800B95CC 4BFFFAC9 */  bl        DSPSendMailToDSP
+lbl_800B95D0:
+/* 0B65D0 800B95D0 4BFFFA8D */  bl        DSPCheckMailToDSP
+/* 0B65D4 800B95D4 28030000 */  cmplwi    r3, 0x0
+/* 0B65D8 800B95D8 4082FFF8 */  bne       lbl_800B95D0
+/* 0B65DC 800B95DC 808D8E4C */  lwz       r4, D_8018BDCC@sda21(r0)
+/* 0B65E0 800B95E0 38000003 */  li        r0, 0x3
+/* 0B65E4 800B95E4 38600000 */  li        r3, 0x0
+/* 0B65E8 800B95E8 90040000 */  stw       r0, 0x0(r4)
+/* 0B65EC 800B95EC 808D8E4C */  lwz       r4, D_8018BDCC@sda21(r0)
+/* 0B65F0 800B95F0 80840038 */  lwz       r4, 0x38(r4)
+/* 0B65F4 800B95F4 4800005D */  bl        __DSP_exec_task
+/* 0B65F8 800B95F8 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B65FC 800B95FC 80030038 */  lwz       r0, 0x38(r3)
+/* 0B6600 800B9600 900D8E4C */  stw       r0, D_8018BDCC@sda21(r0)
+/* 0B6604 800B9604 806D8E4C */  lwz       r3, D_8018BDCC@sda21(r0)
+/* 0B6608 800B9608 8063003C */  lwz       r3, 0x3c(r3)
+/* 0B660C 800B960C 48000411 */  bl        __DSP_remove_task
+/* 0B6610 800B9610 4800001C */  b         lbl_800B962C
+lbl_800B9614:
+/* 0B6614 800B9614 81850034 */  lwz       r12, 0x34(r5)
+/* 0B6618 800B9618 280C0000 */  cmplwi    r12, 0x0
+/* 0B661C 800B961C 41820010 */  beq       lbl_800B962C
+/* 0B6620 800B9620 7D8803A6 */  mtlr      r12
+/* 0B6624 800B9624 38650000 */  addi      r3, r5, 0x0
+/* 0B6628 800B9628 4E800021 */  blrl
+lbl_800B962C:
+/* 0B662C 800B962C 38610010 */  addi      r3, r1, 0x10
+/* 0B6630 800B9630 4BFE40C1 */  bl        OSClearContext
+/* 0B6634 800B9634 7FE3FB78 */  mr        r3, r31
+/* 0B6638 800B9638 4BFE3EF1 */  bl        OSSetCurrentContext
+/* 0B663C 800B963C 800102EC */  lwz       r0, 0x2ec(r1)
+/* 0B6640 800B9640 83E102E4 */  lwz       r31, 0x2e4(r1)
+/* 0B6644 800B9644 382102E8 */  addi      r1, r1, 0x2e8
+/* 0B6648 800B9648 7C0803A6 */  mtlr      r0
+/* 0B664C 800B964C 4E800020 */  blr
+
+glabel __DSP_exec_task
+/* 0B6650 800B9650 7C0802A6 */  mflr      r0
+/* 0B6654 800B9654 90010004 */  stw       r0, 0x4(r1)
+/* 0B6658 800B9658 9421FFE8 */  stwu      r1, -0x18(r1)
+/* 0B665C 800B965C 93E10014 */  stw       r31, 0x14(r1)
+/* 0B6660 800B9660 3BE40000 */  addi      r31, r4, 0x0
+/* 0B6664 800B9664 93C10010 */  stw       r30, 0x10(r1)
+/* 0B6668 800B9668 7C7E1B79 */  mr.       r30, r3
+/* 0B666C 800B966C 41820044 */  beq       lbl_800B96B0
+/* 0B6670 800B9670 807E0018 */  lwz       r3, 0x18(r30)
+/* 0B6674 800B9674 4BFFFA21 */  bl        DSPSendMailToDSP
+lbl_800B9678:
+/* 0B6678 800B9678 4BFFF9E5 */  bl        DSPCheckMailToDSP
+/* 0B667C 800B967C 28030000 */  cmplwi    r3, 0x0
+/* 0B6680 800B9680 4082FFF8 */  bne       lbl_800B9678
+/* 0B6684 800B9684 807E001C */  lwz       r3, 0x1c(r30)
+/* 0B6688 800B9688 4BFFFA0D */  bl        DSPSendMailToDSP
+lbl_800B968C:
+/* 0B668C 800B968C 4BFFF9D1 */  bl        DSPCheckMailToDSP
+/* 0B6690 800B9690 28030000 */  cmplwi    r3, 0x0
+/* 0B6694 800B9694 4082FFF8 */  bne       lbl_800B968C
+/* 0B6698 800B9698 807E0020 */  lwz       r3, 0x20(r30)
+/* 0B669C 800B969C 4BFFF9F9 */  bl        DSPSendMailToDSP
+lbl_800B96A0:
+/* 0B66A0 800B96A0 4BFFF9BD */  bl        DSPCheckMailToDSP
+/* 0B66A4 800B96A4 28030000 */  cmplwi    r3, 0x0
+/* 0B66A8 800B96A8 4082FFF8 */  bne       lbl_800B96A0
+/* 0B66AC 800B96AC 48000040 */  b         lbl_800B96EC
+lbl_800B96B0:
+/* 0B66B0 800B96B0 38600000 */  li        r3, 0x0
+/* 0B66B4 800B96B4 4BFFF9E1 */  bl        DSPSendMailToDSP
+lbl_800B96B8:
+/* 0B66B8 800B96B8 4BFFF9A5 */  bl        DSPCheckMailToDSP
+/* 0B66BC 800B96BC 28030000 */  cmplwi    r3, 0x0
+/* 0B66C0 800B96C0 4082FFF8 */  bne       lbl_800B96B8
+/* 0B66C4 800B96C4 38600000 */  li        r3, 0x0
+/* 0B66C8 800B96C8 4BFFF9CD */  bl        DSPSendMailToDSP
+lbl_800B96CC:
+/* 0B66CC 800B96CC 4BFFF991 */  bl        DSPCheckMailToDSP
+/* 0B66D0 800B96D0 28030000 */  cmplwi    r3, 0x0
+/* 0B66D4 800B96D4 4082FFF8 */  bne       lbl_800B96CC
+/* 0B66D8 800B96D8 38600000 */  li        r3, 0x0
+/* 0B66DC 800B96DC 4BFFF9B9 */  bl        DSPSendMailToDSP
+lbl_800B96E0:
+/* 0B66E0 800B96E0 4BFFF97D */  bl        DSPCheckMailToDSP
+/* 0B66E4 800B96E4 28030000 */  cmplwi    r3, 0x0
+/* 0B66E8 800B96E8 4082FFF8 */  bne       lbl_800B96E0
+lbl_800B96EC:
+/* 0B66EC 800B96EC 807F000C */  lwz       r3, 0xc(r31)
+/* 0B66F0 800B96F0 4BFFF9A5 */  bl        DSPSendMailToDSP
+lbl_800B96F4:
+/* 0B66F4 800B96F4 4BFFF969 */  bl        DSPCheckMailToDSP
+/* 0B66F8 800B96F8 28030000 */  cmplwi    r3, 0x0
+/* 0B66FC 800B96FC 4082FFF8 */  bne       lbl_800B96F4
+/* 0B6700 800B9700 807F0010 */  lwz       r3, 0x10(r31)
+/* 0B6704 800B9704 4BFFF991 */  bl        DSPSendMailToDSP
+lbl_800B9708:
+/* 0B6708 800B9708 4BFFF955 */  bl        DSPCheckMailToDSP
+/* 0B670C 800B970C 28030000 */  cmplwi    r3, 0x0
+/* 0B6710 800B9710 4082FFF8 */  bne       lbl_800B9708
+/* 0B6714 800B9714 807F0014 */  lwz       r3, 0x14(r31)
+/* 0B6718 800B9718 4BFFF97D */  bl        DSPSendMailToDSP
+lbl_800B971C:
+/* 0B671C 800B971C 4BFFF941 */  bl        DSPCheckMailToDSP
+/* 0B6720 800B9720 28030000 */  cmplwi    r3, 0x0
+/* 0B6724 800B9724 4082FFF8 */  bne       lbl_800B971C
+/* 0B6728 800B9728 801F0000 */  lwz       r0, 0x0(r31)
+/* 0B672C 800B972C 28000000 */  cmplwi    r0, 0x0
+/* 0B6730 800B9730 40820058 */  bne       lbl_800B9788
+/* 0B6734 800B9734 A07F0024 */  lhz       r3, 0x24(r31)
+/* 0B6738 800B9738 4BFFF95D */  bl        DSPSendMailToDSP
+lbl_800B973C:
+/* 0B673C 800B973C 4BFFF921 */  bl        DSPCheckMailToDSP
+/* 0B6740 800B9740 28030000 */  cmplwi    r3, 0x0
+/* 0B6744 800B9744 4082FFF8 */  bne       lbl_800B973C
+/* 0B6748 800B9748 38600000 */  li        r3, 0x0
+/* 0B674C 800B974C 4BFFF949 */  bl        DSPSendMailToDSP
+lbl_800B9750:
+/* 0B6750 800B9750 4BFFF90D */  bl        DSPCheckMailToDSP
+/* 0B6754 800B9754 28030000 */  cmplwi    r3, 0x0
+/* 0B6758 800B9758 4082FFF8 */  bne       lbl_800B9750
+/* 0B675C 800B975C 38600000 */  li        r3, 0x0
+/* 0B6760 800B9760 4BFFF935 */  bl        DSPSendMailToDSP
+lbl_800B9764:
+/* 0B6764 800B9764 4BFFF8F9 */  bl        DSPCheckMailToDSP
+/* 0B6768 800B9768 28030000 */  cmplwi    r3, 0x0
+/* 0B676C 800B976C 4082FFF8 */  bne       lbl_800B9764
+/* 0B6770 800B9770 38600000 */  li        r3, 0x0
+/* 0B6774 800B9774 4BFFF921 */  bl        DSPSendMailToDSP
+lbl_800B9778:
+/* 0B6778 800B9778 4BFFF8E5 */  bl        DSPCheckMailToDSP
+/* 0B677C 800B977C 28030000 */  cmplwi    r3, 0x0
+/* 0B6780 800B9780 4082FFF8 */  bne       lbl_800B9778
+/* 0B6784 800B9784 48000054 */  b         lbl_800B97D8
+lbl_800B9788:
+/* 0B6788 800B9788 A07F0026 */  lhz       r3, 0x26(r31)
+/* 0B678C 800B978C 4BFFF909 */  bl        DSPSendMailToDSP
+lbl_800B9790:
+/* 0B6790 800B9790 4BFFF8CD */  bl        DSPCheckMailToDSP
+/* 0B6794 800B9794 28030000 */  cmplwi    r3, 0x0
+/* 0B6798 800B9798 4082FFF8 */  bne       lbl_800B9790
+/* 0B679C 800B979C 807F0018 */  lwz       r3, 0x18(r31)
+/* 0B67A0 800B97A0 4BFFF8F5 */  bl        DSPSendMailToDSP
+lbl_800B97A4:
+/* 0B67A4 800B97A4 4BFFF8B9 */  bl        DSPCheckMailToDSP
+/* 0B67A8 800B97A8 28030000 */  cmplwi    r3, 0x0
+/* 0B67AC 800B97AC 4082FFF8 */  bne       lbl_800B97A4
+/* 0B67B0 800B97B0 807F001C */  lwz       r3, 0x1c(r31)
+/* 0B67B4 800B97B4 4BFFF8E1 */  bl        DSPSendMailToDSP
+lbl_800B97B8:
+/* 0B67B8 800B97B8 4BFFF8A5 */  bl        DSPCheckMailToDSP
+/* 0B67BC 800B97BC 28030000 */  cmplwi    r3, 0x0
+/* 0B67C0 800B97C0 4082FFF8 */  bne       lbl_800B97B8
+/* 0B67C4 800B97C4 807F0020 */  lwz       r3, 0x20(r31)
+/* 0B67C8 800B97C8 4BFFF8CD */  bl        DSPSendMailToDSP
+lbl_800B97CC:
+/* 0B67CC 800B97CC 4BFFF891 */  bl        DSPCheckMailToDSP
+/* 0B67D0 800B97D0 28030000 */  cmplwi    r3, 0x0
+/* 0B67D4 800B97D4 4082FFF8 */  bne       lbl_800B97CC
+lbl_800B97D8:
+/* 0B67D8 800B97D8 8001001C */  lwz       r0, 0x1c(r1)
+/* 0B67DC 800B97DC 83E10014 */  lwz       r31, 0x14(r1)
+/* 0B67E0 800B97E0 83C10010 */  lwz       r30, 0x10(r1)
+/* 0B67E4 800B97E4 38210018 */  addi      r1, r1, 0x18
+/* 0B67E8 800B97E8 7C0803A6 */  mtlr      r0
+/* 0B67EC 800B97EC 4E800020 */  blr
+
+glabel __DSP_boot_task
+/* 0B67F0 800B97F0 7C0802A6 */  mflr      r0
+/* 0B67F4 800B97F4 3C80800F */  lis       r4, D_800F49F8@ha
+/* 0B67F8 800B97F8 90010004 */  stw       r0, 0x4(r1)
+/* 0B67FC 800B97FC 9421FFE8 */  stwu      r1, -0x18(r1)
+/* 0B6800 800B9800 93E10014 */  stw       r31, 0x14(r1)
+/* 0B6804 800B9804 3BE449F8 */  addi      r31, r4, D_800F49F8@l
+/* 0B6808 800B9808 93C10010 */  stw       r30, 0x10(r1)
+/* 0B680C 800B980C 3BC30000 */  addi      r30, r3, 0x0
+lbl_800B9810:
+/* 0B6810 800B9810 4BFFF85D */  bl        DSPCheckMailFromDSP
+/* 0B6814 800B9814 28030000 */  cmplwi    r3, 0x0
+/* 0B6818 800B9818 4182FFF8 */  beq       lbl_800B9810
+/* 0B681C 800B981C 4BFFF861 */  bl        DSPReadMailFromDSP
+/* 0B6820 800B9820 9061000C */  stw       r3, 0xc(r1)
+/* 0B6824 800B9824 3C6080F4 */  lis       r3, 0x80f4
+/* 0B6828 800B9828 3863A001 */  subi      r3, r3, 0x5fff
+/* 0B682C 800B982C 4BFFF869 */  bl        DSPSendMailToDSP
+lbl_800B9830:
+/* 0B6830 800B9830 4BFFF82D */  bl        DSPCheckMailToDSP
+/* 0B6834 800B9834 28030000 */  cmplwi    r3, 0x0
+/* 0B6838 800B9838 4082FFF8 */  bne       lbl_800B9830
+/* 0B683C 800B983C 807E000C */  lwz       r3, 0xc(r30)
+/* 0B6840 800B9840 4BFFF855 */  bl        DSPSendMailToDSP
+lbl_800B9844:
+/* 0B6844 800B9844 4BFFF819 */  bl        DSPCheckMailToDSP
+/* 0B6848 800B9848 28030000 */  cmplwi    r3, 0x0
+/* 0B684C 800B984C 4082FFF8 */  bne       lbl_800B9844
+/* 0B6850 800B9850 3C6080F4 */  lis       r3, 0x80f4
+/* 0B6854 800B9854 3863C002 */  subi      r3, r3, 0x3ffe
+/* 0B6858 800B9858 4BFFF83D */  bl        DSPSendMailToDSP
+lbl_800B985C:
+/* 0B685C 800B985C 4BFFF801 */  bl        DSPCheckMailToDSP
+/* 0B6860 800B9860 28030000 */  cmplwi    r3, 0x0
+/* 0B6864 800B9864 4082FFF8 */  bne       lbl_800B985C
+/* 0B6868 800B9868 801E0014 */  lwz       r0, 0x14(r30)
+/* 0B686C 800B986C 5403043E */  clrlwi    r3, r0, 16
+/* 0B6870 800B9870 4BFFF825 */  bl        DSPSendMailToDSP
+lbl_800B9874:
+/* 0B6874 800B9874 4BFFF7E9 */  bl        DSPCheckMailToDSP
+/* 0B6878 800B9878 28030000 */  cmplwi    r3, 0x0
+/* 0B687C 800B987C 4082FFF8 */  bne       lbl_800B9874
+/* 0B6880 800B9880 3C6080F4 */  lis       r3, 0x80f4
+/* 0B6884 800B9884 3863A002 */  subi      r3, r3, 0x5ffe
+/* 0B6888 800B9888 4BFFF80D */  bl        DSPSendMailToDSP
+lbl_800B988C:
+/* 0B688C 800B988C 4BFFF7D1 */  bl        DSPCheckMailToDSP
+/* 0B6890 800B9890 28030000 */  cmplwi    r3, 0x0
+/* 0B6894 800B9894 4082FFF8 */  bne       lbl_800B988C
+/* 0B6898 800B9898 807E0010 */  lwz       r3, 0x10(r30)
+/* 0B689C 800B989C 4BFFF7F9 */  bl        DSPSendMailToDSP
+lbl_800B98A0:
+/* 0B68A0 800B98A0 4BFFF7BD */  bl        DSPCheckMailToDSP
+/* 0B68A4 800B98A4 28030000 */  cmplwi    r3, 0x0
+/* 0B68A8 800B98A8 4082FFF8 */  bne       lbl_800B98A0
+/* 0B68AC 800B98AC 3C6080F4 */  lis       r3, 0x80f4
+/* 0B68B0 800B98B0 3863B002 */  subi      r3, r3, 0x4ffe
+/* 0B68B4 800B98B4 4BFFF7E1 */  bl        DSPSendMailToDSP
+lbl_800B98B8:
+/* 0B68B8 800B98B8 4BFFF7A5 */  bl        DSPCheckMailToDSP
+/* 0B68BC 800B98BC 28030000 */  cmplwi    r3, 0x0
+/* 0B68C0 800B98C0 4082FFF8 */  bne       lbl_800B98B8
+/* 0B68C4 800B98C4 38600000 */  li        r3, 0x0
+/* 0B68C8 800B98C8 4BFFF7CD */  bl        DSPSendMailToDSP
+lbl_800B98CC:
+/* 0B68CC 800B98CC 4BFFF791 */  bl        DSPCheckMailToDSP
+/* 0B68D0 800B98D0 28030000 */  cmplwi    r3, 0x0
+/* 0B68D4 800B98D4 4082FFF8 */  bne       lbl_800B98CC
+/* 0B68D8 800B98D8 3C6080F4 */  lis       r3, 0x80f4
+/* 0B68DC 800B98DC 3863D001 */  subi      r3, r3, 0x2fff
+/* 0B68E0 800B98E0 4BFFF7B5 */  bl        DSPSendMailToDSP
+lbl_800B98E4:
+/* 0B68E4 800B98E4 4BFFF779 */  bl        DSPCheckMailToDSP
+/* 0B68E8 800B98E8 28030000 */  cmplwi    r3, 0x0
+/* 0B68EC 800B98EC 4082FFF8 */  bne       lbl_800B98E4
+/* 0B68F0 800B98F0 A07E0024 */  lhz       r3, 0x24(r30)
+/* 0B68F4 800B98F4 4BFFF7A1 */  bl        DSPSendMailToDSP
+lbl_800B98F8:
+/* 0B68F8 800B98F8 4BFFF765 */  bl        DSPCheckMailToDSP
+/* 0B68FC 800B98FC 28030000 */  cmplwi    r3, 0x0
+/* 0B6900 800B9900 4082FFF8 */  bne       lbl_800B98F8
+/* 0B6904 800B9904 387F0000 */  addi      r3, r31, 0x0
+/* 0B6908 800B9908 4CC63182 */  crclr     cr1eq
+/* 0B690C 800B990C 389E0000 */  addi      r4, r30, 0x0
+/* 0B6910 800B9910 4BFFF8CD */  bl        __DSP_debug_printf
+/* 0B6914 800B9914 809E000C */  lwz       r4, 0xc(r30)
+/* 0B6918 800B9918 387F0020 */  addi      r3, r31, 0x20
+/* 0B691C 800B991C 4CC63182 */  crclr     cr1eq
+/* 0B6920 800B9920 4BFFF8BD */  bl        __DSP_debug_printf
+/* 0B6924 800B9924 809E0014 */  lwz       r4, 0x14(r30)
+/* 0B6928 800B9928 387F0050 */  addi      r3, r31, 0x50
+/* 0B692C 800B992C 4CC63182 */  crclr     cr1eq
+/* 0B6930 800B9930 4BFFF8AD */  bl        __DSP_debug_printf
+/* 0B6934 800B9934 809E0010 */  lwz       r4, 0x10(r30)
+/* 0B6938 800B9938 387F0080 */  addi      r3, r31, 0x80
+/* 0B693C 800B993C 4CC63182 */  crclr     cr1eq
+/* 0B6940 800B9940 4BFFF89D */  bl        __DSP_debug_printf
+/* 0B6944 800B9944 809E001C */  lwz       r4, 0x1c(r30)
+/* 0B6948 800B9948 387F00B0 */  addi      r3, r31, 0xb0
+/* 0B694C 800B994C 4CC63182 */  crclr     cr1eq
+/* 0B6950 800B9950 4BFFF88D */  bl        __DSP_debug_printf
+/* 0B6954 800B9954 A09E0024 */  lhz       r4, 0x24(r30)
+/* 0B6958 800B9958 387F00E0 */  addi      r3, r31, 0xe0
+/* 0B695C 800B995C 4CC63182 */  crclr     cr1eq
+/* 0B6960 800B9960 4BFFF87D */  bl        __DSP_debug_printf
+/* 0B6964 800B9964 8001001C */  lwz       r0, 0x1c(r1)
+/* 0B6968 800B9968 83E10014 */  lwz       r31, 0x14(r1)
+/* 0B696C 800B996C 83C10010 */  lwz       r30, 0x10(r1)
+/* 0B6970 800B9970 38210018 */  addi      r1, r1, 0x18
+/* 0B6974 800B9974 7C0803A6 */  mtlr      r0
+/* 0B6978 800B9978 4E800020 */  blr
+
+glabel __DSP_insert_task
+/* 0B697C 800B997C 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B6980 800B9980 28000000 */  cmplwi    r0, 0x0
+/* 0B6984 800B9984 40820020 */  bne       lbl_800B99A4
+/* 0B6988 800B9988 906D8E4C */  stw       r3, D_8018BDCC@sda21(r0)
+/* 0B698C 800B998C 38000000 */  li        r0, 0x0
+/* 0B6990 800B9990 906D8E44 */  stw       r3, D_8018BDC4@sda21(r0)
+/* 0B6994 800B9994 906D8E48 */  stw       r3, D_8018BDC8@sda21(r0)
+/* 0B6998 800B9998 9003003C */  stw       r0, 0x3c(r3)
+/* 0B699C 800B999C 90030038 */  stw       r0, 0x38(r3)
+/* 0B69A0 800B99A0 4E800020 */  blr
+lbl_800B99A4:
+/* 0B69A4 800B99A4 7C050378 */  mr        r5, r0
+/* 0B69A8 800B99A8 48000044 */  b         lbl_800B99EC
+lbl_800B99AC:
+/* 0B69AC 800B99AC 80830004 */  lwz       r4, 0x4(r3)
+/* 0B69B0 800B99B0 80050004 */  lwz       r0, 0x4(r5)
+/* 0B69B4 800B99B4 7C040040 */  cmplw     r4, r0
+/* 0B69B8 800B99B8 40800030 */  bge       lbl_800B99E8
+/* 0B69BC 800B99BC 8005003C */  lwz       r0, 0x3c(r5)
+/* 0B69C0 800B99C0 9003003C */  stw       r0, 0x3c(r3)
+/* 0B69C4 800B99C4 9065003C */  stw       r3, 0x3c(r5)
+/* 0B69C8 800B99C8 90A30038 */  stw       r5, 0x38(r3)
+/* 0B69CC 800B99CC 8083003C */  lwz       r4, 0x3c(r3)
+/* 0B69D0 800B99D0 28040000 */  cmplwi    r4, 0x0
+/* 0B69D4 800B99D4 4082000C */  bne       lbl_800B99E0
+/* 0B69D8 800B99D8 906D8E48 */  stw       r3, D_8018BDC8@sda21(r0)
+/* 0B69DC 800B99DC 48000018 */  b         lbl_800B99F4
+lbl_800B99E0:
+/* 0B69E0 800B99E0 90640038 */  stw       r3, 0x38(r4)
+/* 0B69E4 800B99E4 48000010 */  b         lbl_800B99F4
+lbl_800B99E8:
+/* 0B69E8 800B99E8 80A50038 */  lwz       r5, 0x38(r5)
+lbl_800B99EC:
+/* 0B69EC 800B99EC 28050000 */  cmplwi    r5, 0x0
+/* 0B69F0 800B99F0 4082FFBC */  bne       lbl_800B99AC
+lbl_800B99F4:
+/* 0B69F4 800B99F4 28050000 */  cmplwi    r5, 0x0
+/* 0B69F8 800B99F8 4C820020 */  bnelr
+/* 0B69FC 800B99FC 808D8E44 */  lwz       r4, D_8018BDC4@sda21(r0)
+/* 0B6A00 800B9A00 38000000 */  li        r0, 0x0
+/* 0B6A04 800B9A04 90640038 */  stw       r3, 0x38(r4)
+/* 0B6A08 800B9A08 90030038 */  stw       r0, 0x38(r3)
+/* 0B6A0C 800B9A0C 800D8E44 */  lwz       r0, D_8018BDC4@sda21(r0)
+/* 0B6A10 800B9A10 9003003C */  stw       r0, 0x3c(r3)
+/* 0B6A14 800B9A14 906D8E44 */  stw       r3, D_8018BDC4@sda21(r0)
+/* 0B6A18 800B9A18 4E800020 */  blr
+
+glabel __DSP_remove_task
+/* 0B6A1C 800B9A1C 38800000 */  li        r4, 0x0
+/* 0B6A20 800B9A20 90830008 */  stw       r4, 0x8(r3)
+/* 0B6A24 800B9A24 38000003 */  li        r0, 0x3
+/* 0B6A28 800B9A28 90030000 */  stw       r0, 0x0(r3)
+/* 0B6A2C 800B9A2C 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B6A30 800B9A30 7C001840 */  cmplw     r0, r3
+/* 0B6A34 800B9A34 40820030 */  bne       lbl_800B9A64
+/* 0B6A38 800B9A38 80030038 */  lwz       r0, 0x38(r3)
+/* 0B6A3C 800B9A3C 28000000 */  cmplwi    r0, 0x0
+/* 0B6A40 800B9A40 41820014 */  beq       lbl_800B9A54
+/* 0B6A44 800B9A44 900D8E48 */  stw       r0, D_8018BDC8@sda21(r0)
+/* 0B6A48 800B9A48 80630038 */  lwz       r3, 0x38(r3)
+/* 0B6A4C 800B9A4C 9083003C */  stw       r4, 0x3c(r3)
+/* 0B6A50 800B9A50 4E800020 */  blr
+lbl_800B9A54:
+/* 0B6A54 800B9A54 908D8E4C */  stw       r4, D_8018BDCC@sda21(r0)
+/* 0B6A58 800B9A58 908D8E44 */  stw       r4, D_8018BDC4@sda21(r0)
+/* 0B6A5C 800B9A5C 908D8E48 */  stw       r4, D_8018BDC8@sda21(r0)
+/* 0B6A60 800B9A60 4E800020 */  blr
+lbl_800B9A64:
+/* 0B6A64 800B9A64 800D8E44 */  lwz       r0, D_8018BDC4@sda21(r0)
+/* 0B6A68 800B9A68 7C001840 */  cmplw     r0, r3
+/* 0B6A6C 800B9A6C 40820020 */  bne       lbl_800B9A8C
+/* 0B6A70 800B9A70 8003003C */  lwz       r0, 0x3c(r3)
+/* 0B6A74 800B9A74 900D8E44 */  stw       r0, D_8018BDC4@sda21(r0)
+/* 0B6A78 800B9A78 8063003C */  lwz       r3, 0x3c(r3)
+/* 0B6A7C 800B9A7C 90830038 */  stw       r4, 0x38(r3)
+/* 0B6A80 800B9A80 800D8E48 */  lwz       r0, D_8018BDC8@sda21(r0)
+/* 0B6A84 800B9A84 900D8E4C */  stw       r0, D_8018BDCC@sda21(r0)
+/* 0B6A88 800B9A88 4E800020 */  blr
+lbl_800B9A8C:
+/* 0B6A8C 800B9A8C 80030038 */  lwz       r0, 0x38(r3)
+/* 0B6A90 800B9A90 900D8E4C */  stw       r0, D_8018BDCC@sda21(r0)
+/* 0B6A94 800B9A94 80030038 */  lwz       r0, 0x38(r3)
+/* 0B6A98 800B9A98 8083003C */  lwz       r4, 0x3c(r3)
+/* 0B6A9C 800B9A9C 90040038 */  stw       r0, 0x38(r4)
+/* 0B6AA0 800B9AA0 8003003C */  lwz       r0, 0x3c(r3)
+/* 0B6AA4 800B9AA4 80630038 */  lwz       r3, 0x38(r3)
+/* 0B6AA8 800B9AA8 9003003C */  stw       r0, 0x3c(r3)
+/* 0B6AAC 800B9AAC 4E800020 */  blr
+
+# 0x800F49F8 - 0x800F4B38
+.section .data, "wa"
+
+.balign 8
+
+glabel D_800F49F8
+	.string "DSP is booting task: 0x%08X\n"
+
+glabel gap_05_800F4A15_data
+.hidden gap_05_800F4A15_data
+	.byte 0x00, 0x00, 0x00
+
+glabel D_800F4A18
+	.string "__DSP_boot_task()  : IRAM MMEM ADDR: 0x%08X\n"
+
+glabel gap_05_800F4A45_data
+.hidden gap_05_800F4A45_data
+	.byte 0x00, 0x00, 0x00
+
+glabel D_800F4A48
+	.string "__DSP_boot_task()  : IRAM DSP ADDR : 0x%08X\n"
+
+glabel gap_05_800F4A75_data
+.hidden gap_05_800F4A75_data
+	.byte 0x00, 0x00, 0x00
+
+glabel D_800F4A78
+	.string "__DSP_boot_task()  : IRAM LENGTH   : 0x%08X\n"
+
+glabel gap_05_800F4AA5_data
+.hidden gap_05_800F4AA5_data
+	.byte 0x00, 0x00, 0x00
+
+glabel D_800F4AA8
+	.string "__DSP_boot_task()  : DRAM MMEM ADDR: 0x%08X\n"
+
+glabel gap_05_800F4AD5_data
+.hidden gap_05_800F4AD5_data
+	.byte 0x00, 0x00, 0x00
+
+glabel D_800F4AD8
+	.string "__DSP_boot_task()  : Start Vector  : 0x%08X\n"
+
+glabel gap_05_800F4B05_data
+.hidden gap_05_800F4B05_data
+	.byte 0x00, 0x00, 0x00
+
+glabel D_800F4B08
+	.string "__DSP_add_task() : Added task    : 0x%08X\n"
+
+glabel gap_05_800F4B33_data
+.hidden gap_05_800F4B33_data
+	.long 0x00000000
+	.byte 0x00
+
+# 0x8018BDB8 - 0x8018BDD0
+.section .sbss, "wa"
+
+glabel D_8018BDB8
+	.skip 0x4
+
+glabel D_8018BDBC
+	.skip 0x4
+
+glabel D_8018BDC0
+	.skip 0x4
+
+glabel D_8018BDC4
+	.skip 0x4
+
+glabel D_8018BDC8
+	.skip 0x4
+
+glabel D_8018BDCC
+	.skip 0x4

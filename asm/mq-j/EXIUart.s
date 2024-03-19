@@ -1,0 +1,210 @@
+# EXIUart.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x800A3274 - 0x800A34EC
+
+glabel fn_800A3274
+/* 0A0274 800A3274 7C0802A6 */  mflr      r0
+/* 0A0278 800A3278 90010004 */  stw       r0, 0x4(r1)
+/* 0A027C 800A327C 9421FFF8 */  stwu      r1, -0x8(r1)
+/* 0A0280 800A3280 806D8B7C */  lwz       r3, D_8018BAFC@sda21(r0)
+/* 0A0284 800A3284 3C035A01 */  addis     r0, r3, 0x5a01
+/* 0A0288 800A3288 2800005A */  cmplwi    r0, 0x5a
+/* 0A028C 800A328C 4082000C */  bne       lbl_800A3298
+/* 0A0290 800A3290 38600000 */  li        r3, 0x0
+/* 0A0294 800A3294 48000040 */  b         lbl_800A32D4
+lbl_800A3298:
+/* 0A0298 800A3298 4BFF80D1 */  bl        OSGetConsoleType
+/* 0A029C 800A329C 546000C7 */  rlwinm.   r0, r3, 0, 3, 3
+/* 0A02A0 800A32A0 40820014 */  bne       lbl_800A32B4
+/* 0A02A4 800A32A4 38000000 */  li        r0, 0x0
+/* 0A02A8 800A32A8 900D8B78 */  stw       r0, D_8018BAF8@sda21(r0)
+/* 0A02AC 800A32AC 38600002 */  li        r3, 0x2
+/* 0A02B0 800A32B0 48000024 */  b         lbl_800A32D4
+lbl_800A32B4:
+/* 0A02B4 800A32B4 3C60A5FF */  lis       r3, 0xa5ff
+/* 0A02B8 800A32B8 3803005A */  addi      r0, r3, 0x5a
+/* 0A02BC 800A32BC 38600000 */  li        r3, 0x0
+/* 0A02C0 800A32C0 900D8B78 */  stw       r0, D_8018BAF8@sda21(r0)
+/* 0A02C4 800A32C4 38000001 */  li        r0, 0x1
+/* 0A02C8 800A32C8 906D8B70 */  stw       r3, D_8018BAF0@sda21(r0)
+/* 0A02CC 800A32CC 38600000 */  li        r3, 0x0
+/* 0A02D0 800A32D0 900D8B74 */  stw       r0, D_8018BAF4@sda21(r0)
+lbl_800A32D4:
+/* 0A02D4 800A32D4 8001000C */  lwz       r0, 0xc(r1)
+/* 0A02D8 800A32D8 38210008 */  addi      r1, r1, 0x8
+/* 0A02DC 800A32DC 7C0803A6 */  mtlr      r0
+/* 0A02E0 800A32E0 4E800020 */  blr
+
+glabel fn_800A32E4
+/* 0A02E4 800A32E4 38600004 */  li        r3, 0x4
+/* 0A02E8 800A32E8 4E800020 */  blr
+
+glabel fn_800A32EC
+/* 0A02EC 800A32EC 7C0802A6 */  mflr      r0
+/* 0A02F0 800A32F0 90010004 */  stw       r0, 0x4(r1)
+/* 0A02F4 800A32F4 9421FFD0 */  stwu      r1, -0x30(r1)
+/* 0A02F8 800A32F8 BF410018 */  stmw      r26, 0x18(r1)
+/* 0A02FC 800A32FC 3BC30000 */  addi      r30, r3, 0x0
+/* 0A0300 800A3300 3BE40000 */  addi      r31, r4, 0x0
+/* 0A0304 800A3304 80AD8B78 */  lwz       r5, D_8018BAF8@sda21(r0)
+/* 0A0308 800A3308 3C055A01 */  addis     r0, r5, 0x5a01
+/* 0A030C 800A330C 2800005A */  cmplwi    r0, 0x5a
+/* 0A0310 800A3310 4182000C */  beq       lbl_800A331C
+/* 0A0314 800A3314 38600002 */  li        r3, 0x2
+/* 0A0318 800A3318 480001C0 */  b         lbl_800A34D8
+lbl_800A331C:
+/* 0A031C 800A331C 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A0320 800A3320 38A00000 */  li        r5, 0x0
+/* 0A0324 800A3324 808D8B74 */  lwz       r4, D_8018BAF4@sda21(r0)
+/* 0A0328 800A3328 4BFFF9C1 */  bl        EXILock
+/* 0A032C 800A332C 2C030000 */  cmpwi     r3, 0x0
+/* 0A0330 800A3330 4082000C */  bne       lbl_800A333C
+/* 0A0334 800A3334 38600000 */  li        r3, 0x0
+/* 0A0338 800A3338 480001A0 */  b         lbl_800A34D8
+lbl_800A333C:
+/* 0A033C 800A333C 389E0000 */  addi      r4, r30, 0x0
+/* 0A0340 800A3340 3860000D */  li        r3, 0xd
+/* 0A0344 800A3344 48000018 */  b         lbl_800A335C
+lbl_800A3348:
+/* 0A0348 800A3348 88040000 */  lbz       r0, 0x0(r4)
+/* 0A034C 800A334C 2C00000A */  cmpwi     r0, 0xa
+/* 0A0350 800A3350 40820008 */  bne       lbl_800A3358
+/* 0A0354 800A3354 98640000 */  stb       r3, 0x0(r4)
+lbl_800A3358:
+/* 0A0358 800A3358 38840001 */  addi      r4, r4, 0x1
+lbl_800A335C:
+/* 0A035C 800A335C 7C1E2050 */  subf      r0, r30, r4
+/* 0A0360 800A3360 7C00F840 */  cmplw     r0, r31
+/* 0A0364 800A3364 4180FFE4 */  blt       lbl_800A3348
+/* 0A0368 800A3368 3C00A001 */  lis       r0, 0xa001
+/* 0A036C 800A336C 90010014 */  stw       r0, 0x14(r1)
+/* 0A0370 800A3370 3B400000 */  li        r26, 0x0
+/* 0A0374 800A3374 3FA02001 */  lis       r29, 0x2001
+/* 0A0378 800A3378 4800014C */  b         lbl_800A34C4
+lbl_800A337C:
+/* 0A037C 800A337C 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A0380 800A3380 38A00003 */  li        r5, 0x3
+/* 0A0384 800A3384 808D8B74 */  lwz       r4, D_8018BAF4@sda21(r0)
+/* 0A0388 800A3388 4BFFF259 */  bl        EXISelect
+/* 0A038C 800A338C 2C030000 */  cmpwi     r3, 0x0
+/* 0A0390 800A3390 4082000C */  bne       lbl_800A339C
+/* 0A0394 800A3394 3800FFFF */  li        r0, -0x1
+/* 0A0398 800A3398 4800005C */  b         lbl_800A33F4
+lbl_800A339C:
+/* 0A039C 800A339C 93A10010 */  stw       r29, 0x10(r1)
+/* 0A03A0 800A33A0 38810010 */  addi      r4, r1, 0x10
+/* 0A03A4 800A33A4 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A03A8 800A33A8 38A00004 */  li        r5, 0x4
+/* 0A03AC 800A33AC 38C00001 */  li        r6, 0x1
+/* 0A03B0 800A33B0 38E00000 */  li        r7, 0x0
+/* 0A03B4 800A33B4 4BFFE6D9 */  bl        EXIImm
+/* 0A03B8 800A33B8 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A03BC 800A33BC 4BFFEAB9 */  bl        EXISync
+/* 0A03C0 800A33C0 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A03C4 800A33C4 38810010 */  addi      r4, r1, 0x10
+/* 0A03C8 800A33C8 38A00001 */  li        r5, 0x1
+/* 0A03CC 800A33CC 38C00000 */  li        r6, 0x0
+/* 0A03D0 800A33D0 38E00000 */  li        r7, 0x0
+/* 0A03D4 800A33D4 4BFFE6B9 */  bl        EXIImm
+/* 0A03D8 800A33D8 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A03DC 800A33DC 4BFFEA99 */  bl        EXISync
+/* 0A03E0 800A33E0 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A03E4 800A33E4 4BFFF329 */  bl        EXIDeselect
+/* 0A03E8 800A33E8 80010010 */  lwz       r0, 0x10(r1)
+/* 0A03EC 800A33EC 5400463E */  srwi      r0, r0, 24
+/* 0A03F0 800A33F0 20000010 */  subfic    r0, r0, 0x10
+lbl_800A33F4:
+/* 0A03F4 800A33F4 2C000000 */  cmpwi     r0, 0x0
+/* 0A03F8 800A33F8 7C1B0378 */  mr        r27, r0
+/* 0A03FC 800A33FC 4080000C */  bge       lbl_800A3408
+/* 0A0400 800A3400 3B400003 */  li        r26, 0x3
+/* 0A0404 800A3404 480000C8 */  b         lbl_800A34CC
+lbl_800A3408:
+/* 0A0408 800A3408 2C00000C */  cmpwi     r0, 0xc
+/* 0A040C 800A340C 4080000C */  bge       lbl_800A3418
+/* 0A0410 800A3410 7C00F840 */  cmplw     r0, r31
+/* 0A0414 800A3414 418000B0 */  blt       lbl_800A34C4
+lbl_800A3418:
+/* 0A0418 800A3418 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A041C 800A341C 38A00003 */  li        r5, 0x3
+/* 0A0420 800A3420 808D8B74 */  lwz       r4, D_8018BAF4@sda21(r0)
+/* 0A0424 800A3424 4BFFF1BD */  bl        EXISelect
+/* 0A0428 800A3428 2C030000 */  cmpwi     r3, 0x0
+/* 0A042C 800A342C 4082000C */  bne       lbl_800A3438
+/* 0A0430 800A3430 3B400003 */  li        r26, 0x3
+/* 0A0434 800A3434 48000098 */  b         lbl_800A34CC
+lbl_800A3438:
+/* 0A0438 800A3438 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A043C 800A343C 38810014 */  addi      r4, r1, 0x14
+/* 0A0440 800A3440 38A00004 */  li        r5, 0x4
+/* 0A0444 800A3444 38C00001 */  li        r6, 0x1
+/* 0A0448 800A3448 38E00000 */  li        r7, 0x0
+/* 0A044C 800A344C 4BFFE641 */  bl        EXIImm
+/* 0A0450 800A3450 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A0454 800A3454 4BFFEA21 */  bl        EXISync
+/* 0A0458 800A3458 48000054 */  b         lbl_800A34AC
+lbl_800A345C:
+/* 0A045C 800A345C 2C1B0004 */  cmpwi     r27, 0x4
+/* 0A0460 800A3460 4080000C */  bge       lbl_800A346C
+/* 0A0464 800A3464 7C1BF840 */  cmplw     r27, r31
+/* 0A0468 800A3468 41800054 */  blt       lbl_800A34BC
+lbl_800A346C:
+/* 0A046C 800A346C 281F0004 */  cmplwi    r31, 0x4
+/* 0A0470 800A3470 4080000C */  bge       lbl_800A347C
+/* 0A0474 800A3474 7FFCFB78 */  mr        r28, r31
+/* 0A0478 800A3478 48000008 */  b         lbl_800A3480
+lbl_800A347C:
+/* 0A047C 800A347C 3B800004 */  li        r28, 0x4
+lbl_800A3480:
+/* 0A0480 800A3480 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A0484 800A3484 7F85E378 */  mr        r5, r28
+/* 0A0488 800A3488 389E0000 */  addi      r4, r30, 0x0
+/* 0A048C 800A348C 38C00001 */  li        r6, 0x1
+/* 0A0490 800A3490 38E00000 */  li        r7, 0x0
+/* 0A0494 800A3494 4BFFE5F9 */  bl        EXIImm
+/* 0A0498 800A3498 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A049C 800A349C 7FDEE214 */  add       r30, r30, r28
+/* 0A04A0 800A34A0 7FFCF850 */  subf      r31, r28, r31
+/* 0A04A4 800A34A4 7F7CD850 */  subf      r27, r28, r27
+/* 0A04A8 800A34A8 4BFFE9CD */  bl        EXISync
+lbl_800A34AC:
+/* 0A04AC 800A34AC 2C1B0000 */  cmpwi     r27, 0x0
+/* 0A04B0 800A34B0 4182000C */  beq       lbl_800A34BC
+/* 0A04B4 800A34B4 281F0000 */  cmplwi    r31, 0x0
+/* 0A04B8 800A34B8 4082FFA4 */  bne       lbl_800A345C
+lbl_800A34BC:
+/* 0A04BC 800A34BC 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A04C0 800A34C0 4BFFF24D */  bl        EXIDeselect
+lbl_800A34C4:
+/* 0A04C4 800A34C4 281F0000 */  cmplwi    r31, 0x0
+/* 0A04C8 800A34C8 4082FEB4 */  bne       lbl_800A337C
+lbl_800A34CC:
+/* 0A04CC 800A34CC 806D8B70 */  lwz       r3, D_8018BAF0@sda21(r0)
+/* 0A04D0 800A34D0 4BFFF90D */  bl        EXIUnlock
+/* 0A04D4 800A34D4 7F43D378 */  mr        r3, r26
+lbl_800A34D8:
+/* 0A04D8 800A34D8 BB410018 */  lmw       r26, 0x18(r1)
+/* 0A04DC 800A34DC 80010034 */  lwz       r0, 0x34(r1)
+/* 0A04E0 800A34E0 38210030 */  addi      r1, r1, 0x30
+/* 0A04E4 800A34E4 7C0803A6 */  mtlr      r0
+/* 0A04E8 800A34E8 4E800020 */  blr
+
+# 0x8018BAF0 - 0x8018BB00
+.section .sbss, "wa"
+
+glabel D_8018BAF0
+	.skip 0x4
+
+glabel D_8018BAF4
+	.skip 0x4
+
+glabel D_8018BAF8
+	.skip 0x4
+
+glabel D_8018BAFC
+	.skip 0x4

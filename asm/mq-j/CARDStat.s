@@ -1,0 +1,346 @@
+# CARDStat.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x800BFC04 - 0x800C009C
+
+glabel UpdateIconOffsets
+/* 0BCC04 800BFC04 8103002C */  lwz       r8, 0x2c(r3)
+/* 0BCC08 800BFC08 3C080001 */  addis     r0, r8, 0x1
+/* 0BCC0C 800BFC0C 2800FFFF */  cmplwi    r0, 0xffff
+/* 0BCC10 800BFC10 40820018 */  bne       lbl_800BFC28
+/* 0BCC14 800BFC14 38000000 */  li        r0, 0x0
+/* 0BCC18 800BFC18 9804002E */  stb       r0, 0x2e(r4)
+/* 0BCC1C 800BFC1C 39000000 */  li        r8, 0x0
+/* 0BCC20 800BFC20 B0040034 */  sth       r0, 0x34(r4)
+/* 0BCC24 800BFC24 B0040036 */  sth       r0, 0x36(r4)
+lbl_800BFC28:
+/* 0BCC28 800BFC28 88030007 */  lbz       r0, 0x7(r3)
+/* 0BCC2C 800BFC2C 39200000 */  li        r9, 0x0
+/* 0BCC30 800BFC30 540007BE */  clrlwi    r0, r0, 30
+/* 0BCC34 800BFC34 2C000002 */  cmpwi     r0, 0x2
+/* 0BCC38 800BFC38 41820028 */  beq       lbl_800BFC60
+/* 0BCC3C 800BFC3C 40800038 */  bge       lbl_800BFC74
+/* 0BCC40 800BFC40 2C000001 */  cmpwi     r0, 0x1
+/* 0BCC44 800BFC44 40800008 */  bge       lbl_800BFC4C
+/* 0BCC48 800BFC48 4800002C */  b         lbl_800BFC74
+lbl_800BFC4C:
+/* 0BCC4C 800BFC4C 9104003C */  stw       r8, 0x3c(r4)
+/* 0BCC50 800BFC50 38080C00 */  addi      r0, r8, 0xc00
+/* 0BCC54 800BFC54 39080E00 */  addi      r8, r8, 0xe00
+/* 0BCC58 800BFC58 90040040 */  stw       r0, 0x40(r4)
+/* 0BCC5C 800BFC5C 48000024 */  b         lbl_800BFC80
+lbl_800BFC60:
+/* 0BCC60 800BFC60 9104003C */  stw       r8, 0x3c(r4)
+/* 0BCC64 800BFC64 3800FFFF */  li        r0, -0x1
+/* 0BCC68 800BFC68 39081800 */  addi      r8, r8, 0x1800
+/* 0BCC6C 800BFC6C 90040040 */  stw       r0, 0x40(r4)
+/* 0BCC70 800BFC70 48000010 */  b         lbl_800BFC80
+lbl_800BFC74:
+/* 0BCC74 800BFC74 3800FFFF */  li        r0, -0x1
+/* 0BCC78 800BFC78 9004003C */  stw       r0, 0x3c(r4)
+/* 0BCC7C 800BFC7C 90040040 */  stw       r0, 0x40(r4)
+lbl_800BFC80:
+/* 0BCC80 800BFC80 38000002 */  li        r0, 0x2
+/* 0BCC84 800BFC84 7C0903A6 */  mtctr     r0
+/* 0BCC88 800BFC88 38E40000 */  addi      r7, r4, 0x0
+/* 0BCC8C 800BFC8C 39400000 */  li        r10, 0x0
+/* 0BCC90 800BFC90 38C00000 */  li        r6, 0x0
+/* 0BCC94 800BFC94 3800FFFF */  li        r0, -0x1
+lbl_800BFC98:
+/* 0BCC98 800BFC98 A0A30030 */  lhz       r5, 0x30(r3)
+/* 0BCC9C 800BFC9C 7CA53630 */  sraw      r5, r5, r6
+/* 0BCCA0 800BFCA0 54A507BE */  clrlwi    r5, r5, 30
+/* 0BCCA4 800BFCA4 2C050002 */  cmpwi     r5, 0x2
+/* 0BCCA8 800BFCA8 41820024 */  beq       lbl_800BFCCC
+/* 0BCCAC 800BFCAC 4080002C */  bge       lbl_800BFCD8
+/* 0BCCB0 800BFCB0 2C050001 */  cmpwi     r5, 0x1
+/* 0BCCB4 800BFCB4 40800008 */  bge       lbl_800BFCBC
+/* 0BCCB8 800BFCB8 48000020 */  b         lbl_800BFCD8
+lbl_800BFCBC:
+/* 0BCCBC 800BFCBC 91070044 */  stw       r8, 0x44(r7)
+/* 0BCCC0 800BFCC0 39200001 */  li        r9, 0x1
+/* 0BCCC4 800BFCC4 39080400 */  addi      r8, r8, 0x400
+/* 0BCCC8 800BFCC8 48000014 */  b         lbl_800BFCDC
+lbl_800BFCCC:
+/* 0BCCCC 800BFCCC 91070044 */  stw       r8, 0x44(r7)
+/* 0BCCD0 800BFCD0 39080800 */  addi      r8, r8, 0x800
+/* 0BCCD4 800BFCD4 48000008 */  b         lbl_800BFCDC
+lbl_800BFCD8:
+/* 0BCCD8 800BFCD8 90070044 */  stw       r0, 0x44(r7)
+lbl_800BFCDC:
+/* 0BCCDC 800BFCDC A0A30030 */  lhz       r5, 0x30(r3)
+/* 0BCCE0 800BFCE0 38C60002 */  addi      r6, r6, 0x2
+/* 0BCCE4 800BFCE4 38E70004 */  addi      r7, r7, 0x4
+/* 0BCCE8 800BFCE8 7CA53630 */  sraw      r5, r5, r6
+/* 0BCCEC 800BFCEC 54A507BE */  clrlwi    r5, r5, 30
+/* 0BCCF0 800BFCF0 2C050002 */  cmpwi     r5, 0x2
+/* 0BCCF4 800BFCF4 41820024 */  beq       lbl_800BFD18
+/* 0BCCF8 800BFCF8 4080002C */  bge       lbl_800BFD24
+/* 0BCCFC 800BFCFC 2C050001 */  cmpwi     r5, 0x1
+/* 0BCD00 800BFD00 40800008 */  bge       lbl_800BFD08
+/* 0BCD04 800BFD04 48000020 */  b         lbl_800BFD24
+lbl_800BFD08:
+/* 0BCD08 800BFD08 91070044 */  stw       r8, 0x44(r7)
+/* 0BCD0C 800BFD0C 39200001 */  li        r9, 0x1
+/* 0BCD10 800BFD10 39080400 */  addi      r8, r8, 0x400
+/* 0BCD14 800BFD14 48000014 */  b         lbl_800BFD28
+lbl_800BFD18:
+/* 0BCD18 800BFD18 91070044 */  stw       r8, 0x44(r7)
+/* 0BCD1C 800BFD1C 39080800 */  addi      r8, r8, 0x800
+/* 0BCD20 800BFD20 48000008 */  b         lbl_800BFD28
+lbl_800BFD24:
+/* 0BCD24 800BFD24 90070044 */  stw       r0, 0x44(r7)
+lbl_800BFD28:
+/* 0BCD28 800BFD28 A0A30030 */  lhz       r5, 0x30(r3)
+/* 0BCD2C 800BFD2C 38C60002 */  addi      r6, r6, 0x2
+/* 0BCD30 800BFD30 394A0001 */  addi      r10, r10, 0x1
+/* 0BCD34 800BFD34 7CA53630 */  sraw      r5, r5, r6
+/* 0BCD38 800BFD38 54A507BE */  clrlwi    r5, r5, 30
+/* 0BCD3C 800BFD3C 2C050002 */  cmpwi     r5, 0x2
+/* 0BCD40 800BFD40 38E70004 */  addi      r7, r7, 0x4
+/* 0BCD44 800BFD44 41820024 */  beq       lbl_800BFD68
+/* 0BCD48 800BFD48 4080002C */  bge       lbl_800BFD74
+/* 0BCD4C 800BFD4C 2C050001 */  cmpwi     r5, 0x1
+/* 0BCD50 800BFD50 40800008 */  bge       lbl_800BFD58
+/* 0BCD54 800BFD54 48000020 */  b         lbl_800BFD74
+lbl_800BFD58:
+/* 0BCD58 800BFD58 91070044 */  stw       r8, 0x44(r7)
+/* 0BCD5C 800BFD5C 39200001 */  li        r9, 0x1
+/* 0BCD60 800BFD60 39080400 */  addi      r8, r8, 0x400
+/* 0BCD64 800BFD64 48000014 */  b         lbl_800BFD78
+lbl_800BFD68:
+/* 0BCD68 800BFD68 91070044 */  stw       r8, 0x44(r7)
+/* 0BCD6C 800BFD6C 39080800 */  addi      r8, r8, 0x800
+/* 0BCD70 800BFD70 48000008 */  b         lbl_800BFD78
+lbl_800BFD74:
+/* 0BCD74 800BFD74 90070044 */  stw       r0, 0x44(r7)
+lbl_800BFD78:
+/* 0BCD78 800BFD78 A0A30030 */  lhz       r5, 0x30(r3)
+/* 0BCD7C 800BFD7C 38C60002 */  addi      r6, r6, 0x2
+/* 0BCD80 800BFD80 394A0001 */  addi      r10, r10, 0x1
+/* 0BCD84 800BFD84 7CA53630 */  sraw      r5, r5, r6
+/* 0BCD88 800BFD88 54A507BE */  clrlwi    r5, r5, 30
+/* 0BCD8C 800BFD8C 2C050002 */  cmpwi     r5, 0x2
+/* 0BCD90 800BFD90 38E70004 */  addi      r7, r7, 0x4
+/* 0BCD94 800BFD94 41820024 */  beq       lbl_800BFDB8
+/* 0BCD98 800BFD98 4080002C */  bge       lbl_800BFDC4
+/* 0BCD9C 800BFD9C 2C050001 */  cmpwi     r5, 0x1
+/* 0BCDA0 800BFDA0 40800008 */  bge       lbl_800BFDA8
+/* 0BCDA4 800BFDA4 48000020 */  b         lbl_800BFDC4
+lbl_800BFDA8:
+/* 0BCDA8 800BFDA8 91070044 */  stw       r8, 0x44(r7)
+/* 0BCDAC 800BFDAC 39200001 */  li        r9, 0x1
+/* 0BCDB0 800BFDB0 39080400 */  addi      r8, r8, 0x400
+/* 0BCDB4 800BFDB4 48000014 */  b         lbl_800BFDC8
+lbl_800BFDB8:
+/* 0BCDB8 800BFDB8 91070044 */  stw       r8, 0x44(r7)
+/* 0BCDBC 800BFDBC 39080800 */  addi      r8, r8, 0x800
+/* 0BCDC0 800BFDC0 48000008 */  b         lbl_800BFDC8
+lbl_800BFDC4:
+/* 0BCDC4 800BFDC4 90070044 */  stw       r0, 0x44(r7)
+lbl_800BFDC8:
+/* 0BCDC8 800BFDC8 38C60002 */  addi      r6, r6, 0x2
+/* 0BCDCC 800BFDCC 38E70004 */  addi      r7, r7, 0x4
+/* 0BCDD0 800BFDD0 394A0001 */  addi      r10, r10, 0x1
+/* 0BCDD4 800BFDD4 4200FEC4 */  bdnz      lbl_800BFC98
+/* 0BCDD8 800BFDD8 2C090000 */  cmpwi     r9, 0x0
+/* 0BCDDC 800BFDDC 41820010 */  beq       lbl_800BFDEC
+/* 0BCDE0 800BFDE0 91040064 */  stw       r8, 0x64(r4)
+/* 0BCDE4 800BFDE4 39080200 */  addi      r8, r8, 0x200
+/* 0BCDE8 800BFDE8 4800000C */  b         lbl_800BFDF4
+lbl_800BFDEC:
+/* 0BCDEC 800BFDEC 3800FFFF */  li        r0, -0x1
+/* 0BCDF0 800BFDF0 90040064 */  stw       r0, 0x64(r4)
+lbl_800BFDF4:
+/* 0BCDF4 800BFDF4 91040068 */  stw       r8, 0x68(r4)
+/* 0BCDF8 800BFDF8 4E800020 */  blr
+
+glabel CARDGetStatus
+/* 0BCDFC 800BFDFC 7C0802A6 */  mflr      r0
+/* 0BCE00 800BFE00 90010004 */  stw       r0, 0x4(r1)
+/* 0BCE04 800BFE04 9421FFD8 */  stwu      r1, -0x28(r1)
+/* 0BCE08 800BFE08 93E10024 */  stw       r31, 0x24(r1)
+/* 0BCE0C 800BFE0C 3BE50000 */  addi      r31, r5, 0x0
+/* 0BCE10 800BFE10 93C10020 */  stw       r30, 0x20(r1)
+/* 0BCE14 800BFE14 93A1001C */  stw       r29, 0x1c(r1)
+/* 0BCE18 800BFE18 7C9D2379 */  mr.       r29, r4
+/* 0BCE1C 800BFE1C 4180000C */  blt       lbl_800BFE28
+/* 0BCE20 800BFE20 2C1D007F */  cmpwi     r29, 0x7f
+/* 0BCE24 800BFE24 4180000C */  blt       lbl_800BFE30
+lbl_800BFE28:
+/* 0BCE28 800BFE28 3860FF80 */  li        r3, -0x80
+/* 0BCE2C 800BFE2C 480000E0 */  b         lbl_800BFF0C
+lbl_800BFE30:
+/* 0BCE30 800BFE30 38810014 */  addi      r4, r1, 0x14
+/* 0BCE34 800BFE34 4BFFABDD */  bl        __CARDGetControlBlock
+/* 0BCE38 800BFE38 2C030000 */  cmpwi     r3, 0x0
+/* 0BCE3C 800BFE3C 40800008 */  bge       lbl_800BFE44
+/* 0BCE40 800BFE40 480000CC */  b         lbl_800BFF0C
+lbl_800BFE44:
+/* 0BCE44 800BFE44 80610014 */  lwz       r3, 0x14(r1)
+/* 0BCE48 800BFE48 4BFFC849 */  bl        __CARDGetDirBlock
+/* 0BCE4C 800BFE4C 57A03032 */  slwi      r0, r29, 6
+/* 0BCE50 800BFE50 7FA30214 */  add       r29, r3, r0
+/* 0BCE54 800BFE54 80610014 */  lwz       r3, 0x14(r1)
+/* 0BCE58 800BFE58 7FA4EB78 */  mr        r4, r29
+/* 0BCE5C 800BFE5C 4BFFED0D */  bl        fn_800BEB68
+/* 0BCE60 800BFE60 3BC30000 */  addi      r30, r3, 0x0
+/* 0BCE64 800BFE64 2C1EFFF6 */  cmpwi     r30, -0xa
+/* 0BCE68 800BFE68 40820010 */  bne       lbl_800BFE78
+/* 0BCE6C 800BFE6C 7FA3EB78 */  mr        r3, r29
+/* 0BCE70 800BFE70 4BFFED91 */  bl        fn_800BEC00
+/* 0BCE74 800BFE74 7C7E1B78 */  mr        r30, r3
+lbl_800BFE78:
+/* 0BCE78 800BFE78 2C1E0000 */  cmpwi     r30, 0x0
+/* 0BCE7C 800BFE7C 41800084 */  blt       lbl_800BFF00
+/* 0BCE80 800BFE80 389D0000 */  addi      r4, r29, 0x0
+/* 0BCE84 800BFE84 387F0028 */  addi      r3, r31, 0x28
+/* 0BCE88 800BFE88 38A00004 */  li        r5, 0x4
+/* 0BCE8C 800BFE8C 4BF45589 */  bl        memcpy
+/* 0BCE90 800BFE90 387F002C */  addi      r3, r31, 0x2c
+/* 0BCE94 800BFE94 389D0004 */  addi      r4, r29, 0x4
+/* 0BCE98 800BFE98 38A00002 */  li        r5, 0x2
+/* 0BCE9C 800BFE9C 4BF45579 */  bl        memcpy
+/* 0BCEA0 800BFEA0 80A10014 */  lwz       r5, 0x14(r1)
+/* 0BCEA4 800BFEA4 7FE3FB78 */  mr        r3, r31
+/* 0BCEA8 800BFEA8 A0DD0038 */  lhz       r6, 0x38(r29)
+/* 0BCEAC 800BFEAC 389D0008 */  addi      r4, r29, 0x8
+/* 0BCEB0 800BFEB0 8005000C */  lwz       r0, 0xc(r5)
+/* 0BCEB4 800BFEB4 38A00020 */  li        r5, 0x20
+/* 0BCEB8 800BFEB8 7C0601D6 */  mullw     r0, r6, r0
+/* 0BCEBC 800BFEBC 901F0020 */  stw       r0, 0x20(r31)
+/* 0BCEC0 800BFEC0 4BF45555 */  bl        memcpy
+/* 0BCEC4 800BFEC4 801D0028 */  lwz       r0, 0x28(r29)
+/* 0BCEC8 800BFEC8 387D0000 */  addi      r3, r29, 0x0
+/* 0BCECC 800BFECC 389F0000 */  addi      r4, r31, 0x0
+/* 0BCED0 800BFED0 901F0024 */  stw       r0, 0x24(r31)
+/* 0BCED4 800BFED4 881D0007 */  lbz       r0, 0x7(r29)
+/* 0BCED8 800BFED8 981F002E */  stb       r0, 0x2e(r31)
+/* 0BCEDC 800BFEDC 801D002C */  lwz       r0, 0x2c(r29)
+/* 0BCEE0 800BFEE0 901F0030 */  stw       r0, 0x30(r31)
+/* 0BCEE4 800BFEE4 A01D0030 */  lhz       r0, 0x30(r29)
+/* 0BCEE8 800BFEE8 B01F0034 */  sth       r0, 0x34(r31)
+/* 0BCEEC 800BFEEC A01D0032 */  lhz       r0, 0x32(r29)
+/* 0BCEF0 800BFEF0 B01F0036 */  sth       r0, 0x36(r31)
+/* 0BCEF4 800BFEF4 801D003C */  lwz       r0, 0x3c(r29)
+/* 0BCEF8 800BFEF8 901F0038 */  stw       r0, 0x38(r31)
+/* 0BCEFC 800BFEFC 4BFFFD09 */  bl        UpdateIconOffsets
+lbl_800BFF00:
+/* 0BCF00 800BFF00 80610014 */  lwz       r3, 0x14(r1)
+/* 0BCF04 800BFF04 7FC4F378 */  mr        r4, r30
+/* 0BCF08 800BFF08 4BFFABC1 */  bl        __CARDPutControlBlock
+lbl_800BFF0C:
+/* 0BCF0C 800BFF0C 8001002C */  lwz       r0, 0x2c(r1)
+/* 0BCF10 800BFF10 83E10024 */  lwz       r31, 0x24(r1)
+/* 0BCF14 800BFF14 83C10020 */  lwz       r30, 0x20(r1)
+/* 0BCF18 800BFF18 83A1001C */  lwz       r29, 0x1c(r1)
+/* 0BCF1C 800BFF1C 38210028 */  addi      r1, r1, 0x28
+/* 0BCF20 800BFF20 7C0803A6 */  mtlr      r0
+/* 0BCF24 800BFF24 4E800020 */  blr
+
+glabel CARDSetStatusAsync
+/* 0BCF28 800BFF28 7C0802A6 */  mflr      r0
+/* 0BCF2C 800BFF2C 90010004 */  stw       r0, 0x4(r1)
+/* 0BCF30 800BFF30 9421FFD0 */  stwu      r1, -0x30(r1)
+/* 0BCF34 800BFF34 93E1002C */  stw       r31, 0x2c(r1)
+/* 0BCF38 800BFF38 7C9F2379 */  mr.       r31, r4
+/* 0BCF3C 800BFF3C 93C10028 */  stw       r30, 0x28(r1)
+/* 0BCF40 800BFF40 3BC60000 */  addi      r30, r6, 0x0
+/* 0BCF44 800BFF44 93A10024 */  stw       r29, 0x24(r1)
+/* 0BCF48 800BFF48 3BA50000 */  addi      r29, r5, 0x0
+/* 0BCF4C 800BFF4C 93810020 */  stw       r28, 0x20(r1)
+/* 0BCF50 800BFF50 3B830000 */  addi      r28, r3, 0x0
+/* 0BCF54 800BFF54 41800040 */  blt       lbl_800BFF94
+/* 0BCF58 800BFF58 2C1F007F */  cmpwi     r31, 0x7f
+/* 0BCF5C 800BFF5C 40800038 */  bge       lbl_800BFF94
+/* 0BCF60 800BFF60 807D0030 */  lwz       r3, 0x30(r29)
+/* 0BCF64 800BFF64 3C030001 */  addis     r0, r3, 0x1
+/* 0BCF68 800BFF68 2800FFFF */  cmplwi    r0, 0xffff
+/* 0BCF6C 800BFF6C 4182000C */  beq       lbl_800BFF78
+/* 0BCF70 800BFF70 28030200 */  cmplwi    r3, 0x200
+/* 0BCF74 800BFF74 40800020 */  bge       lbl_800BFF94
+lbl_800BFF78:
+/* 0BCF78 800BFF78 807D0038 */  lwz       r3, 0x38(r29)
+/* 0BCF7C 800BFF7C 3C030001 */  addis     r0, r3, 0x1
+/* 0BCF80 800BFF80 2800FFFF */  cmplwi    r0, 0xffff
+/* 0BCF84 800BFF84 41820018 */  beq       lbl_800BFF9C
+/* 0BCF88 800BFF88 546004FE */  clrlwi    r0, r3, 19
+/* 0BCF8C 800BFF8C 28001FC0 */  cmplwi    r0, 0x1fc0
+/* 0BCF90 800BFF90 4081000C */  ble       lbl_800BFF9C
+lbl_800BFF94:
+/* 0BCF94 800BFF94 3860FF80 */  li        r3, -0x80
+/* 0BCF98 800BFF98 480000E4 */  b         lbl_800C007C
+lbl_800BFF9C:
+/* 0BCF9C 800BFF9C 387C0000 */  addi      r3, r28, 0x0
+/* 0BCFA0 800BFFA0 38810018 */  addi      r4, r1, 0x18
+/* 0BCFA4 800BFFA4 4BFFAA6D */  bl        __CARDGetControlBlock
+/* 0BCFA8 800BFFA8 2C030000 */  cmpwi     r3, 0x0
+/* 0BCFAC 800BFFAC 40800008 */  bge       lbl_800BFFB4
+/* 0BCFB0 800BFFB0 480000CC */  b         lbl_800C007C
+lbl_800BFFB4:
+/* 0BCFB4 800BFFB4 80610018 */  lwz       r3, 0x18(r1)
+/* 0BCFB8 800BFFB8 4BFFC6D9 */  bl        __CARDGetDirBlock
+/* 0BCFBC 800BFFBC 57E03032 */  slwi      r0, r31, 6
+/* 0BCFC0 800BFFC0 7FE30214 */  add       r31, r3, r0
+/* 0BCFC4 800BFFC4 80610018 */  lwz       r3, 0x18(r1)
+/* 0BCFC8 800BFFC8 7FE4FB78 */  mr        r4, r31
+/* 0BCFCC 800BFFCC 4BFFEB9D */  bl        fn_800BEB68
+/* 0BCFD0 800BFFD0 7C641B79 */  mr.       r4, r3
+/* 0BCFD4 800BFFD4 40800010 */  bge       lbl_800BFFE4
+/* 0BCFD8 800BFFD8 80610018 */  lwz       r3, 0x18(r1)
+/* 0BCFDC 800BFFDC 4BFFAAED */  bl        __CARDPutControlBlock
+/* 0BCFE0 800BFFE0 4800009C */  b         lbl_800C007C
+lbl_800BFFE4:
+/* 0BCFE4 800BFFE4 881D002E */  lbz       r0, 0x2e(r29)
+/* 0BCFE8 800BFFE8 387F0000 */  addi      r3, r31, 0x0
+/* 0BCFEC 800BFFEC 389D0000 */  addi      r4, r29, 0x0
+/* 0BCFF0 800BFFF0 981F0007 */  stb       r0, 0x7(r31)
+/* 0BCFF4 800BFFF4 801D0030 */  lwz       r0, 0x30(r29)
+/* 0BCFF8 800BFFF8 901F002C */  stw       r0, 0x2c(r31)
+/* 0BCFFC 800BFFFC A01D0034 */  lhz       r0, 0x34(r29)
+/* 0BD000 800C0000 B01F0030 */  sth       r0, 0x30(r31)
+/* 0BD004 800C0004 A01D0036 */  lhz       r0, 0x36(r29)
+/* 0BD008 800C0008 B01F0032 */  sth       r0, 0x32(r31)
+/* 0BD00C 800C000C 801D0038 */  lwz       r0, 0x38(r29)
+/* 0BD010 800C0010 901F003C */  stw       r0, 0x3c(r31)
+/* 0BD014 800C0014 4BFFFBF1 */  bl        UpdateIconOffsets
+/* 0BD018 800C0018 807F002C */  lwz       r3, 0x2c(r31)
+/* 0BD01C 800C001C 3C030001 */  addis     r0, r3, 0x1
+/* 0BD020 800C0020 2800FFFF */  cmplwi    r0, 0xffff
+/* 0BD024 800C0024 40820014 */  bne       lbl_800C0038
+/* 0BD028 800C0028 A01F0032 */  lhz       r0, 0x32(r31)
+/* 0BD02C 800C002C 5400003A */  clrrwi    r0, r0, 2
+/* 0BD030 800C0030 60000001 */  ori       r0, r0, 0x1
+/* 0BD034 800C0034 B01F0032 */  sth       r0, 0x32(r31)
+lbl_800C0038:
+/* 0BD038 800C0038 3C608000 */  lis       r3, 0x8000
+/* 0BD03C 800C003C 800300F8 */  lwz       r0, 0xf8(r3)
+/* 0BD040 800C0040 541DF0BE */  srwi      r29, r0, 2
+/* 0BD044 800C0044 4BFE149D */  bl        OSGetTime
+/* 0BD048 800C0048 38DD0000 */  addi      r6, r29, 0x0
+/* 0BD04C 800C004C 38A00000 */  li        r5, 0x0
+/* 0BD050 800C0050 4800C5A5 */  bl        __div2i
+/* 0BD054 800C0054 909F0028 */  stw       r4, 0x28(r31)
+/* 0BD058 800C0058 387C0000 */  addi      r3, r28, 0x0
+/* 0BD05C 800C005C 389E0000 */  addi      r4, r30, 0x0
+/* 0BD060 800C0060 4BFFC7D1 */  bl        __CARDUpdateDir
+/* 0BD064 800C0064 7C7C1B79 */  mr.       r28, r3
+/* 0BD068 800C0068 40800010 */  bge       lbl_800C0078
+/* 0BD06C 800C006C 80610018 */  lwz       r3, 0x18(r1)
+/* 0BD070 800C0070 7F84E378 */  mr        r4, r28
+/* 0BD074 800C0074 4BFFAA55 */  bl        __CARDPutControlBlock
+lbl_800C0078:
+/* 0BD078 800C0078 7F83E378 */  mr        r3, r28
+lbl_800C007C:
+/* 0BD07C 800C007C 80010034 */  lwz       r0, 0x34(r1)
+/* 0BD080 800C0080 83E1002C */  lwz       r31, 0x2c(r1)
+/* 0BD084 800C0084 83C10028 */  lwz       r30, 0x28(r1)
+/* 0BD088 800C0088 83A10024 */  lwz       r29, 0x24(r1)
+/* 0BD08C 800C008C 83810020 */  lwz       r28, 0x20(r1)
+/* 0BD090 800C0090 38210030 */  addi      r1, r1, 0x30
+/* 0BD094 800C0094 7C0803A6 */  mtlr      r0
+/* 0BD098 800C0098 4E800020 */  blr

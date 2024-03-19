@@ -1,0 +1,151 @@
+# serpoll.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x800C89E0 - 0x800C8BA8
+
+glabel fn_800C89E0
+/* 0C59E0 800C89E0 7C0802A6 */  mflr      r0
+/* 0C59E4 800C89E4 90010004 */  stw       r0, 0x4(r1)
+/* 0C59E8 800C89E8 9421FFE8 */  stwu      r1, -0x18(r1)
+/* 0C59EC 800C89EC 93E10014 */  stw       r31, 0x14(r1)
+/* 0C59F0 800C89F0 93C10010 */  stw       r30, 0x10(r1)
+/* 0C59F4 800C89F4 4800380D */  bl        fn_800CC200
+/* 0C59F8 800C89F8 7C7E1B79 */  mr.       r30, r3
+/* 0C59FC 800C89FC 40810088 */  ble       lbl_800C8A84
+/* 0C5A00 800C8A00 38610008 */  addi      r3, r1, 0x8
+/* 0C5A04 800C8A04 3881000C */  addi      r4, r1, 0xc
+/* 0C5A08 800C8A08 4BFFF811 */  bl        fn_800C8218
+/* 0C5A0C 800C8A0C 2C1E0880 */  cmpwi     r30, 0x880
+/* 0C5A10 800C8A10 4081004C */  ble       lbl_800C8A5C
+/* 0C5A14 800C8A14 4800002C */  b         lbl_800C8A40
+lbl_800C8A18:
+/* 0C5A18 800C8A18 2C1E0880 */  cmpwi     r30, 0x880
+/* 0C5A1C 800C8A1C 4081000C */  ble       lbl_800C8A28
+/* 0C5A20 800C8A20 3BE00880 */  li        r31, 0x880
+/* 0C5A24 800C8A24 48000008 */  b         lbl_800C8A2C
+lbl_800C8A28:
+/* 0C5A28 800C8A28 7FDFF378 */  mr        r31, r30
+lbl_800C8A2C:
+/* 0C5A2C 800C8A2C 8061000C */  lwz       r3, 0xc(r1)
+/* 0C5A30 800C8A30 389F0000 */  addi      r4, r31, 0x0
+/* 0C5A34 800C8A34 38630010 */  addi      r3, r3, 0x10
+/* 0C5A38 800C8A38 480037F9 */  bl        fn_800CC230
+/* 0C5A3C 800C8A3C 7FDFF050 */  subf      r30, r31, r30
+lbl_800C8A40:
+/* 0C5A40 800C8A40 2C1E0000 */  cmpwi     r30, 0x0
+/* 0C5A44 800C8A44 4181FFD4 */  bgt       lbl_800C8A18
+/* 0C5A48 800C8A48 8061000C */  lwz       r3, 0xc(r1)
+/* 0C5A4C 800C8A4C 388000FF */  li        r4, 0xff
+/* 0C5A50 800C8A50 38A00006 */  li        r5, 0x6
+/* 0C5A54 800C8A54 480002D9 */  bl        fn_800C8D2C
+/* 0C5A58 800C8A58 4800002C */  b         lbl_800C8A84
+lbl_800C8A5C:
+/* 0C5A5C 800C8A5C 8061000C */  lwz       r3, 0xc(r1)
+/* 0C5A60 800C8A60 389E0000 */  addi      r4, r30, 0x0
+/* 0C5A64 800C8A64 38630010 */  addi      r3, r3, 0x10
+/* 0C5A68 800C8A68 480037C9 */  bl        fn_800CC230
+/* 0C5A6C 800C8A6C 2C030000 */  cmpwi     r3, 0x0
+/* 0C5A70 800C8A70 40820014 */  bne       lbl_800C8A84
+/* 0C5A74 800C8A74 8061000C */  lwz       r3, 0xc(r1)
+/* 0C5A78 800C8A78 93C30008 */  stw       r30, 0x8(r3)
+/* 0C5A7C 800C8A7C 80610008 */  lwz       r3, 0x8(r1)
+/* 0C5A80 800C8A80 48000018 */  b         lbl_800C8A98
+lbl_800C8A84:
+/* 0C5A84 800C8A84 80610008 */  lwz       r3, 0x8(r1)
+/* 0C5A88 800C8A88 2C03FFFF */  cmpwi     r3, -0x1
+/* 0C5A8C 800C8A8C 41820008 */  beq       lbl_800C8A94
+/* 0C5A90 800C8A90 4BFFF851 */  bl        fn_800C82E0
+lbl_800C8A94:
+/* 0C5A94 800C8A94 3860FFFF */  li        r3, -0x1
+lbl_800C8A98:
+/* 0C5A98 800C8A98 83E10014 */  lwz       r31, 0x14(r1)
+/* 0C5A9C 800C8A9C 83C10010 */  lwz       r30, 0x10(r1)
+/* 0C5AA0 800C8AA0 38210018 */  addi      r1, r1, 0x18
+/* 0C5AA4 800C8AA4 80010004 */  lwz       r0, 0x4(r1)
+/* 0C5AA8 800C8AA8 7C0803A6 */  mtlr      r0
+/* 0C5AAC 800C8AAC 4E800020 */  blr
+
+glabel TRKGetInput
+/* 0C5AB0 800C8AB0 7C0802A6 */  mflr      r0
+/* 0C5AB4 800C8AB4 90010004 */  stw       r0, 0x4(r1)
+/* 0C5AB8 800C8AB8 9421FFE8 */  stwu      r1, -0x18(r1)
+/* 0C5ABC 800C8ABC 93E10014 */  stw       r31, 0x14(r1)
+/* 0C5AC0 800C8AC0 93C10010 */  stw       r30, 0x10(r1)
+/* 0C5AC4 800C8AC4 4BFFFF1D */  bl        fn_800C89E0
+/* 0C5AC8 800C8AC8 3BC30000 */  addi      r30, r3, 0x0
+/* 0C5ACC 800C8ACC 2C1EFFFF */  cmpwi     r30, -0x1
+/* 0C5AD0 800C8AD0 41820044 */  beq       lbl_800C8B14
+/* 0C5AD4 800C8AD4 7FC3F378 */  mr        r3, r30
+/* 0C5AD8 800C8AD8 4BFFF7DD */  bl        fn_800C82B4
+/* 0C5ADC 800C8ADC 3BE30000 */  addi      r31, r3, 0x0
+/* 0C5AE0 800C8AE0 38800000 */  li        r4, 0x0
+/* 0C5AE4 800C8AE4 4BFFF8A5 */  bl        fn_800C8388
+/* 0C5AE8 800C8AE8 387F0000 */  addi      r3, r31, 0x0
+/* 0C5AEC 800C8AEC 38810008 */  addi      r4, r1, 0x8
+/* 0C5AF0 800C8AF0 4BFFFC1D */  bl        fn_800C870C
+/* 0C5AF4 800C8AF4 88010008 */  lbz       r0, 0x8(r1)
+/* 0C5AF8 800C8AF8 28000080 */  cmplwi    r0, 0x80
+/* 0C5AFC 800C8AFC 40800010 */  bge       lbl_800C8B0C
+/* 0C5B00 800C8B00 7FC3F378 */  mr        r3, r30
+/* 0C5B04 800C8B04 48000029 */  bl        fn_800C8B2C
+/* 0C5B08 800C8B08 4800000C */  b         lbl_800C8B14
+lbl_800C8B0C:
+/* 0C5B0C 800C8B0C 7FC3F378 */  mr        r3, r30
+/* 0C5B10 800C8B10 4BFFF7D1 */  bl        fn_800C82E0
+lbl_800C8B14:
+/* 0C5B14 800C8B14 83E10014 */  lwz       r31, 0x14(r1)
+/* 0C5B18 800C8B18 83C10010 */  lwz       r30, 0x10(r1)
+/* 0C5B1C 800C8B1C 38210018 */  addi      r1, r1, 0x18
+/* 0C5B20 800C8B20 80010004 */  lwz       r0, 0x4(r1)
+/* 0C5B24 800C8B24 7C0803A6 */  mtlr      r0
+/* 0C5B28 800C8B28 4E800020 */  blr
+
+glabel fn_800C8B2C
+/* 0C5B2C 800C8B2C 7C0802A6 */  mflr      r0
+/* 0C5B30 800C8B30 38800002 */  li        r4, 0x2
+/* 0C5B34 800C8B34 90010004 */  stw       r0, 0x4(r1)
+/* 0C5B38 800C8B38 9421FFE8 */  stwu      r1, -0x18(r1)
+/* 0C5B3C 800C8B3C 93E10014 */  stw       r31, 0x14(r1)
+/* 0C5B40 800C8B40 3BE30000 */  addi      r31, r3, 0x0
+/* 0C5B44 800C8B44 38610008 */  addi      r3, r1, 0x8
+/* 0C5B48 800C8B48 4BFFF459 */  bl        fn_800C7FA0
+/* 0C5B4C 800C8B4C 3C608019 */  lis       r3, D_8018A7D0@ha
+/* 0C5B50 800C8B50 93E10010 */  stw       r31, 0x10(r1)
+/* 0C5B54 800C8B54 3883A7D0 */  addi      r4, r3, D_8018A7D0@l
+/* 0C5B58 800C8B58 38610008 */  addi      r3, r1, 0x8
+/* 0C5B5C 800C8B5C 3800FFFF */  li        r0, -0x1
+/* 0C5B60 800C8B60 90040000 */  stw       r0, 0x0(r4)
+/* 0C5B64 800C8B64 4BFFF35D */  bl        fn_800C7EC0
+/* 0C5B68 800C8B68 83E10014 */  lwz       r31, 0x14(r1)
+/* 0C5B6C 800C8B6C 38210018 */  addi      r1, r1, 0x18
+/* 0C5B70 800C8B70 80010004 */  lwz       r0, 0x4(r1)
+/* 0C5B74 800C8B74 7C0803A6 */  mtlr      r0
+/* 0C5B78 800C8B78 4E800020 */  blr
+
+glabel TRKInitializeSerialHandler
+/* 0C5B7C 800C8B7C 3C608019 */  lis       r3, D_8018A7D0@ha
+/* 0C5B80 800C8B80 3883A7D0 */  addi      r4, r3, D_8018A7D0@l
+/* 0C5B84 800C8B84 3800FFFF */  li        r0, -0x1
+/* 0C5B88 800C8B88 90040000 */  stw       r0, 0x0(r4)
+/* 0C5B8C 800C8B8C 38000000 */  li        r0, 0x0
+/* 0C5B90 800C8B90 38600000 */  li        r3, 0x0
+/* 0C5B94 800C8B94 98040008 */  stb       r0, 0x8(r4)
+/* 0C5B98 800C8B98 9004000C */  stw       r0, 0xc(r4)
+/* 0C5B9C 800C8B9C 4E800020 */  blr
+
+glabel fn_800C8BA0
+/* 0C5BA0 800C8BA0 38600000 */  li        r3, 0x0
+/* 0C5BA4 800C8BA4 4E800020 */  blr
+
+# 0x8018A7D0 - 0x8018A7E8
+.section .bss, "wa"
+
+glabel D_8018A7D0
+	.skip 0x14
+
+glabel gTRKInputPendingPtr
+	.skip 0x4

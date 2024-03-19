@@ -1,0 +1,54 @@
+# scanf.c
+.include "macros.inc"
+
+.section .text, "ax"
+
+.balign 4
+
+# 0x800CF318 - 0x800CF3A8
+
+glabel __StringRead
+/* 0CC318 800CF318 2C050001 */  cmpwi     r5, 0x1
+/* 0CC31C 800CF31C 41820050 */  beq       lbl_800CF36C
+/* 0CC320 800CF320 40800010 */  bge       lbl_800CF330
+/* 0CC324 800CF324 2C050000 */  cmpwi     r5, 0x0
+/* 0CC328 800CF328 40800014 */  bge       lbl_800CF33C
+/* 0CC32C 800CF32C 48000074 */  b         lbl_800CF3A0
+lbl_800CF330:
+/* 0CC330 800CF330 2C050003 */  cmpwi     r5, 0x3
+/* 0CC334 800CF334 4080006C */  bge       lbl_800CF3A0
+/* 0CC338 800CF338 48000060 */  b         lbl_800CF398
+lbl_800CF33C:
+/* 0CC33C 800CF33C 80830000 */  lwz       r4, 0x0(r3)
+/* 0CC340 800CF340 88A40000 */  lbz       r5, 0x0(r4)
+/* 0CC344 800CF344 7CA00775 */  extsb.    r0, r5
+/* 0CC348 800CF348 40820014 */  bne       lbl_800CF35C
+/* 0CC34C 800CF34C 38000001 */  li        r0, 0x1
+/* 0CC350 800CF350 90030004 */  stw       r0, 0x4(r3)
+/* 0CC354 800CF354 3860FFFF */  li        r3, -0x1
+/* 0CC358 800CF358 4E800020 */  blr
+lbl_800CF35C:
+/* 0CC35C 800CF35C 38040001 */  addi      r0, r4, 0x1
+/* 0CC360 800CF360 90030000 */  stw       r0, 0x0(r3)
+/* 0CC364 800CF364 7CA30774 */  extsb     r3, r5
+/* 0CC368 800CF368 4E800020 */  blr
+lbl_800CF36C:
+/* 0CC36C 800CF36C 80030004 */  lwz       r0, 0x4(r3)
+/* 0CC370 800CF370 2C000000 */  cmpwi     r0, 0x0
+/* 0CC374 800CF374 40820014 */  bne       lbl_800CF388
+/* 0CC378 800CF378 80A30000 */  lwz       r5, 0x0(r3)
+/* 0CC37C 800CF37C 3805FFFF */  subi      r0, r5, 0x1
+/* 0CC380 800CF380 90030000 */  stw       r0, 0x0(r3)
+/* 0CC384 800CF384 4800000C */  b         lbl_800CF390
+lbl_800CF388:
+/* 0CC388 800CF388 38000000 */  li        r0, 0x0
+/* 0CC38C 800CF38C 90030004 */  stw       r0, 0x4(r3)
+lbl_800CF390:
+/* 0CC390 800CF390 7C832378 */  mr        r3, r4
+/* 0CC394 800CF394 4E800020 */  blr
+lbl_800CF398:
+/* 0CC398 800CF398 80630004 */  lwz       r3, 0x4(r3)
+/* 0CC39C 800CF39C 4E800020 */  blr
+lbl_800CF3A0:
+/* 0CC3A0 800CF3A0 38600000 */  li        r3, 0x0
+/* 0CC3A4 800CF3A4 4E800020 */  blr
