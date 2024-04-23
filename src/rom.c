@@ -546,14 +546,54 @@ static s32 ganSceneFileIndices[] = {
 
 static u32 ganOffsetBlockFromDmadata[250];
 
+typedef struct DmaFileInfo {
+    /* 0x00 */ char acName[48];
+    /* 0x30 */ s32 nValue; // index or size
+} DmaFileInfo; // size = 0x34
+
+extern int atoi(const char* str);
+
+#define DMA_ENTRY_SIZE 64
+
 // Set up ROM cache for OOT (gz or not) from dmadata, so that files can move around between versions.
 static s32 romCacheGameFromDmadata(Rom* pROM) {
     static DmaEntry dmadata[1509] ALIGNAS(32);
+    static DmaFileInfo dmaInfos[3000] ALIGNAS(32); // using a high value to make sure most mods will work
+    static char entry[DMA_ENTRY_SIZE] ALIGNAS(32);
     s32 blockCount = 0;
     s32 nCountOffsetBlocks = 0;
     s32 rangeStart;
     s32 rangeEnd;
-    s32 i;
+    s32 i, iDmaEntry, iEntry, iData;
+    s32 nFileSize = pROM->dmaFileInfo.length / DMA_ENTRY_SIZE;
+    char acValue[16];
+
+    // get dmadata from config file
+    for (iDmaEntry = 0; iDmaEntry < nFileSize; iDmaEntry++) {
+        // reset value array
+        for (iEntry = 0, iData = 0; iEntry < 16; iEntry++) {
+            acValue[iData++] = '\0';
+        }
+
+        // read the file
+        if (!simulatorDVDRead(&pROM->dmaFileInfo, (void*)entry, DMA_ENTRY_SIZE, iDmaEntry * DMA_ENTRY_SIZE, NULL)) {
+            return 0;
+        }
+
+        // fetch the data
+        for (iEntry = 0, iData = 0; iEntry < ARRAY_COUNT(acValue); iEntry++) {
+            if (entry[iEntry] >= '0' && entry[iEntry] <= '9') {
+                acValue[iData++] = entry[iEntry];
+            }
+        }
+        for (iEntry = ARRAY_COUNT(acValue), iData = 0; iEntry < DMA_ENTRY_SIZE; iEntry++) {
+            if (entry[iEntry] != ' ') {
+                dmaInfos[iDmaEntry].acName[iData++] = entry[iEntry];
+            }
+        }
+        dmaInfos[iDmaEntry].nValue = atoi(acValue);
+        OSReport("DMA - %d, %s;\n", dmaInfos[iDmaEntry].nValue, dmaInfos[iDmaEntry].acName);
+    }
 
     // Load dmadata
     if (!simulatorDVDRead(&pROM->fileInfo, (void*)dmadata, sizeof(dmadata), 0x7170, NULL)) {
@@ -1316,6 +1356,7 @@ inline void romOpen(Rom* pROM, char* szNameFile) {
 
     pROM->bFlip = bFlip;
     simulatorDVDOpen(szNameFile, &pROM->fileInfo);
+    simulatorDVDOpen("dma_files.txt", &pROM->dmaFileInfo);
 }
 
 s32 romSetImage(Rom* pROM, char* szNameFile) {

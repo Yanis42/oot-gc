@@ -79,6 +79,7 @@ typedef struct Rom {
     /* 0x10EB4 */ s32 nCountOffsetBlocks;
     /* 0x10EB8 */ DVDFileInfo fileInfo;
     /* 0x10EF4 */ s32 offsetToRom;
+    DVDFileInfo dmaFileInfo;
 } Rom; // size = 0x10EF8
 
 s32 romGetPC(Rom* pROM, u64* pnPC);
