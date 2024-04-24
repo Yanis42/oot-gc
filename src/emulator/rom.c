@@ -436,11 +436,11 @@ static s32 romCacheGame_ZELDA(f32 rProgress) {
 
 enum {
     CONFIG_SCENE_START_OFFSET,
-    CONFIG_MAP_I_STATIC, // map_i_static
-    CONFIG_CODE, // code
-    CONFIG_SKYBOX, // vr_cloud3_pal_static
-    CONFIG_MSG_FIELD, // elf_message_field
-    CONFIG_MSG_YDAN, // elf_message_ydan
+    CONFIG_CODE_START, // code
+    CONFIG_CODE_END, // ovl_title
+    CONFIG_SKYBOX_START, // vr_cloud3_pal_static
+    CONFIG_MSG_FIELD_START, // elf_message_field
+    CONFIG_MSG_YDAN_START, // elf_message_ydan
     CONFIG_SCENE_START,
 };
 
@@ -448,7 +448,7 @@ enum {
 extern int atoi(const char* str);
 
 static u32 ganOffsetBlockFromDmadata[500] ALIGNAS(32) = {0};
-static u32 gacConfig[500] ALIGNAS(32);
+static u32 ganConfig[500] ALIGNAS(32);
 static s32 giLastScene;
 
 static s32 romGetDmaConfig(Rom* pROM) {
@@ -482,8 +482,8 @@ static s32 romGetDmaConfig(Rom* pROM) {
             for (iData = 0; iData < ARRAY_COUNT(acValue); iData++) {
                 acValue[iData] = entry[iData + iEntry];
             }
-            gacConfig[iConfig++] = atoi(acValue);
-            OSReport("DMA Config Entry Found - %d;\n", gacConfig[iConfig - 1]);
+            ganConfig[iConfig++] = atoi(acValue);
+            OSReport("DMA Config Entry Found - %d;\n", ganConfig[iConfig - 1]);
         }
     }
 
@@ -503,17 +503,17 @@ static s32 romCacheGameFromDmadata(Rom* pROM) {
         return 0;
     }
 
-    ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = gacConfig[CONFIG_MSG_FIELD];
-    ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = gacConfig[CONFIG_MSG_YDAN] - 1;
+    ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = ganConfig[CONFIG_MSG_FIELD_START];
+    ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = ganConfig[CONFIG_MSG_YDAN_START] - 1;
 
     // scene file indices
-    for (i = 0; i < ARRAY_COUNT(gacConfig); i++) {
+    for (i = 0; i < ARRAY_COUNT(ganConfig); i++) {
         if (i >= CONFIG_SCENE_START) {
-            rangeStart = gacConfig[i];
-            if (i + 1 < ARRAY_COUNT(gacConfig)) {
-                rangeEnd = gacConfig[i + 1] - 1;
+            rangeStart = ganConfig[i];
+            if (i + 1 < ARRAY_COUNT(ganConfig)) {
+                rangeEnd = ganConfig[i + 1] - 1;
             } else {
-                rangeEnd = gacConfig[giLastScene] - 1;
+                rangeEnd = ganConfig[giLastScene] - 1;
             }
         }
 
@@ -526,15 +526,15 @@ static s32 romCacheGameFromDmadata(Rom* pROM) {
 
     // Load up to the start of code
     rangeStart = 0;
-    rangeEnd = gacConfig[CONFIG_MAP_I_STATIC] - 1;
+    rangeEnd = ganConfig[CONFIG_CODE_START] - 1;
     OSReport("romCacheGameFromDmadata: loading range %08X-%08X\n", rangeStart, rangeEnd);
     if (!romLoadRange(pROM, rangeStart, rangeEnd, &blockCount, 1, &romCacheGame_ZELDA)) {
         return 0;
     }
 
     // Load from end of code to start of skyboxes (except for normal sky)
-    rangeStart = gacConfig[CONFIG_CODE];
-    rangeEnd = gacConfig[CONFIG_SKYBOX] - 1;
+    rangeStart = ganConfig[CONFIG_CODE_END];
+    rangeEnd = ganConfig[CONFIG_SKYBOX_START] - 1;
 
     OSReport("romCacheGameFromDmadata: loading range %08X-%08X\n", rangeStart, rangeEnd);
     if (!romLoadRange(pROM, rangeStart, rangeEnd, &blockCount, 1, &romCacheGame_ZELDA)) {
