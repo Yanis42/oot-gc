@@ -507,18 +507,22 @@ static s32 romCacheGameFromDmadata(Rom* pROM) {
     ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = ganConfig[CONFIG_MSG_YDAN_START] - 1;
 
     // scene file indices
-    for (i = 0; i < ARRAY_COUNT(ganConfig); i++) {
+    for (i = 0; i < (giLastScene + 1); i++) {
         if (i >= CONFIG_SCENE_START) {
             rangeStart = ganConfig[i];
-            if (i + 1 < ARRAY_COUNT(ganConfig)) {
+            if (i + 1 < (giLastScene + 1)) {
                 rangeEnd = ganConfig[i + 1] - 1;
             } else {
                 rangeEnd = ganConfig[giLastScene] - 1;
             }
         }
 
-        ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = rangeStart;
-        ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = rangeEnd;
+        if (rangeStart != rangeEnd + 1) {
+            ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = rangeStart;
+            ganOffsetBlockFromDmadata[nCountOffsetBlocks++] = rangeEnd;
+        } else {
+            OSReport("Warning: rangeStart == rangeEnd: %d, %d, %d\n", i, rangeStart, rangeEnd);
+        }
     }
 
     pROM->anOffsetBlock = ganOffsetBlockFromDmadata;
