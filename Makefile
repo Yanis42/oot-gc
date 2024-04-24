@@ -1,6 +1,6 @@
 WINDOWS := $(shell which wine ; echo $$?)
 
-NON_MATCHING := 0
+NON_MATCHING := 1
 
 #-------------------------------------------------------------------------------
 # Files
@@ -132,6 +132,7 @@ format:
 
 # Note: this is meant for testing/modding purposes as a dol is easier to package and run than the original elf
 dol: all $(DOL)
+	$(shell cp $(DOL) /mnt/c/Users/Yanis/Desktop/hackeroot_gc_testing/sys/main.dol)
 
 .PHONY: all setup clean format dol distclean
 
