@@ -3688,6 +3688,8 @@ s32 libraryTestFunction(Library* pLibrary, CpuFunction* pFunction) {
                 }
             }
 
+            // OSReport("gaFunction[iFunction].szName: %s, pFunction->nAddress0: 0x%08X\n", gaFunction[iFunction].szName, pFunction->nAddress0);
+
             if (bFlag) {
                 pFunction->timeToLive = 0;
                 *(pnCode++) = 0x7C000000 | iFunction;

@@ -2126,6 +2126,8 @@ static s32 cpuExecuteUpdate(Cpu* pCPU, s32* pnAddressGCN, u32 nCount) {
 
     pSystem = (System*)pCPU->pHost;
 
+    // OSReport("PC: 0x%08X\n", pCPU->nPC);
+
     if (!romUpdate(SYSTEM_ROM(pSystem))) {
         return 0;
     }
