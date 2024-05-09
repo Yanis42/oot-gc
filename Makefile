@@ -1,6 +1,31 @@
 NON_MATCHING := 0
 RUN_CC_CHECK := 1
 
+# Verbose toggle
+V := @
+ifeq (VERBOSE, 1)
+    V=
+endif
+
+# Colors
+NO_COL  := \033[0m
+GREEN   := \033[0;32m
+BLUE    := \033[0;36m
+YELLOW  := \033[0;33m
+BLINK   := \033[32;5m
+
+PRINT := printf
+
+# Generic print function for make rules
+define print
+  $(V)echo "$(GREEN)$(1) $(YELLOW)$(2)$(GREEN) -> $(BLUE)$(3)$(NO_COL)"
+endef
+
+define timeit
+  $(V)time -f "$(1) $(2) in %e sec" $(3)
+endef
+
+
 #-------------------------------------------------------------------------------
 # Files
 #-------------------------------------------------------------------------------
@@ -111,7 +136,8 @@ SBSS_PDHR 	:= 10
 default: all
 
 # Compare to the checksum of a stripped original
-all: $(ELF)
+all:
+	@time -f "Build time: %e sec" $(MAKE) $(ELF)
 ifneq ($(NON_MATCHING),1)
 	@md5sum $(COMPARE_TO)
 	@md5sum -c checksum.md5
@@ -149,27 +175,27 @@ ALL_DIRS := build $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS)
 DUMMY != mkdir -p $(ALL_DIRS)
 
 $(ELF): $(O_FILES) ldscript.lcf
-	$(RM) -rf $(ASM_PROCESSOR_DIR)/tmp
-	$(LD) $(LDFLAGS) -o $@ -lcf ldscript.lcf $(O_FILES)
-	$(OBJCOPY) $(ELF) $(COMPARE_TO) -S
+	$(V)$(RM) -rf $(ASM_PROCESSOR_DIR)/tmp
+	$(V)$(LD) $(LDFLAGS) -o $@ -lcf ldscript.lcf $(O_FILES)
+	$(V)$(OBJCOPY) $(ELF) $(COMPARE_TO) -S
 
 $(DOL): $(ELF)
-	$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
+	$(V)$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
 
 $(BUILD_DIR)/%.o: %.s
-	$(AS) $(ASFLAGS) -o $@ $<
+	$(V)$(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/src/dolphin/%.o: src/dolphin/%.c
-	$(ASM_PROCESSOR) "$(DOLPHIN_CC) $(CFLAGS)" "$(AS) $(ASFLAGS)" $@ $<
+	$(call timeit,Compiled,$<,$(ASM_PROCESSOR) "$(DOLPHIN_CC) $(CFLAGS)" "$(AS) $(ASFLAGS)" $@ $<)
 
 $(BUILD_DIR)/src/emulator/THPRead.o: src/emulator/THPRead.c
-	$(ASM_PROCESSOR) "$(CC) $(CFLAGS) -inline deferred" "$(AS) $(ASFLAGS)" $@ $<
+	$(call timeit,Compiled,$<,$(ASM_PROCESSOR) "$(CC) $(CFLAGS) -inline deferred" "$(AS) $(ASFLAGS)" $@ $<)
 
 $(BUILD_DIR)/src/emulator/THP%.o: src/emulator/THP%.c
-	$(ASM_PROCESSOR) "$(CC) $(CFLAGS)" "$(AS) $(ASFLAGS)" $@ $<
+	$(call timeit,Compiled,$<,$(ASM_PROCESSOR) "$(CC) $(CFLAGS)" "$(AS) $(ASFLAGS)" $@ $<)
 
 $(BUILD_DIR)/src/emulator/%.o: src/emulator/%.c
 ifeq ($(RUN_CC_CHECK),1)
-	$(CC_CHECK) $(CC_CHECK_FLAGS) $<
+	$(V)$(CC_CHECK) $(CC_CHECK_FLAGS) $<
 endif
-	$(ASM_PROCESSOR) "$(CC) $(CFLAGS) -inline deferred" "$(AS) $(ASFLAGS)" $@ $<
+	$(call timeit,Compiled,$<,$(ASM_PROCESSOR) "$(CC) $(CFLAGS) -inline deferred" "$(AS) $(ASFLAGS)" $@ $<)
