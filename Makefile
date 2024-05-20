@@ -148,7 +148,7 @@ dol: all $(DOL)
 	$(shell cp $(DOL) /mnt/c/Users/Yanis/Desktop/hackeroot_gc_testing/sys/main.dol)
 
 bps: dol
-	$(FLIPS) --create SIM_original.dol $(DOL) $(BUILD_DIR)/gamecube.bps
+	$(FLIPS) --create /home/github/oot-gc-dtk/build/mq-j/oot-gc.dol $(DOL) $(BUILD_DIR)/gamecube.bps
 	cp $(BUILD_DIR)/gamecube.bps /home/github/hackeroot/tools/gamecube.bps
 
 .PHONY: all setup clean format dol distclean
