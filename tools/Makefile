@@ -18,11 +18,14 @@ COMPILERS_TAG := 20231018
 
 all: binutils mwcc_compiler
 	$(MAKE) -C elf2dol
+	$(MAKE) -C Flips TARGET=cli
 
 clean:
 	rm -rf binutils
 	rm -rf mwcc_compiler
 	$(MAKE) -C elf2dol clean
+	$(MAKE) -C Flips clean
+	rm Flips/flips
 
 binutils:
 	mkdir -p binutils

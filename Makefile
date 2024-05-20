@@ -83,6 +83,7 @@ CC_CHECK_WARNINGS := \
 SHA1SUM := sha1sum
 PYTHON := python3
 ELF2DOL := tools/elf2dol/elf2dol
+FLIPS := tools/Flips/flips
 
 ASM_PROCESSOR_DIR := tools/asm_processor
 ASM_PROCESSOR := $(ASM_PROCESSOR_DIR)/compile.sh
@@ -130,6 +131,7 @@ setup:
 	$(OBJCOPY) SIM_original.elf SIM.elf -R .mwcats.text -g
 # Copy again to strip symbols since we don't want to diff those
 	$(OBJCOPY) SIM.elf SIM_S.elf -S
+	$(ELF2DOL) SIM_original.elf SIM_original.dol
 
 clean:
 	rm -f -d -r build
@@ -144,6 +146,10 @@ format:
 # Note: this is meant for testing/modding purposes as a dol is easier to package and run than the original elf
 dol: all $(DOL)
 	$(shell cp $(DOL) /mnt/c/Users/Yanis/Desktop/hackeroot_gc_testing/sys/main.dol)
+
+bps: dol
+	$(FLIPS) --create SIM_original.dol $(DOL) $(BUILD_DIR)/gamecube.bps
+	cp $(BUILD_DIR)/gamecube.bps /home/github/hackeroot/tools/gamecube.bps
 
 .PHONY: all setup clean format dol distclean
 

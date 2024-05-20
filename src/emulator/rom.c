@@ -6,7 +6,7 @@
 #include "emulator/simGCN.h"
 #include "emulator/system.h"
 #include "emulator/xlCoreGCN.h"
-#include "libc/string.h"
+#include "string.h"
 #include "emulator/xlHeap.h"
 #include "macros.h"
 

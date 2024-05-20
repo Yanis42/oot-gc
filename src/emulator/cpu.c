@@ -12,6 +12,7 @@
 #include "emulator/xlHeap.h"
 #include "emulator/xlObject.h"
 #include "emulator/xlPostGCN.h"
+#include "emulator/xlCoreGCN.h"
 #include "macros.h"
 #include "math.h"
 
@@ -3805,7 +3806,9 @@ static bool cpuExecuteJump(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressG
     pCPU->nPC = nAddressN64;
 
     if (gpSystem->eTypeROM == SRT_ZELDA1 && pCPU->nPC == 0x81000000) {
-        simulatorPlayMovie();
+        // simulatorPlayMovie();
+        simulatorReset(gPreviousIPLSetting, gPreviousForceMenuSetting);
+        xlCoreReset();
     }
 
     if (!cpuExecuteUpdate(pCPU, &nAddressGCN, nCount)) {

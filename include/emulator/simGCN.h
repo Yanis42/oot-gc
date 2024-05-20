@@ -97,6 +97,9 @@ extern u8 TexCoords_u8[];
 
 extern char gpErrorMessageBuffer[20480];
 
+extern bool gPreviousForceMenuSetting;
+extern bool gPreviousIPLSetting;
+
 void simulatorUnpackTexPalette(TEXPalette* pal);
 bool simulatorDVDOpen(char* szNameFile, DVDFileInfo* pFileInfo);
 bool simulatorDVDRead(DVDFileInfo* pFileInfo, void* anData, s32 nSizeRead, s32 nOffset, DVDCallback callback);
@@ -122,5 +125,6 @@ bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset, bool usePrevi
 bool simulatorGetArgument(SimArgumentType eType, char** pszArgument);
 bool simulatorPlayMovie(void);
 bool xlMain(void);
+void simulatorReset(bool IPL, bool forceMenu);
 
 #endif
