@@ -813,7 +813,7 @@ static bool cpuCompile_DMULT(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x556BF87E; // srwi    r11,r11,1
     compile[count++] = 0x398CFFFF; // addi    r12,r12,-1
     compile[count++] = 0x2C0C0000; // cmpwi   r12,0
-    compile[count++] = 0x4082FFB4; // bne+    0xffffffb4
+    compile[count++] = 0x4082FFB4; // bne+    0xFFFFFFB4
     compile[count++] = 0x39600001; // li      r11,1
     compile[count++] = 0x7DCE7A78; // xor     r14,r14,r15
     compile[count++] = 0x2C0E0000; // cmpwi   r14,0
@@ -871,7 +871,7 @@ static bool cpuCompile_DMULTU(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x556BF87E; // srwi    r11,r11,1
     compile[count++] = 0x398CFFFF; // addi    r12,r12,-1
     compile[count++] = 0x2C0C0000; // cmpwi   r12,0
-    compile[count++] = 0x4082FFB4; // bne+    0xffffffb4
+    compile[count++] = 0x4082FFB4; // bne+    0xFFFFFFB4
     compile[count++] = 0x91030004 + OFFSETOF(pCPU, nLo); // stw     r8,4(r3)
     compile[count++] = 0x90E30000 + OFFSETOF(pCPU, nLo); // stw     r7,0(r3)
     compile[count++] = 0x91430004 + OFFSETOF(pCPU, nHi); // stw     r10,4(r3)
@@ -914,7 +914,7 @@ static bool cpuCompile_DDIV(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x3D80FFFF; // lis     r12,-1
     compile[count++] = 0x618CFFFE; // ori     r12,r12,65534
     compile[count++] = 0x2C060000; // cmpwi   r6,0
-    compile[count++] = 0x4180002C; // blt-    0x2c
+    compile[count++] = 0x4180002C; // blt-    0x2C
     compile[count++] = 0x54C6083C; // slwi    r6,r6,1
     compile[count++] = 0x50E60FFE; // rlwimi  r6,r7,1,31,31
     compile[count++] = 0x54E7083C; // slwi    r7,r7,1
@@ -935,15 +935,15 @@ static bool cpuCompile_DDIV(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x7CE75814; // addc    r7,r7,r11
     compile[count++] = 0x7CC65114; // adde    r6,r6,r10
     compile[count++] = 0x2C060000; // cmpwi   r6,0
-    compile[count++] = 0x4180000C; // blt-    0xc
+    compile[count++] = 0x4180000C; // blt-    0xC
     compile[count++] = 0x61290001; // ori     r9,r9,1
     compile[count++] = 0x42800008; // bc      20,lt,0x8
     compile[count++] = 0x7D296038; // and     r9,r9,r12
     compile[count++] = 0x38A5FFFF; // addi    r5,r5,-1
     compile[count++] = 0x2C050000; // cmpwi   r5,0
-    compile[count++] = 0x4082FF90; // bne+    0xffffff90
+    compile[count++] = 0x4082FF90; // bne+    0xFFFFFF90
     compile[count++] = 0x2C060000; // cmpwi   r6,0
-    compile[count++] = 0x4080000C; // bge-    0xc
+    compile[count++] = 0x4080000C; // bge-    0xC
     compile[count++] = 0x7CE75814; // addc    r7,r7,r11
     compile[count++] = 0x7CC65114; // adde    r6,r6,r10
     compile[count++] = 0x39800001; // li      r12,1
@@ -983,7 +983,7 @@ static bool cpuCompile_DDIVU(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x3D80FFFF; // lis     r12,-1
     compile[count++] = 0x618CFFFE; // ori     r12,r12,65534
     compile[count++] = 0x2C060000; // cmpwi   r6,0
-    compile[count++] = 0x4180002C; // blt-    0x2c
+    compile[count++] = 0x4180002C; // blt-    0x2C
     compile[count++] = 0x54C6083C; // slwi    r6,r6,1
     compile[count++] = 0x50E60FFE; // rlwimi  r6,r7,1,31,31
     compile[count++] = 0x54E7083C; // slwi    r7,r7,1
@@ -1004,15 +1004,15 @@ static bool cpuCompile_DDIVU(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x7CE75814; // addc    r7,r7,r11
     compile[count++] = 0x7CC65114; // adde    r6,r6,r10
     compile[count++] = 0x2C060000; // cmpwi   r6,0
-    compile[count++] = 0x4180000C; // blt-    0xc
+    compile[count++] = 0x4180000C; // blt-    0xC
     compile[count++] = 0x61290001; // ori     r9,r9,1
     compile[count++] = 0x42800008; // bc      20,lt,0x8
     compile[count++] = 0x7D296038; // and     r9,r9,r12
     compile[count++] = 0x38A5FFFF; // addi    r5,r5,-1
     compile[count++] = 0x2C050000; // cmpwi   r5,0
-    compile[count++] = 0x4082FF90; // bne+    0xffffff90
+    compile[count++] = 0x4082FF90; // bne+    0xFFFFFF90
     compile[count++] = 0x2C060000; // cmpwi   r6,0
-    compile[count++] = 0x4080000C; // bge-    0xc
+    compile[count++] = 0x4080000C; // bge-    0xC
     compile[count++] = 0x7CE75814; // addc    r7,r7,r11
     compile[count++] = 0x7CC65114; // adde    r6,r6,r10
     compile[count++] = 0x91030000 + OFFSETOF(pCPU, nLo); // stw     r8,0(r3)
@@ -1205,7 +1205,7 @@ static bool cpuCompile_D_SQRT(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0xFC210032; // fmul    f1,f1,f0
     compile[count++] = 0x42800044; // bc      20,lt,0x44
     compile[count++] = 0xFC010000; // fcmpu   cr0,f1,f0
-    compile[count++] = 0x4082000C; // bne-    0xc
+    compile[count++] = 0x4082000C; // bne-    0xC
     compile[count++] = 0xFC200090; // fmr     f1,f0
     compile[count++] = 0x42800034; // bc      20,lt,0x34
     compile[count++] = 0xFC010000; // fcmpu   cr0,f1,f0
@@ -1282,7 +1282,7 @@ static bool cpuCompile_L_CVT_SD(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x91810028; // stw     r12,40(r1)
     compile[count++] = 0x9421FFF0; // stwu    r1,-16(r1)
     compile[count++] = 0x54A70001; // clrrwi. r7,r5,31
-    compile[count++] = 0x4182000C; // beq-    0xc
+    compile[count++] = 0x4182000C; // beq-    0xC
     compile[count++] = 0x20C60000; // subfic  r6,r6,0
     compile[count++] = 0x7CA50190; // subfze  r5,r5
     compile[count++] = 0x7CA93379; // or.     r9,r5,r6
@@ -1306,8 +1306,8 @@ static bool cpuCompile_L_CVT_SD(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x54C9057E; // clrlwi  r9,r6,21
     compile[count++] = 0x2C090400; // cmpwi   r9,1024
     compile[count++] = 0x3908043E; // addi    r8,r8,1086
-    compile[count++] = 0x4180001C; // blt-    0x1c
-    compile[count++] = 0x4181000C; // bgt-    0xc
+    compile[count++] = 0x4180001C; // blt-    0x1C
+    compile[count++] = 0x4181000C; // bgt-    0xC
     compile[count++] = 0x54C90529; // rlwinm. r9,r6,0,20,20
     compile[count++] = 0x41820010; // beq-    0x10
     compile[count++] = 0x30C60800; // addic   r6,r6,2048
@@ -1351,7 +1351,7 @@ static bool cpuCompile_CEIL_W(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x9421FFE0; // stwu    r1,-32(r1)
     compile[count++] = 0xC8030000 + (OFFSETOF(pCPU, aFPR) & 0xFFFF); // lfd     f0,0(r3)
     compile[count++] = 0xFC010040; // fcmpo   cr0,f1,f0
-    compile[count++] = 0x4081000C; // ble-    0xc
+    compile[count++] = 0x4081000C; // ble-    0xC
     compile[count++] = 0x38C00001; // li      r6,1
     compile[count++] = 0x42800008; // bc      20,lt,0x8
     compile[count++] = 0x38C00000; // li      r6,0
@@ -1382,7 +1382,7 @@ static bool cpuCompile_FLOOR_W(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x9421FFE0; // stwu    r1,-32(r1)
     compile[count++] = 0xC8030000 + (OFFSETOF(pCPU, aFPR) & 0xFFFF); // lfd     f0,0(r3)
     compile[count++] = 0xFC010040; // fcmpo   cr0,f1,f0
-    compile[count++] = 0x4180000C; // blt-    0xc
+    compile[count++] = 0x4180000C; // blt-    0xC
     compile[count++] = 0x38C00000; // li      r6,0
     compile[count++] = 0x42800008; // bc      20,lt,0x8
     compile[count++] = 0x38C00001; // li      r6,1
@@ -1738,7 +1738,7 @@ static bool cpuCompile_LWL(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x38C6FFF8; // addi    r6,r6,-8
     compile[count++] = 0x54E507BF; // clrlwi. r5,r7,30
     compile[count++] = 0x38E70001; // addi    r7,r7,1
-    compile[count++] = 0x4082FFDC; // bne+    0xffffffdc
+    compile[count++] = 0x4082FFDC; // bne+    0xFFFFFFDC
     compile[count++] = 0x4E800020; // blr
 
     nSize = count;
@@ -1768,7 +1768,7 @@ static bool cpuCompile_LWR(Cpu* pCPU, s32* addressGCN) {
     compile[count++] = 0x38C60008; // addi    r6,r6,8
     compile[count++] = 0x54E507BF; // clrlwi. r5,r7,30
     compile[count++] = 0x38E7FFFF; // addi    r7,r7,-1
-    compile[count++] = 0x4082FFDC; // bne+    0xffffffdc
+    compile[count++] = 0x4082FFDC; // bne+    0xFFFFFFDC
     compile[count++] = 0x4E800020; // blr
 
     nSize = count;
@@ -2332,7 +2332,7 @@ static bool cpuExecuteOpcode(Cpu* pCPU, s32 nCount0, s32 nAddressN64, s32 nAddre
     ramGetBuffer(SYSTEM_RAM(pCPU->pHost), &opcode, nAddressN64, NULL);
     nOpcode = *opcode;
     pCPU->nPC = nAddressN64 + 4;
-    if (nOpcode == 0xACBF011C) { // sw $ra,0x11c($a1)
+    if (nOpcode == 0xACBF011C) { // sw $ra,0x11C($a1)
         save = pCPU->aGPR[31].u64;
         restore = 1;
         pCPU->aGPR[31].s32 = pCPU->nReturnAddrLast;
@@ -3768,9 +3768,12 @@ static bool cpuExecuteIdle(Cpu* pCPU, s32 nCount, s32 nAddressN64, s32 nAddressG
     Rom* pROM;
 
     pROM = SYSTEM_ROM(pCPU->pHost);
+
+#if VERSION != MQ_J
     if (!simulatorTestReset(false, false, false, true)) {
         return false;
     }
+#endif
 
     nCount = OSGetTick();
     if (pCPU->nWaitPC != 0) {
@@ -5474,8 +5477,11 @@ bool cpuEvent(Cpu* pCPU, s32 nEvent, void* pArgument) {
             break;
         case 0:
         case 1:
+            break;
+#if VERSION != MQ_J
         case 0x1003:
             break;
+#endif
         default:
             return false;
     }

@@ -1,12 +1,12 @@
 #include "dolphin/hw_regs.h"
 #include "dolphin/os.h"
+#include "intrinsics.h"
 #include "macros.h"
 
 static ASM void ExternalInterruptHandler(register __OSException exception, register OSContext* context);
 
 extern void __RAS_OSDisableInterrupts_begin(void);
 extern void __RAS_OSDisableInterrupts_end(void);
-int __cntlzw(unsigned int n);
 
 static __OSInterruptHandler* InterruptHandlerTable;
 
@@ -87,7 +87,7 @@ void __OSInterruptInit(void) {
 
     *(OSInterruptMask*)OSPhysicalToCached(0x00C8) = 0;
 
-    __PIRegs[1] = 0xf0;
+    __PIRegs[1] = 0xF0;
 
     __OSMaskInterrupts(OS_INTERRUPTMASK_MEM | OS_INTERRUPTMASK_DSP | OS_INTERRUPTMASK_AI | OS_INTERRUPTMASK_EXI |
                        OS_INTERRUPTMASK_PI);
@@ -115,7 +115,7 @@ u32 SetInterruptMask(OSInterruptMask mask, OSInterruptMask current) {
                 reg |= 0x8;
             if (!(current & OS_INTERRUPTMASK_MEM_ADDRESS))
                 reg |= 0x10;
-            __MEMRegs[0x0000000e] = (u16)reg;
+            __MEMRegs[0x0000000E] = (u16)reg;
             mask &= ~OS_INTERRUPTMASK_MEM;
             break;
         case __OS_INTERRUPT_DSP_AI:

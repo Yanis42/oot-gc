@@ -5,10 +5,6 @@
 #include "dolphin/types.h"
 #include "macros.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Upper words of the masks, since UIMM is only 16 bits
 #define OS_CACHED_REGION_PREFIX 0x8000
 #define OS_UNCACHED_REGION_PREFIX 0xC000
@@ -19,8 +15,16 @@ extern "C" {
 
 typedef s64 OSTime;
 typedef u32 OSTick;
+
+extern bool __OSInIPL;
+extern OSTime __OSGetSystemTime(void);
+extern OSTime __OSStartTime;
+
+u8 GameChoice AT_ADDRESS(OS_BASE_CACHED | 0x30E3);
+u16 __OSWirelessPadFixMode AT_ADDRESS(OS_BASE_CACHED | 0x30E0);
 u32 __OSBusClock AT_ADDRESS(OS_BASE_CACHED | 0x00F8);
 u32 __OSCoreClock AT_ADDRESS(OS_BASE_CACHED | 0x00FC);
+
 #define OS_BUS_CLOCK (u32) __OSBusClock
 #define OS_CORE_CLOCK __OSCoreClock
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
@@ -82,7 +86,7 @@ typedef struct OSCalendarTime {
 
 void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime* td);
 
-#define OS_CONSOLE_MASK 0xf0000000
+#define OS_CONSOLE_MASK 0xF0000000
 #define OS_CONSOLE_RETAIL 0x00000000
 #define OS_CONSOLE_DEVELOPMENT 0x10000000
 #define OS_CONSOLE_TDEV 0x20000000
@@ -200,13 +204,10 @@ volatile int __OSTVMode AT_ADDRESS(OS_BASE_CACHED | 0xCC);
 void OSReport(const char* msg, ...);
 void OSPanic(const char* file, int line, const char* msg, ...);
 
-#ifdef __cplusplus
-}
-#endif
-
 #include "dolphin/os/OSAlarm.h"
 #include "dolphin/os/OSAlloc.h"
 #include "dolphin/os/OSArena.h"
+#include "dolphin/os/OSBootInfo.h"
 #include "dolphin/os/OSCache.h"
 #include "dolphin/os/OSContext.h"
 #include "dolphin/os/OSError.h"
@@ -223,4 +224,5 @@ void OSPanic(const char* file, int line, const char* msg, ...);
 #include "dolphin/os/OSRtc.h"
 #include "dolphin/os/OSSerial.h"
 #include "dolphin/os/OSThread.h"
+
 #endif

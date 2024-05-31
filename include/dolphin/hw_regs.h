@@ -4,10 +4,6 @@
 #include "dolphin/types.h"
 #include "macros.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 vu16 __VIRegs[59] AT_ADDRESS(0xCC002000);
 
 // offsets for __VIRegs[i]
@@ -144,6 +140,8 @@ vu16 __DSPRegs[32] AT_ADDRESS(0xCC005000);
 #define DSP_DMA_CONTROL_LEN (27)
 #define DSP_DMA_BYTES_LEFT (29)
 
+#define DSP_DMA_START_FLAG (0x8000) // set to start DSP
+
 vu32 __DIRegs[16] AT_ADDRESS(0xCC006000);
 
 // offsets for __DIRegs[i]
@@ -215,8 +213,29 @@ vu32 __AIRegs[8] AT_ADDRESS(0xCC006C00);
 #define AI_SAMPLE_COUNTER (2) // number of stereo samples output
 #define AI_INTRPT_TIMING (3) // interrupt timing
 
-#ifdef __cplusplus
-}
-#endif
+#define AI_CONTROL_PLAY_STATE (0x1)
+#define AI_CONTROL_STREAM_SAMPLE_RATE (0x2)
+#define AI_CONTROL_DSP_SAMPLE_COUNT (0x4)
+#define AI_CONTROL_UNKNOWN8 (0x8)
+#define AI_CONTROL_STREAM_SAMPLE_COUNT (0x20)
+#define AI_CONTROL_DSP_SAMPLE_RATE (0x40)
+
+#define FP0 fp0
+#define FP1 fp1
+#define FP2 fp2
+#define FP3 fp3
+#define FP4 fp4
+#define FP5 fp5
+#define FP6 fp6
+#define FP7 fp7
+#define FP8 fp8
+#define FP9 fp9
+#define FP10 fp10
+#define FP11 fp11
+#define FP12 fp12
+#define FP13 fp13
+#define FP14 fp14
+#define FP15 fp15
+#define FP31 fp31
 
 #endif // _DOLPHIN_HW_REGS

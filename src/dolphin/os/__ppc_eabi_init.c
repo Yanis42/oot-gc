@@ -2,10 +2,6 @@
 #include "dolphin/base/PPCArch.h"
 #include "macros.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 void __OSPSInit(void);
 void __OSCacheInit(void);
 
@@ -53,14 +49,14 @@ void InitMetroTRK_BBA(void) { return; }
 void __init_user(void) { __init_cpp(); }
 
 typedef void (*voidfunctionptr)(void); // pointer to function returning void
-INIT extern voidfunctionptr _ctors[];
-INIT extern voidfunctionptr _dtors[];
+extern voidfunctionptr _ctors[];
+extern voidfunctionptr _dtors[];
 
 void __init_cpp(void) {
     voidfunctionptr* constructor;
 
     /*
-     *	call static initializers
+     * call static initializers
      */
     for (constructor = _ctors; *constructor; constructor++) {
         (*constructor)();
@@ -68,7 +64,3 @@ void __init_cpp(void) {
 }
 
 void _ExitProcess(void) { PPCHalt(); }
-
-#ifdef __cplusplus
-}
-#endif

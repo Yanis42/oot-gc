@@ -15,7 +15,7 @@ _XL_OBJECTTYPE gClassSound = {
     (EventFunc)soundEvent,
 };
 
-s32 gVolumeCurve[257] ALIGNAS(32);
+s32 gVolumeCurve[257] ATTRIBUTE_ALIGN(32);
 
 bool soundWipeBuffers(Sound* pSound) {
     s32 iBuffer;
@@ -449,8 +449,10 @@ bool soundEvent(Sound* pSound, s32 nEvent, void* pArgument) {
                 return false;
             }
             break;
+#if VERSION != MQ_J
         case 0x1003:
             break;
+#endif
         default:
             return false;
     }

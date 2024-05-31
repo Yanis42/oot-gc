@@ -1,7 +1,14 @@
 #ifndef _MACROS_H
 #define _MACROS_H
 
-#define ALIGNAS(N) __attribute__((aligned(N)))
+// The VERSION macro will be set to one of these version numbers.
+#define MQ_J 1
+#define MQ_U 2
+#define MQ_E 3
+#define CE_J 4
+#define CE_U 5
+#define CE_E 6
+
 #define ALIGN_PREV(X, N) ((X) & ~((N) - 1))
 #define ALIGN_NEXT(X, N) ALIGN_PREV(((X) + (N) - 1), N)
 
@@ -13,6 +20,7 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) < (b) ? (b) : (a))
 #define SQ(x) ((x) * (x))
+#define CLAMP(x, l, h) (((x) > (h)) ? (h) : (((x) < (l)) ? (l) : (x)))
 
 // Adds no-ops to increase a function's size, preventing automatic inlining
 #define NO_INLINE() \
@@ -52,6 +60,18 @@ inline void padStack(void) { int pad = 0; }
 #define INIT __declspec(section ".init")
 #else
 #define INIT
+#endif
+
+#ifdef __MWERKS__
+#define CTORS __declspec(section ".ctors")
+#else
+#define CTORS
+#endif
+
+#ifdef __MWERKS__
+#define DTORS __declspec(section ".dtors")
+#else
+#define DTORS
 #endif
 
 #ifdef __MWERKS__

@@ -3,10 +3,6 @@
 #include "dolphin/types.h"
 #include "string.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // clang-format off
 static u8 DSPInitCode[128] = {
     0x02, 0x9F, 0x00, 0x10, 0x02, 0x9F, 0x00, 0x33, 0x02, 0x9F, 0x00, 0x34, 0x02, 0x9F, 0x00, 0x35,
@@ -98,20 +94,16 @@ void __OSStopAudioSystem(void) {
     __DSPRegs[27] = r28 & ~0x8000;
     waitUntil(__DSPRegs[5], 0x400);
     waitUntil(__DSPRegs[5], 0x200);
-    __DSPRegs[5] = 0x8ac;
+    __DSPRegs[5] = 0x8AC;
     __DSPRegs[0] = 0;
 
     while (((__DSPRegs[2] << 16) | __DSPRegs[3]) & 0x80000000)
         ;
     r28 = OSGetTick();
-    while ((s32)(OSGetTick() - r28) < 0x2c)
+    while ((s32)(OSGetTick() - r28) < 0x2C)
         ;
     __DSPRegs[5] |= 1;
     waitUntil(__DSPRegs[5], 0x001);
 
 #undef waitUntil
 }
-
-#ifdef __cplusplus
-}
-#endif

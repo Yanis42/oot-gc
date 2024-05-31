@@ -16,126 +16,107 @@
 #include "macros.h"
 #include "string.h"
 
-u8 gcoverOpen[0x28C1] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000D8880, 0x28C1)
+// clang-format off
+#include "gcoverOpen.inc"
+#include "gnoDisk.inc"
+#include "gretryErr.inc"
+#include "gfatalErr.inc"
+#include "gwrongDisk.inc"
+#include "greadingDisk.inc"
+#include "gbar.inc"
+#include "gyes.inc"
+#include "gno.inc"
+#include "gmesgOK.inc"
+// clang-format on
+
+#if VERSION == MQ_J
+#define DEFAULT_ROM_NAME "urazlj_f.n64"
+#elif VERSION == CE_J
+#define DEFAULT_ROM_NAME "zlj_f.n64"
+#elif VERSION == CE_U
+#define DEFAULT_ROM_NAME "zle_f.n64"
+#endif
+
+s16 Vert_s16[12] ATTRIBUTE_ALIGN(32) = {
+    0, 0, -1, 200, 0, -1, 200, 200, -1, 0, 200, -1,
 };
 
-u8 gnoDisk[0x1F01] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000DB160, 0x1F01)
+s16 VertTitle_s16[12] ATTRIBUTE_ALIGN(32) = {
+    0, 0, -1, 200, 0, -1, 200, 200, -1, 0, 200, -1,
 };
 
-u8 gretryErr[0x2441] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000DD080, 0x2441)
+s16 VertYes_s16[12] ATTRIBUTE_ALIGN(32) = {
+    0, 0, -1, 200, 0, -1, 200, 200, -1, 0, 200, -1,
 };
 
-u8 gfatalErr[0x32E1] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000DF4E0, 0x32E1)
+s16 VertNo_s16[12] ATTRIBUTE_ALIGN(32) = {
+    0, 0, -1, 200, 0, -1, 200, 200, -1, 0, 200, -1,
 };
 
-u8 gwrongDisk[0x1F01] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000E27E0, 0x1F01)
-};
-
-u8 greadingDisk[0x0C41] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000E4700, 0x0C41)
-};
-
-u8 gbar[0x0741] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000E5360, 0x0741)
-};
-
-u8 gyes[0x05C1] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000E5AC0, 0x05C1)
-};
-
-u8 gno[0x05C1] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000E60A0, 0x05C1)
-};
-
-u8 gmesgOK[0x0341] ALIGNAS(32) = {
-#pragma INCBIN("SIM_original.elf", 0x000E6680, 0x0341)
-};
-
-s16 Vert_s16[12] ALIGNAS(32) = {
-    0x0000, 0x0000, 0xFFFF, 0x00C8, 0x0000, 0xFFFF, 0x00C8, 0x00C8, 0xFFFF, 0x0000, 0x00C8, 0xFFFF,
-};
-
-s16 VertTitle_s16[12] ALIGNAS(32) = {
-    0x0000, 0x0000, 0xFFFF, 0x00C8, 0x0000, 0xFFFF, 0x00C8, 0x00C8, 0xFFFF, 0x0000, 0x00C8, 0xFFFF,
-};
-
-s16 VertYes_s16[12] ALIGNAS(32) = {
-    0x0000, 0x0000, 0xFFFF, 0x00C8, 0x0000, 0xFFFF, 0x00C8, 0x00C8, 0xFFFF, 0x0000, 0x00C8, 0xFFFF,
-};
-
-s16 VertNo_s16[12] ALIGNAS(32) = {
-    0x0000, 0x0000, 0xFFFF, 0x00C8, 0x0000, 0xFFFF, 0x00C8, 0x00C8, 0xFFFF, 0x0000, 0x00C8, 0xFFFF,
-};
-
-s16 Vert_s16Bar[12] ALIGNAS(32) = {
-    0x0000, 0x0000, 0xFFFF, 0x00C8, 0x0000, 0xFFFF, 0x00C8, 0x00C8, 0xFFFF, 0x0000, 0x00C8, 0xFFFF,
+s16 Vert_s16Bar[12] ATTRIBUTE_ALIGN(32) = {
+    0, 0, -1, 200, 0, -1, 200, 200, -1, 0, 200, -1,
 };
 
 // rgba
-u32 Colors_u32[3] ALIGNAS(32) = {
+u32 Colors_u32[3] ATTRIBUTE_ALIGN(32) = {
     0x000000FF,
     0x000000FF,
     0x000000FF,
 };
 
-u8 TexCoords_u8[] ALIGNAS(32) = {
-    0x00, 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01,
+u8 TexCoords_u8[] ATTRIBUTE_ALIGN(32) = {
+    0, 0, 1, 0, 1, 1, 0, 1,
 };
 
-static f32 gOrthoMtx[4][4] ALIGNAS(32);
+static f32 gOrthoMtx[4][4] ATTRIBUTE_ALIGN(32);
 static u32 gContMap[4][GCN_BTN_COUNT];
 static char* gaszArgument[8];
 
-u32 gmsg_ld01Size = 0x00003E20;
-u32 gmsg_ld02Size = 0x00003E20;
-u32 gmsg_ld03Size = 0x00003E20;
-u32 gmsg_ld04Size = 0x00003E20;
-u32 gmsg_ld05_1Size = 0x00003E20;
-u32 gmsg_ld05_2Size = 0x00003E20;
-u32 gmsg_ld06_1Size = 0x00003E20;
-u32 gmsg_ld06_2Size = 0x00003E20;
-u32 gmsg_ld06_3Size = 0x00003E20;
-u32 gmsg_ld06_4Size = 0x00003E20;
-u32 gmsg_ld07Size = 0x00003E20;
-u32 gmsg_gf01Size = 0x00003E20;
-u32 gmsg_gf02Size = 0x00003E20;
-u32 gmsg_gf03Size = 0x00003E20;
-u32 gmsg_gf04Size = 0x00003E20;
-u32 gmsg_gf05Size = 0x00003E20;
-u32 gmsg_gf06Size = 0x00003E20;
-u32 gmsg_in01Size = 0x00003E20;
-u32 gmsg_in02Size = 0x00003E20;
-u32 gmsg_in03Size = 0x00003E20;
-u32 gmsg_in04Size = 0x00003E20;
-u32 gmsg_in05Size = 0x00003E20;
-u32 gmsg_sv01Size = 0x00003E20;
-u32 gmsg_sv01_2Size = 0x00003E20;
-u32 gmsg_sv02Size = 0x00003E20;
-u32 gmsg_sv03Size = 0x00003E20;
-u32 gmsg_sv04Size = 0x00003E20;
-u32 gmsg_sv05_1Size = 0x00003E20;
-u32 gmsg_sv06_1Size = 0x00003E20;
-u32 gmsg_sv06_2Size = 0x00003E20;
-u32 gmsg_sv06_3Size = 0x00003E20;
-u32 gmsg_sv06_4Size = 0x00003E20;
-u32 gmsg_sv06_5Size = 0x00003E20;
-u32 gmsg_sv07Size = 0x00003E20;
-u32 gmsg_sv08Size = 0x00003E20;
-u32 gmsg_sv09Size = 0x00003E20;
-u32 gmsg_sv10Size = 0x00003E20;
-u32 gmsg_sv11Size = 0x00003E20;
-u32 gmsg_sv12Size = 0x00003E20;
-u32 gmsg_sv_shareSize = 0x00003E20;
-u32 gz_bnrSize = 0x00001840;
-u32 gz_iconSize = 0x00001840;
+u32 gmsg_ld01Size = 0x3E20;
+u32 gmsg_ld02Size = 0x3E20;
+u32 gmsg_ld03Size = 0x3E20;
+u32 gmsg_ld04Size = 0x3E20;
+u32 gmsg_ld05_1Size = 0x3E20;
+u32 gmsg_ld05_2Size = 0x3E20;
+u32 gmsg_ld06_1Size = 0x3E20;
+u32 gmsg_ld06_2Size = 0x3E20;
+u32 gmsg_ld06_3Size = 0x3E20;
+u32 gmsg_ld06_4Size = 0x3E20;
+u32 gmsg_ld07Size = 0x3E20;
+u32 gmsg_gf01Size = 0x3E20;
+u32 gmsg_gf02Size = 0x3E20;
+u32 gmsg_gf03Size = 0x3E20;
+u32 gmsg_gf04Size = 0x3E20;
+u32 gmsg_gf05Size = 0x3E20;
+u32 gmsg_gf06Size = 0x3E20;
+u32 gmsg_in01Size = 0x3E20;
+u32 gmsg_in02Size = 0x3E20;
+u32 gmsg_in03Size = 0x3E20;
+u32 gmsg_in04Size = 0x3E20;
+u32 gmsg_in05Size = 0x3E20;
+u32 gmsg_sv01Size = 0x3E20;
+u32 gmsg_sv01_2Size = 0x3E20;
+u32 gmsg_sv02Size = 0x3E20;
+u32 gmsg_sv03Size = 0x3E20;
+u32 gmsg_sv04Size = 0x3E20;
+u32 gmsg_sv05_1Size = 0x3E20;
+u32 gmsg_sv06_1Size = 0x3E20;
+u32 gmsg_sv06_2Size = 0x3E20;
+u32 gmsg_sv06_3Size = 0x3E20;
+u32 gmsg_sv06_4Size = 0x3E20;
+u32 gmsg_sv06_5Size = 0x3E20;
+u32 gmsg_sv07Size = 0x3E20;
+u32 gmsg_sv08Size = 0x3E20;
+u32 gmsg_sv09Size = 0x3E20;
+u32 gmsg_sv10Size = 0x3E20;
+u32 gmsg_sv11Size = 0x3E20;
+u32 gmsg_sv12Size = 0x3E20;
+u32 gmsg_sv_shareSize = 0x3E20;
+u32 gz_bnrSize = 0x1840;
+u32 gz_iconSize = 0x1840;
 
 bool gHighlightChoice = true;
-__anon_0x61D7 simulatorMessageCurrent = S_M_NONE;
+SimulatorMessage simulatorMessageCurrent = S_M_NONE;
 bool gResetBeginFlag = true;
 
 static Code* gpCode;
@@ -146,9 +127,12 @@ System* gpSystem;
 
 char gpErrorMessageBuffer[20480];
 bool gbDisplayedError;
+
+#if VERSION != MQ_J
 bool gPreviousAllowResetSetting;
 bool gPreviousForceMenuSetting;
 bool gPreviousIPLSetting;
+#endif
 
 u32 gnTickReset;
 bool gbReset;
@@ -164,15 +148,14 @@ bool simulatorGXInit(void) {
         {0.0f, 0.0f, 1.0f, -1.0f},
     };
 
-    // possible bug? GX_TG_MTX3x4 vs GX_TG_MTX2x4 (see identity_mtx)
-    GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_TEX1, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD2, GX_TG_MTX2x4, GX_TG_TEX2, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD3, GX_TG_MTX2x4, GX_TG_TEX3, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD4, GX_TG_MTX2x4, GX_TG_TEX4, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD5, GX_TG_MTX2x4, GX_TG_TEX5, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD6, GX_TG_MTX2x4, GX_TG_TEX6, 0x3C, GX_FALSE, 0x7D);
-    GXSetTexCoordGen2(GX_TEXCOORD7, GX_TG_MTX2x4, GX_TG_TEX7, 0x3C, GX_FALSE, 0x7D);
+    GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_TEX1, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD2, GX_TG_MTX2x4, GX_TG_TEX2, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD3, GX_TG_MTX2x4, GX_TG_TEX3, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD4, GX_TG_MTX2x4, GX_TG_TEX4, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD5, GX_TG_MTX2x4, GX_TG_TEX5, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD6, GX_TG_MTX2x4, GX_TG_TEX6, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD7, GX_TG_MTX2x4, GX_TG_TEX7, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
 
     GXSetNumTexGens(1);
     GXClearVtxDesc();
@@ -230,7 +213,7 @@ bool simulatorGXInit(void) {
     GXSetAlphaCompare(GX_ALWAYS, 0, GX_AOP_AND, GX_ALWAYS, 0);
     GXSetZTexture(GX_ZT_DISABLE, GX_TF_Z8, 0);
 
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < GX_MAX_TEVSTAGE; i++) {
         GXSetTevKColorSel(i, GX_TEV_KCSEL_1_4);
         GXSetTevKAlphaSel(i, GX_TEV_KASEL_1);
         GXSetTevSwapMode(i, GX_TEV_SWAP0, GX_TEV_SWAP0);
@@ -264,7 +247,7 @@ bool simulatorGXInit(void) {
     GXSetFieldMask(GX_ENABLE, GX_ENABLE);
 
     GXSetCopyClear(GX_DEFAULT_BG, 0xFFFFFF);
-    GXSetCopyClamp(3); // missing enum?
+    GXSetCopyClamp((GXFBClamp)(GX_CLAMP_TOP | GX_CLAMP_BOTTOM));
     GXSetDispCopyGamma(GX_GM_1_0);
     GXSetDispCopyFrame2Field(GX_COPY_PROGRESSIVE);
     GXClearBoundingBox();
@@ -310,19 +293,26 @@ bool gButtonDownToggle = false;
 bool gDVDResetToggle = false;
 
 bool simulatorDVDShowError(s32 nStatus, void* anData, s32 nSizeRead, u32 nOffset) {
+    static bool toggle;
 
-    static s32 toggle;
+#if VERSION == MQ_J
+#define continueToggle false
+#else
+    bool continueToggle;
+#endif
 
-    s32 continueToggle;
-    __anon_0x61D7 nMessage = S_M_NONE;
+    SimulatorMessage nMessage = S_M_NONE;
 
     do {
+
+#if VERSION != MQ_J
         if ((nStatus != 1) && (nStatus != 0) && (nStatus != 2) && (nStatus != 3) && (nStatus != 7) && (nStatus != 8) &&
             (nStatus != 10)) {
             continueToggle = true;
         } else {
             continueToggle = false;
         }
+#endif
 
         switch (nStatus) {
             case -1:
@@ -352,7 +342,7 @@ bool simulatorDVDShowError(s32 nStatus, void* anData, s32 nSizeRead, u32 nOffset
                 break;
             default:
                 nMessage = S_M_DISK_DEFAULT_ERROR;
-                xlPostText("ShowError: Unknown FileInfoStatus: %d", "simGCN.c", 763, nStatus);
+                xlPostText("ShowError: Unknown FileInfoStatus: %d", "simGCN.c", VERSION == MQ_J ? 750 : 763, nStatus);
                 break;
         }
 
@@ -364,6 +354,21 @@ bool simulatorDVDShowError(s32 nStatus, void* anData, s32 nSizeRead, u32 nOffset
             nMessage = S_M_DISK_READING_DISK;
         }
 
+#if VERSION == MQ_J
+        if (nStatus == 5) {
+            if (!simulatorTestReset(true, true, true)) {
+                return false;
+            }
+        } else if (nStatus != -1) {
+            if (gDVDResetToggle == 1 && (((u32)nStatus <= 3) || (((u32)nStatus - 7) <= 1) || (nStatus == 10))) {
+                if (!simulatorTestReset(false, false, true)) {
+                    return false;
+                }
+            } else if (!simulatorTestReset(true, false, true)) {
+                return false;
+            }
+        }
+#else
         if ((gDVDResetToggle == 1) && ((nStatus <= 3U) || ((nStatus - 7) <= 1U) || (nStatus == 10))) {
             if (!simulatorTestReset(false, false, true, false)) {
                 return false;
@@ -371,15 +376,18 @@ bool simulatorDVDShowError(s32 nStatus, void* anData, s32 nSizeRead, u32 nOffset
         } else if ((nStatus != -1) && (!simulatorTestReset(true, false, true, false))) {
             return false;
         }
+#endif
 
         if (nMessage != S_M_NONE) {
-            while (!(frameBeginOK(gpSystem->pFrame)))
-                ;
+            while (!(frameBeginOK(gpSystem->pFrame))) {}
             PADControlMotor(0, PAD_MOTOR_STOP);
-            simulatorDrawErrorMessage(nMessage, 0, 0);
+            simulatorDrawErrorMessage(nMessage, false, 0);
         }
 
+#if VERSION != MQ_J
         nStatus = DVDGetDriveStatus();
+#endif
+
     } while (continueToggle == true);
 
     return true;
@@ -431,7 +439,7 @@ bool simulatorPlayMovie(void) {
     return true;
 }
 
-s32 simulatorDrawImage(TEXPalette* tpl, s32 nX0, s32 nY0, s32 drawBar, s32 percent) {
+bool simulatorDrawImage(TEXPalette* tpl, s32 nX0, s32 nY0, bool drawBar, s32 percent) {
     GXTexObj texObj;
     GXTexObj texObj2;
     u32 pad2;
@@ -449,8 +457,7 @@ s32 simulatorDrawImage(TEXPalette* tpl, s32 nX0, s32 nY0, s32 drawBar, s32 perce
 
     Mtx g2;
 
-    do {
-    } while (frameBeginOK(gpFrame) != true);
+    while (frameBeginOK(gpFrame) != true) {}
 
     simulatorGXInit();
     xlCoreBeforeRender();
@@ -610,11 +617,11 @@ s32 simulatorDrawImage(TEXPalette* tpl, s32 nX0, s32 nY0, s32 drawBar, s32 perce
     frameDrawReset(gpFrame, 0x5FFED);
 
     PAD_STACK();
-    return 1;
+    return true;
 }
 
-s32 simulatorDrawYesNoImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message, TEXPalette* tplYes, s32 nX0Yes,
-                            s32 nY0Yes, TEXPalette* tplNo, s32 nX0No, s32 nY0No) {
+bool simulatorDrawYesNoImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message, TEXPalette* tplYes, s32 nX0Yes,
+                             s32 nY0Yes, TEXPalette* tplNo, s32 nX0No, s32 nY0No) {
 
     GXTexObj texObj;
     u32 pad;
@@ -632,8 +639,7 @@ s32 simulatorDrawYesNoImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Messa
         {0.0f, 0.0f, 1.0f, -1.0f},
     };
 
-    do {
-    } while (frameBeginOK(gpFrame) != true);
+    while (frameBeginOK(gpFrame) != true) {}
 
     Vert_s16[0] = nX0Message;
     Vert_s16[1] = nY0Message;
@@ -841,11 +847,11 @@ s32 simulatorDrawYesNoImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Messa
     PAD_STACK();
     PAD_STACK();
 
-    return 1;
+    return true;
 }
 
-s32 simulatorDrawOKImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message, TEXPalette* tplOK, s32 nX0OK,
-                         s32 nY0OK) {
+bool simulatorDrawOKImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message, TEXPalette* tplOK, s32 nX0OK,
+                          s32 nY0OK) {
     GXTexObj texObj;
     GXColor color0;
     GXColor color1;
@@ -861,8 +867,7 @@ s32 simulatorDrawOKImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message,
         {0.0f, 0.0f, 1.0f, -1.0f},
     };
 
-    do {
-    } while (frameBeginOK(gpFrame) != true);
+    while (frameBeginOK(gpFrame) != true) {}
 
     Vert_s16[0] = nX0Message;
     Vert_s16[1] = nY0Message;
@@ -956,8 +961,8 @@ s32 simulatorDrawOKImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message,
     GXSetTevColor(GX_TEVREG1, color1);
     GXSetTevColorIn(GX_TEVSTAGE0, GX_CC_C0, GX_CC_C1, GX_CC_TEXC, GX_CC_ZERO);
     GXSetTevAlphaIn(GX_TEVSTAGE0, GX_CA_A0, GX_CA_A1, GX_CA_TEXA, GX_CA_ZERO);
-    GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, 1U, GX_TEVPREV);
-    GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, 1U, GX_TEVPREV);
+    GXSetTevColorOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+    GXSetTevAlphaOp(GX_TEVSTAGE0, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
     GXLoadTexObj(&texObj, 0);
     xlCoreBeforeRender();
 
@@ -1003,9 +1008,9 @@ s32 simulatorDrawOKImage(TEXPalette* tplMessage, s32 nX0Message, s32 nY0Message,
     return true;
 }
 
-bool simulatorDrawErrorMessage(__anon_0x61D7 simulatorErrorMessage, s32 drawBar, s32 percent) {
-
+bool simulatorDrawErrorMessage(SimulatorMessage simulatorErrorMessage, bool drawBar, s32 percent) {
     PADControlMotor(0, PAD_MOTOR_STOP);
+
     switch (simulatorErrorMessage) {
         case S_M_DISK_COVER_OPEN:
             simulatorDrawImage(
@@ -1056,16 +1061,14 @@ bool simulatorDrawErrorMessage(__anon_0x61D7 simulatorErrorMessage, s32 drawBar,
                 N64_FRAME_HEIGHT / 2 - ((TEXPalette*)gfatalErr)->descriptorArray->textureHeader->height / 2, drawBar,
                 percent);
             break;
-
         default:
-
             break;
     }
     gbDisplayedError = true;
     return true;
 }
 
-s32 simulatorPrepareMessage(__anon_0x61D7 simulatorErrorMessage) {
+bool simulatorPrepareMessage(SimulatorMessage simulatorErrorMessage) {
     DVDFileInfo fileInfo;
     switch (simulatorErrorMessage) {
         case S_M_CARD_IN02:
@@ -1099,7 +1102,6 @@ s32 simulatorPrepareMessage(__anon_0x61D7 simulatorErrorMessage) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             break;
 
         default:
@@ -1108,13 +1110,13 @@ s32 simulatorPrepareMessage(__anon_0x61D7 simulatorErrorMessage) {
     return true;
 }
 
-bool simulatorDrawYesNoMessageLoop(TEXPalette* simulatorQuestion, s32* yes) {
+bool simulatorDrawYesNoMessageLoop(TEXPalette* simulatorQuestion, bool* yes) {
     TEXDescriptor** pNo;
     TEXDescriptor** pYes;
     TEXDescriptor** pQuestion;
     s32 pad[2];
 
-    if (*yes == 1) {
+    if (*yes == true) {
         gHighlightChoice = true;
     } else {
         gHighlightChoice = false;
@@ -1138,7 +1140,7 @@ bool simulatorDrawYesNoMessageLoop(TEXPalette* simulatorQuestion, s32* yes) {
 
     gButtonDownToggle = false;
     DEMOPadRead();
-    if (*yes == 1) {
+    if (*yes == true) {
         gHighlightChoice = true;
     } else {
         gHighlightChoice = false;
@@ -1152,7 +1154,7 @@ bool simulatorDrawYesNoMessageLoop(TEXPalette* simulatorQuestion, s32* yes) {
 
     if (DemoPad->pst.err == 0) {
         if (DemoPad->pst.button & 0x1100) {
-            if ((s32)*yes == 1) {
+            if (*yes == true) {
                 soundPlayBeep(SYSTEM_SOUND(gpSystem), SOUND_BEEP_ACCEPT);
             } else {
                 soundPlayBeep(SYSTEM_SOUND(gpSystem), SOUND_BEEP_DECLINE);
@@ -1163,22 +1165,22 @@ bool simulatorDrawYesNoMessageLoop(TEXPalette* simulatorQuestion, s32* yes) {
         if (DemoPad->pst.button & 0x200) {
             soundPlayBeep(SYSTEM_SOUND(gpSystem), SOUND_BEEP_DECLINE);
             gButtonDownToggle = true;
-            *yes = 0;
+            *yes = false;
             return true;
         }
-        if ((DemoPad->pst.stickX < 0) && (*yes == 0)) {
+        if (DemoPad->pst.stickX < 0 && *yes == false) {
             soundPlayBeep(SYSTEM_SOUND(gpSystem), SOUND_BEEP_SELECT);
-            *yes = 1;
-        } else if ((DemoPad->pst.stickX > 0) && (*yes == 1)) {
+            *yes = true;
+        } else if (DemoPad->pst.stickX > 0 && *yes == true) {
             soundPlayBeep(SYSTEM_SOUND(gpSystem), SOUND_BEEP_SELECT);
-            *yes = 0;
+            *yes = false;
         }
     }
 
     return false;
 }
 
-bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
+bool simulatorDrawYesNoMessage(SimulatorMessage simulatorMessage, bool* yes) {
     DVDFileInfo fileInfo;
     switch (simulatorMessage) {
         case S_M_CARD_LD05_2:
@@ -1212,8 +1214,8 @@ bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             return simulatorDrawYesNoMessageLoop((TEXPalette*)gpErrorMessageBuffer, yes);
+
         case S_M_CARD_GF01:
             if (simulatorMessageCurrent != simulatorMessage) {
                 simulatorMessageCurrent = simulatorMessage;
@@ -1223,7 +1225,6 @@ bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             return simulatorDrawYesNoMessageLoop((TEXPalette*)gpErrorMessageBuffer, yes);
 
         case S_M_CARD_IN01:
@@ -1235,7 +1236,6 @@ bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             return simulatorDrawYesNoMessageLoop((TEXPalette*)gpErrorMessageBuffer, yes);
 
         case S_M_CARD_SV06_4:
@@ -1247,8 +1247,8 @@ bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             return simulatorDrawYesNoMessageLoop((TEXPalette*)gpErrorMessageBuffer, yes);
+
         case S_M_CARD_SV06_5:
             if (simulatorMessageCurrent != simulatorMessage) {
                 simulatorMessageCurrent = simulatorMessage;
@@ -1258,8 +1258,8 @@ bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             return simulatorDrawYesNoMessageLoop((TEXPalette*)gpErrorMessageBuffer, yes);
+
         case S_M_CARD_SV08:
             if (simulatorMessageCurrent != simulatorMessage) {
                 simulatorMessageCurrent = simulatorMessage;
@@ -1269,7 +1269,6 @@ bool simulatorDrawYesNoMessage(__anon_0x61D7 simulatorMessage, s32* yes) {
                 DVDClose(&fileInfo);
                 simulatorUnpackTexPalette((TEXPalette*)gpErrorMessageBuffer);
             }
-
             return simulatorDrawYesNoMessageLoop((TEXPalette*)gpErrorMessageBuffer, yes);
 
         default:
@@ -1314,7 +1313,7 @@ static inline bool simulatorDrawOKMessageLoop(TEXPalette* simulatorMessage) {
     return false;
 }
 
-bool simulatorDrawErrorMessageWait(__anon_0x61D7 simulatorErrorMessage) {
+bool simulatorDrawErrorMessageWait(SimulatorMessage simulatorErrorMessage) {
     DVDFileInfo fileInfo;
 
     switch (simulatorErrorMessage) {
@@ -1723,20 +1722,21 @@ bool simulatorCopyControllerMap(u32* mapDataOutput, u32* mapDataInput) {
 }
 
 inline void UnkInlineReadController(s32 stickValue, s32* val) {
-    s32 ret;
-    if (((stickValue >= 0) && (stickValue < 0x28)) || ((stickValue < 0) && (stickValue > -0x28))) {
-        ret = (stickValue * 0x43) / 40;
-    } else if ((stickValue >= 0x28) && (stickValue < 0x48)) {
-        ret = (((0x48 - stickValue) * 0x43) / 32) + (((stickValue - 0x28) * 0x5A) / 32);
-    } else if ((stickValue <= -0x28) && (stickValue > -0x48)) {
-        ret = (((-0x28 - stickValue) * -0x5A) / 32) + (((stickValue + 0x48) * -0x43) / 32);
-    } else if (stickValue >= 0x48) {
-        ret = 0x5A;
+    s32 result;
+
+    if ((stickValue >= 0 && stickValue < 40) || (stickValue < 0 && stickValue > -40)) {
+        result = (stickValue * 67) / 40;
+    } else if (stickValue >= 40 && stickValue < 72) {
+        result = ((72 - stickValue) * 67) / 32 + ((stickValue - 40) * 90) / 32;
+    } else if (stickValue <= -40 && stickValue > -72) {
+        result = ((-40 - stickValue) * -90) / 32 + ((stickValue + 72) * -67) / 32;
+    } else if (stickValue >= 72) {
+        result = 90;
     } else {
-        ret = -0x5A;
+        result = -90;
     }
 
-    *val = ret;
+    *val = result;
 }
 
 bool simulatorReadController(s32 channel, u32* anData, u8* ptx) {
@@ -1932,15 +1932,30 @@ bool simulatorRumbleStop(s32 channel) {
     return true;
 }
 
-bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset, bool usePreviousSettings) {
+#if VERSION == MQ_J
+bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset)
+#define usePreviousSettings false
+#else
+bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset, bool usePreviousSettings)
+#endif
+{
     u32 bFlag;
     u32 nTick;
+
+#if VERSION == MQ_J
+#define prevIPLSetting false
+#define prevForceMenuSetting false
+#define prevAllowResetSetting true
+#else
     bool prevIPLSetting;
     bool prevForceMenuSetting;
     bool prevAllowResetSetting;
     s32 pad;
+#endif
 
     nTick = OSGetTick();
+
+#if VERSION != MQ_J
     prevAllowResetSetting = gPreviousAllowResetSetting;
     prevIPLSetting = gPreviousIPLSetting;
     prevForceMenuSetting = gPreviousForceMenuSetting;
@@ -1954,12 +1969,13 @@ bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset, bool usePrevi
         gPreviousForceMenuSetting = forceMenu;
         gPreviousAllowResetSetting = allowReset;
     }
+#endif
 
     DEMOPadRead();
     bFlag = OSGetResetButtonState();
 
-    if ((gResetBeginFlag == true) && ((DemoPad[0].pst.button & (PAD_BUTTON_START | PAD_BUTTON_B | PAD_BUTTON_X)) ==
-                                      (PAD_BUTTON_START | PAD_BUTTON_B | PAD_BUTTON_X))) {
+    if (gResetBeginFlag == true && (DemoPad[0].pst.button & (PAD_BUTTON_START | PAD_BUTTON_B | PAD_BUTTON_X)) ==
+                                       (PAD_BUTTON_START | PAD_BUTTON_B | PAD_BUTTON_X)) {
         if (!gbReset || bFlag) {
             gbReset = bFlag;
             return true;
@@ -1992,7 +2008,7 @@ bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset, bool usePrevi
             }
         }
     } else {
-        if (((nTick - gnTickReset) >= OSSecondsToTicks(0.5f)) && (allowReset == true)) {
+        if (nTick - gnTickReset >= OSSecondsToTicks(0.5f) && allowReset == true) {
             if (prevAllowResetSetting == true) {
                 simulatorReset(IPL, forceMenu);
             } else {
@@ -2005,17 +2021,21 @@ bool simulatorTestReset(bool IPL, bool forceMenu, bool allowReset, bool usePrevi
 }
 
 bool simulatorDrawMCardText(void) {
+#if VERSION != MQ_J
     if ((s32)(((TEXPalette*)gpErrorMessageBuffer)->versionNumber) == 0) {
         xlPostText("Invalid Message Image Data - Assuming SV09", "simGCN.c", 1623);
         simulatorPrepareMessage(S_M_CARD_SV09);
     }
+#endif
+
     simulatorDrawImage((TEXPalette*)gpErrorMessageBuffer,
                        160 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->width / 2),
-                       120 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->height / 2), 0, 0);
+                       120 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->height / 2), false,
+                       0);
     return true;
 }
 
-s32 simulatorMCardPollDrawBar(void) {
+bool simulatorMCardPollDrawBar(void) {
     f32 rate;
     s32 nBytes;
 
@@ -2023,21 +2043,23 @@ s32 simulatorMCardPollDrawBar(void) {
     rate = nBytes / (f32)mCard.pollSize;
 
     rate = (rate > 1.0f) ? 1.0f : rate;
-
     rate = (rate < 0.0f) ? 0.0f : rate;
 
+#if VERSION != MQ_J
     if ((s32)(((TEXPalette*)gpErrorMessageBuffer)->versionNumber) == 0) {
         xlPostText("Invalid Message Image Data - Assuming SV09", "simGCN.c", 1623);
         simulatorPrepareMessage(S_M_CARD_SV09);
     }
+#endif
+
     simulatorDrawImage((TEXPalette*)gpErrorMessageBuffer,
                        160 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->width / 2),
-                       120 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->height / 2), 1,
+                       120 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->height / 2), true,
                        100.0f * rate);
     return true;
 }
 
-s32 simulatorMCardPollDrawFormatBar(void) {
+bool simulatorMCardPollDrawFormatBar(void) {
     f32 rate;
     s32 nBytes;
 
@@ -2045,16 +2067,18 @@ s32 simulatorMCardPollDrawFormatBar(void) {
     rate = nBytes / (f32)mCard.pollSize;
 
     rate = (rate > 1.0f) ? 1.0f : rate;
-
     rate = (rate < 0.0f) ? 0.0f : rate;
 
+#if VERSION != MQ_J
     if ((s32)(((TEXPalette*)gpErrorMessageBuffer)->versionNumber) == 0) {
         xlPostText("Invalid Message Image Data - Assuming SV09", "simGCN.c", 1623);
         simulatorPrepareMessage(S_M_CARD_SV09);
     }
+#endif
+
     simulatorDrawImage((TEXPalette*)gpErrorMessageBuffer,
                        160 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->width / 2),
-                       120 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->height / 2), 0,
+                       120 - (((TEXPalette*)gpErrorMessageBuffer)->descriptorArray->textureHeader->height / 2), false,
                        100.0f * rate);
     return true;
 }
@@ -2191,7 +2215,7 @@ static bool simulatorParseArguments(void) {
     return true;
 }
 
-bool simulatorGetArgument(SimArgumentType eType, char** pszArgument) {
+bool simulatorGetArgument(SimulatorArgumentType eType, char** pszArgument) {
     if (eType != SAT_NONE && pszArgument != NULL && gaszArgument[eType] != NULL) {
         *pszArgument = gaszArgument[eType];
         return true;
@@ -2201,6 +2225,7 @@ bool simulatorGetArgument(SimArgumentType eType, char** pszArgument) {
 }
 
 static inline s32 simulatorRun(SystemMode* peMode) {
+    // TODO: fake match?
     int nResult;
 
     while (systemGetMode(gpSystem, peMode) && *peMode == SM_RUNNING) {
@@ -2300,13 +2325,15 @@ bool xlMain(void) {
     }
 
     mCard.bufferCreated = 0;
+#if VERSION != MQ_J
     mCard.isBroken = 0;
+#endif
     mcardInit(&mCard);
 
     if (simulatorGetArgument(SAT_NAME, &szNameROM)) {
         strcpy(acNameROM, szNameROM);
     } else {
-        strcpy(acNameROM, "zlj_f.n64");
+        strcpy(acNameROM, DEFAULT_ROM_NAME);
     }
 
     iName = strlen(acNameROM) - 1;

@@ -5,10 +5,6 @@
 #include "stdarg.h"
 #include "stddef.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define SEEK_SET 0
 #define SEEK_CUR 1
 #define SEEK_END 2
@@ -77,7 +73,6 @@ typedef struct _IO_FILE {
     __file_handle handle;
     __file_modes mode;
     __file_state state;
-    unsigned char is_dynamically_allocated;
     unsigned char char_buffer;
     unsigned char char_buffer_overflow;
     unsigned char ungetc_buffer[__ungetc_buffer_size];
@@ -95,7 +90,6 @@ typedef struct _IO_FILE {
     __io_proc write_proc;
     __close_proc close_proc;
     __idle_proc idle_proc;
-    struct _IO_FILE* next_file_struct;
 } FILE;
 
 typedef struct {
@@ -130,9 +124,5 @@ size_t fread(const void*, size_t memb_size, size_t num_memb, FILE*);
 size_t fwrite(const void*, size_t memb_size, size_t num_memb, FILE*);
 int fseek(FILE* file, long offset, int mode);
 size_t __fwrite(const void*, size_t, size_t, FILE*);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // _STDIO

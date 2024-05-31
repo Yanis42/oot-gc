@@ -11,7 +11,7 @@ s32 gnSizeHeap;
 
 s32 gbStatsDirty;
 
-#define PADDING_MAGIC 0x1234abcd
+#define PADDING_MAGIC 0x1234ABCD
 
 #define FLAG_FREE 0x01000000
 #define FLAG_TAKEN 0x02000000

@@ -6,6 +6,7 @@
 #include "dolphin/os/OSBootInfo.h"
 #include "dolphin/os/OSPriv.h"
 #include "dolphin/si.h"
+#include "intrinsics.h"
 #include "macros.h"
 #include "string.h"
 
@@ -16,7 +17,6 @@ extern void __OSCacheInit(void);
 extern void __OSInitSram(void);
 extern void __OSInitAudioSystem(void);
 extern void EnableMetroTRKInterrupts(void);
-void __sync(void);
 
 #if DOLPHIN_REV == 2002
 static const char* __OSVersion = "<< Dolphin SDK - OS\trelease build: Sep  5 2002 05:32:39 (0x2301) >>";
@@ -283,9 +283,9 @@ void OSInit(void) {
         //     set arenaLo to just past the end of the db stack
         if ((BootInfo->arenaLo == NULL) && (BI2DebugFlag != 0) && (*BI2DebugFlag < 2)) {
 #if DOLPHIN_REV == 2002
-            debugArenaLo = (char*)(((u32)_db_stack_end + 0x1f) & ~0x1f);
+            debugArenaLo = (char*)(((u32)_db_stack_end + 0x1F) & ~0x1F);
 #else
-            debugArenaLo = (char*)(((u32)_stack_addr + 0x1f) & ~0x1f);
+            debugArenaLo = (char*)(((u32)_stack_addr + 0x1F) & ~0x1F);
 #endif
             OSSetArenaLo(debugArenaLo);
         }
