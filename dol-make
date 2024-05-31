@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Usage: ./dol-make [VERSION]
+# If VERSION is not provided, it defaults to ce-j.
+
+set -euo pipefail
+
+VERSION=${1:-ce-j}
+python3 configure.py --non-matching
+ninja $VERSION
+cp build/$VERSION/oot-gc.dol /mnt/c/Users/Yanis/Desktop/hackeroot_gc_testing/sys/main.dol
+tools/Flips/flips --create ./orig/$VERSION/main.dol build/$VERSION/oot-gc.dol build/$VERSION/gamecube.bps
+cp build/$VERSION/gamecube.bps /home/github/hackeroot/tools/gamecube.bps
+cp /home/github/hackeroot/build/hackeroot-mq/dma_config.txt /mnt/c/Users/Yanis/Desktop/hackeroot_gc_testing/files/dma_config.txt

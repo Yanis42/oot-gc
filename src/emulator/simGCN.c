@@ -30,7 +30,7 @@
 // clang-format on
 
 #if VERSION == MQ_J
-#define DEFAULT_ROM_NAME "urazlj_f.n64"
+#define DEFAULT_ROM_NAME "zlj_f.n64"
 #elif VERSION == CE_J
 #define DEFAULT_ROM_NAME "zlj_f.n64"
 #elif VERSION == CE_U
