@@ -100,14 +100,12 @@ inline bool IsStreamEnabled(void) {
 
 void __OSReboot(u32 resetCode, u32 bootDol) {
     OSContext exceptionContext;
-
 #if IS_CE
     OSTime time;
     DVDCommandBlock dvdCmd;
     DVDCommandBlock dvdCmd2;
     DVDCommandBlock dvdCmd3;
 #endif
-
     u32 numBytes;
     u32 offset;
 
@@ -122,18 +120,17 @@ void __OSReboot(u32 resetCode, u32 bootDol) {
     DVDInit();
     DVDSetAutoInvalidation(true);
 
-#if IS_CE
+#if IS_MQ
+    __DVDPrepareResetAsync(Callback);
+    if (!DVDCheckDisk()) {
+        __OSDoHotReset(UNK_817FFFFC);
+    }
+#else
     DVDResume();
     Prepared = false;
 #endif
 
     __DVDPrepareResetAsync(Callback);
-
-#if IS_MQ
-    if (!DVDCheckDisk()) {
-        __OSDoHotReset(UNK_817FFFFC);
-    }
-#endif
 
     __OSMaskInterrupts(~0x1F);
     __OSUnmaskInterrupts(0x400);
