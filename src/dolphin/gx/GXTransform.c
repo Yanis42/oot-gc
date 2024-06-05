@@ -189,6 +189,7 @@ void GXLoadTexMtxImm(const Mtx mtx, u32 id, GXTexMtxType type) {
     }
 }
 
+#if IS_CE
 void __GXSetViewport(void) {
     f32 sx;
     f32 sy;
@@ -221,6 +222,7 @@ void __GXSetViewport(void) {
     GX_WRITE_XF_REG_F(30, oy);
     GX_WRITE_XF_REG_F(31, oz);
 }
+#endif
 
 void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz, u32 field) {
 #if IS_MQ
@@ -237,10 +239,11 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
     if (field == 0) {
         top -= 0.5f;
     }
+
     sx = wd / 2.0f;
     sy = -ht / 2.0f;
-    ox = 340.0f + (left + (wd / 2.0f));
-    oy = 340.0f + (top + (ht / 2.0f));
+    ox = 342.0f + (left + (wd / 2.0f));
+    oy = 342.0f + (top + (ht / 2.0f));
     zmin = 1.6777215e7f * nearz;
     zmax = 1.6777215e7f * farz;
     sz = zmax - zmin;
@@ -253,8 +256,8 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
     gx->vpNearz = nearz;
     gx->vpFarz = farz;
 
-    if (gx->zOffset != 0) {
-        __GXSetRange(nearz, gx->zScale);
+    if (gx->fgRange != 0) {
+        __GXSetRange(nearz, gx->fgSideX);
     }
 
     reg = 0x5101A;
@@ -279,10 +282,9 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
     gx->vpFarz = farz;
 
     __GXSetViewport();
-    gx->bpSentNot = GX_TRUE;
 #endif
 
-    NO_INLINE();
+    gx->bpSentNot = GX_TRUE;
 }
 
 void GXSetViewport(f32 left, f32 top, f32 width, f32 height, f32 nearZ, f32 farZ) {

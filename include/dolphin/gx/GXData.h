@@ -155,8 +155,14 @@ typedef struct _GXData {
     /* 0x500 */ f32 vpHt;
     /* 0x504 */ f32 vpNearz;
     /* 0x508 */ f32 vpFarz;
+
+#if IS_MQ
+    u8 fgRange;
+    f32 fgSideX;
+#else
     /* 0x50C */ f32 zOffset;
     /* 0x510 */ f32 zScale;
+#endif
 
     // Texture regs
     /* 0x514 */ u32 tImage0[8];

@@ -130,8 +130,6 @@ void __OSReboot(u32 resetCode, u32 bootDol) {
     Prepared = false;
 #endif
 
-    __DVDPrepareResetAsync(Callback);
-
     __OSMaskInterrupts(~0x1F);
     __OSUnmaskInterrupts(0x400);
     OSEnableInterrupts();

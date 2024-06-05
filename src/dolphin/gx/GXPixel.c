@@ -263,8 +263,8 @@ void GXSetPixelFmt(GXPixelFmt pixelFmt, GXZFmt16 zFmt) {
     }
 
     if (p2f[pixelFmt] == GX_PF_Y8) {
-        GX_SET_REG(gx->cmode1, pixelFmt - GX_PF_Y8, GX_BP_DSTALPHA_YUV_FMT_ST, GX_BP_DSTALPHA_YUV_FMT_END);
-        GX_SET_REG(gx->cmode1, GX_BP_REG_DSTALPHA, 0, 7);
+        SET_REG_FIELD(gx->cmode1, 2, 9, (pixelFmt - 4) & 0x3);
+        SET_REG_FIELD(gx->cmode1, 8, 24, 0x42);
         GX_BP_LOAD_REG(gx->cmode1);
     }
 

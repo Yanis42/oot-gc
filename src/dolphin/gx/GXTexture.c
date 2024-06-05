@@ -258,19 +258,26 @@ void GXInitTexObjCI(GXTexObj* obj, void* imagePtr, u16 width, u16 height, GXCITe
 void GXInitTexObjLOD(GXTexObj* obj, GXTexFilter minFilter, GXTexFilter maxFilter, f32 minLOD, f32 maxLOD, f32 lodBias,
                      GXBool doBiasClamp, GXBool doEdgeLOD, GXAnisotropy maxAniso) {
     GXTexObjPriv* internal = (GXTexObjPriv*)obj;
-    u8 reg1, reg2;
+    u8 reg1;
+    u8 reg2;
+
     if (lodBias < -4.0f) {
         lodBias = -4.0f;
     } else if (lodBias >= 4.0f) {
         lodBias = 3.99f;
     }
 
-#if IS_MQ
-    GX_SET_REG(internal->mode0, (u32)lodBias * 32, 15, 22);
-#else
-    GX_SET_REG(internal->mode0, lodBias * 32.0f, 15, 22);
-#endif
+    GX_SET_REG(internal->mode0, (u8)(lodBias * 32.0f), 15, 22);
 
+#if IS_MQ
+    SET_REG_FIELD(internal->mode0, 1, 4, (maxFilter == GX_LINEAR) ? 1 : 0);
+    SET_REG_FIELD(internal->mode0, 3, 5, GX2HWFiltConv[minFilter]);
+    SET_REG_FIELD(internal->mode0, 1, 8, doEdgeLOD ? 0 : 1);
+    internal->mode0 &= 0xFFFDFFFF;
+    internal->mode0 &= 0xFFFBFFFF;
+    SET_REG_FIELD(internal->mode0, 2, 19, maxAniso);
+    SET_REG_FIELD(internal->mode0, 1, 21, doBiasClamp);
+#else
     GX_SET_REG(internal->mode0, maxFilter == 1 ? 1 : 0, 27, 27);
     GX_SET_REG(internal->mode0, GX2HWFiltConv[minFilter], 24, 26);
     GX_SET_REG(internal->mode0, doEdgeLOD ? 0 : 1, 23, 23);
@@ -278,6 +285,7 @@ void GXInitTexObjLOD(GXTexObj* obj, GXTexFilter minFilter, GXTexFilter maxFilter
     GX_SET_REG(internal->mode0, 0, 13, 13);
     GX_SET_REG(internal->mode0, maxAniso, 11, 12);
     GX_SET_REG(internal->mode0, doBiasClamp, 10, 10);
+#endif
 
     if (minLOD < 0.0f) {
         minLOD = 0.0f;
@@ -313,7 +321,9 @@ GXBool GXGetTexObjMipMap(GXTexObj* obj) {
 }
 
 void GXLoadTexObjPreLoaded(GXTexObj* obj, GXTexRegion* region, GXTexMapID map) {
+#if IS_CE
     u8 stackManipulation[0x18];
+#endif
 
     GXTexObjPriv* internalObj = (GXTexObjPriv*)obj;
     GXTexRegionPriv* internalRegion = (GXTexRegionPriv*)region;
@@ -360,7 +370,7 @@ void GXInitTlutObj(GXTlutObj* obj, void* table, GXTlutFmt format, u16 numEntries
     internal->unk0 = 0;
 
     GX_SET_REG(internal->unk0, format, 20, 21);
-    GX_SET_REG(internal->unk4, (u32)table >> 5, 11, 31);
+    GX_SET_REG(internal->unk4, ((u32)table & 0x3FFFFFFF) >> 5, 11, 31);
     GX_SET_REG(internal->unk4, 100, 0, 7);
 
     internal->numEntries = numEntries;
@@ -378,7 +388,7 @@ void GXLoadTlut(GXTlutObj* obj, u32 tlutName) {
 
     __GXFlushTextureState();
 
-    reg = ret->unk0;
+    reg = ret->unk0 & 0x3FF;
     GX_SET_REG(internal->unk0, reg, 22, 31);
 
     ret->tlutObj = *internal;
@@ -465,11 +475,12 @@ GXTlutRegionCallback GXSetTlutRegionCallback(GXTlutRegionCallback func) {
 }
 
 void __SetSURegs(u32 texImgIndex, u32 setUpRegIndex) {
-    u16 a1, a2;
-    GXBool b, c;
+    u32 a1;
+    u32 a2;
+    GXBool b;
+    GXBool c;
 
     a1 = GX_GET_REG(gx->tImage0[texImgIndex], 22, 31);
-    // a2 = GX_GET_REG(gx->tImage0[texImgIndex], 12, 21);
     a2 = (gx->tImage0[texImgIndex] & (0x3FF << 10)) >> 10;
 
     GX_SET_REG(gx->suTs0[setUpRegIndex], a1, 16, 31);
@@ -544,6 +555,8 @@ void __GXSetSUTexRegs(void) {
 
 void __GXSetTmemConfig(u32 config) {
     switch (config) {
+
+#if IS_CE
         case 2:
             GX_BP_LOAD_REG(0x8C0d8000);
             GX_BP_LOAD_REG(0x900DC000);
@@ -569,6 +582,8 @@ void __GXSetTmemConfig(u32 config) {
             GX_BP_LOAD_REG(0xAF0DB800);
             GX_BP_LOAD_REG(0xB30DDC00);
             break;
+#endif
+
         case 1:
             GX_BP_LOAD_REG(0x8C0d8000);
             GX_BP_LOAD_REG(0x900DC000);
