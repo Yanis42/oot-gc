@@ -75,22 +75,28 @@ static GXTexRegion* __GXDefaultTexRegionCallback(GXTexObj* obj, GXTexMapID id) {
     id = (GXTexMapID)(id % GX_MAX_TEXMAP);
 
     switch (format) {
+
+#if IS_CE
         case GX_TF_RGBA8:
             if (isMipMap) {
                 return &gx->TexRegions2[id];
             }
             return &gx->TexRegions1[id];
+#endif
 
         case GX_TF_C4:
         case GX_TF_C8:
         case GX_TF_C14X2:
             return &gx->TexRegions0[id];
 
+#if IS_CE
         default:
             if (isMipMap) {
                 return &gx->TexRegions1[id];
             }
             return &gx->TexRegions0[id];
+#endif
+
     }
 }
 
@@ -151,7 +157,9 @@ bool __GXShutdown(bool final) {
         GX_SET_CP_REG(1, 0);
         GX_SET_CP_REG(2, 3);
 
+#if IS_CE
         gx->abtWaitPECopy = GX_TRUE;
+#endif
 
         __GXAbort();
     }
@@ -168,7 +176,10 @@ GXFifoObj* GXInit(void* base, u32 size) {
     OSRegisterVersion(__GXVersion);
     gx->inDispList = GX_FALSE;
     gx->dlSaveContext = GX_TRUE;
+
+#if IS_CE
     gx->abtWaitPECopy = GX_TRUE;
+#endif
 
     gx->tcsManEnab = 0;
     gx->tevTcEnab = 0;
@@ -301,10 +312,13 @@ GXFifoObj* GXInit(void* base, u32 size) {
     for (i = 0; i < GX_MAX_TEXMAP; i++) {
         GXInitTexCacheRegion(&gx->TexRegions0[i], GX_FALSE, GXTexRegionAddrTable[i], GX_TEXCACHE_32K,
                              GXTexRegionAddrTable[i + 8], GX_TEXCACHE_32K);
+
+#if IS_CE
         GXInitTexCacheRegion(&gx->TexRegions1[i], GX_FALSE, GXTexRegionAddrTable[i + 16], GX_TEXCACHE_32K,
                              GXTexRegionAddrTable[i + 24], GX_TEXCACHE_32K);
         GXInitTexCacheRegion(&gx->TexRegions2[i], GX_TRUE, GXTexRegionAddrTable[i + 32], GX_TEXCACHE_32K,
                              GXTexRegionAddrTable[i + 40], GX_TEXCACHE_32K);
+#endif
     }
 
     for (i = 0; i < GX_MAX_TLUT; i++) {

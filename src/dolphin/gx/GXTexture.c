@@ -79,6 +79,92 @@ void __GetImageTileCount(GXTexFmt format, u16 width, u16 height, u32* a, u32* b,
 
 void GXInitTexObj(GXTexObj* obj, void* imagePtr, u16 width, u16 height, GXTexFmt format, GXTexWrapMode sWrap,
                   GXTexWrapMode tWrap, GXBool useMIPmap) {
+#if IS_MQ
+    u32 imageBase;
+    u32 maxLOD;
+    u16 rowT;
+    u16 colT;
+    u32 rowC;
+    u32 colC;
+    GXTexObjPriv* internal = (GXTexObjPriv*)obj;
+
+    memset(internal, 0, 0x20);
+    SET_REG_FIELD(internal->mode0, 2, 0, sWrap);
+    SET_REG_FIELD(internal->mode0, 2, 2, tWrap);
+    SET_REG_FIELD(internal->mode0, 1, 4, 1);
+    if (useMIPmap != 0) {
+        u8 lmax;
+        internal->flags |= 1;
+
+        if (format == 8 || format == 9 || format == 10) {
+            internal->mode0 = (internal->mode0 & 0xFFFFFF1F) | 0xA0;
+        } else {
+            internal->mode0 = (internal->mode0 & 0xFFFFFF1F) | 0xC0;
+        }
+
+        if (width > height) {
+            maxLOD = 31 - __cntlzw(width);
+        } else {
+            maxLOD = 31 - __cntlzw(height);
+        }
+        lmax = 16.0f * maxLOD;
+        SET_REG_FIELD(internal->mode1, 8, 8, lmax);
+    } else {
+        internal->mode0 = (internal->mode0 & 0xFFFFFF1F) | 0x80;
+    }
+    internal->format = format;
+
+    SET_REG_FIELD(internal->image0, 10, 0, width - 1);
+    SET_REG_FIELD(internal->image0, 10, 10, height - 1);
+    SET_REG_FIELD(internal->image0, 4, 20, format & 0xF);
+
+    imageBase = (u32)((u32)imagePtr >> 5) & 0x01FFFFFF;
+    SET_REG_FIELD(internal->image3, 21, 0, imageBase);
+
+    switch (format & 0xF) {
+        case 0:
+        case 8:
+            internal->loadFormat = 1;
+            rowT = 3;
+            colT = 3;
+            break;
+        case 1:
+        case 2:
+        case 9:
+            internal->loadFormat = 2;
+            rowT = 3;
+            colT = 2;
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 10:
+            internal->loadFormat = 2;
+            rowT = 2;
+            colT = 2;
+            break;
+        case 6:
+            internal->loadFormat = 3;
+            rowT = 2;
+            colT = 2;
+            break;
+        case 14:
+            internal->loadFormat = 0;
+            rowT = 3;
+            colT = 3;
+            break;
+        default:
+            internal->loadFormat = 2;
+            rowT = 2;
+            colT = 2;
+            break;
+    }
+
+    rowC = (width + (1 << rowT) - 1) >> rowT;
+    colC = (height + (1 << colT) - 1) >> colT;
+    internal->loadCount = (rowC * colC) & 0x7FFF;
+    internal->flags |= 2;
+#else
     u32 imageBase;
     u16 a, b;
     u32 c, d;
@@ -156,6 +242,7 @@ void GXInitTexObj(GXTexObj* obj, void* imagePtr, u16 width, u16 height, GXTexFmt
     internal->loadCount = (GET_TILE_COUNT(width, a) * GET_TILE_COUNT(height, b)) & 0x7FFF;
 
     internal->flags |= 2;
+#endif
 }
 
 void GXInitTexObjCI(GXTexObj* obj, void* imagePtr, u16 width, u16 height, GXCITexFmt format, GXTexWrapMode sWrap,
@@ -178,7 +265,12 @@ void GXInitTexObjLOD(GXTexObj* obj, GXTexFilter minFilter, GXTexFilter maxFilter
         lodBias = 3.99f;
     }
 
+#if IS_MQ
+    GX_SET_REG(internal->mode0, (u32)lodBias * 32, 15, 22);
+#else
     GX_SET_REG(internal->mode0, lodBias * 32.0f, 15, 22);
+#endif
+
     GX_SET_REG(internal->mode0, maxFilter == 1 ? 1 : 0, 27, 27);
     GX_SET_REG(internal->mode0, GX2HWFiltConv[minFilter], 24, 26);
     GX_SET_REG(internal->mode0, doEdgeLOD ? 0 : 1, 23, 23);

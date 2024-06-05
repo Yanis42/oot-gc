@@ -32,9 +32,23 @@ inline void Copy6Floats(const register f32 src[6], register f32 dst[6]) {
 }
 
 inline void __GXSetProjection(void) {
+#if IS_MQ
+    u32 reg = 0x00061020;
+
+    GX_WRITE_U8(0x10);
+    GX_WRITE_U32(reg);
+    GX_WRITE_XF_REG_F(32, gx->projMtx[0]);
+    GX_WRITE_XF_REG_F(33, gx->projMtx[1]);
+    GX_WRITE_XF_REG_F(34, gx->projMtx[2]);
+    GX_WRITE_XF_REG_F(35, gx->projMtx[3]);
+    GX_WRITE_XF_REG_F(36, gx->projMtx[4]);
+    GX_WRITE_XF_REG_F(37, gx->projMtx[5]);
+    GX_WRITE_XF_REG_2(38, gx->projType);
+#else
     GX_XF_LOAD_REGS(6, GX_XF_REG_PROJECTIONA);
     WriteProjPS(gx->projMtx, (volatile void*)GXFIFO_ADDR);
     GX_WRITE_U32(gx->projType);
+#endif
 }
 
 void GXSetProjection(const Mtx44 proj, GXProjectionType type) {
@@ -59,8 +73,18 @@ void GXSetProjection(const Mtx44 proj, GXProjectionType type) {
 }
 
 void GXSetProjectionv(const f32* proj) {
+#if IS_MQ
+    gx->projType = proj[0];
+    gx->projMtx[0] = proj[1];
+    gx->projMtx[1] = proj[2];
+    gx->projMtx[2] = proj[3];
+    gx->projMtx[3] = proj[4];
+    gx->projMtx[4] = proj[5];
+    gx->projMtx[5] = proj[6];
+#else
     gx->projType = proj[0] == 0.0f ? GX_PERSPECTIVE : GX_ORTHOGRAPHIC;
     Copy6Floats(&proj[1], gx->projMtx);
+#endif
 
     __GXSetProjection();
     gx->bpSentNot = GX_TRUE;
@@ -199,6 +223,50 @@ void __GXSetViewport(void) {
 }
 
 void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz, u32 field) {
+#if IS_MQ
+    f32 sx;
+    f32 sy;
+    f32 sz;
+    f32 ox;
+    f32 oy;
+    f32 oz;
+    f32 zmin;
+    f32 zmax;
+    u32 reg;
+
+    if (field == 0) {
+        top -= 0.5f;
+    }
+    sx = wd / 2.0f;
+    sy = -ht / 2.0f;
+    ox = 340.0f + (left + (wd / 2.0f));
+    oy = 340.0f + (top + (ht / 2.0f));
+    zmin = 1.6777215e7f * nearz;
+    zmax = 1.6777215e7f * farz;
+    sz = zmax - zmin;
+    oz = zmax;
+
+    gx->vpLeft = left;
+    gx->vpTop = top;
+    gx->vpWd = wd;
+    gx->vpHt = ht;
+    gx->vpNearz = nearz;
+    gx->vpFarz = farz;
+
+    if (gx->zOffset != 0) {
+        __GXSetRange(nearz, gx->zScale);
+    }
+
+    reg = 0x5101A;
+    GX_WRITE_U8(0x10);
+    GX_WRITE_U32(reg);
+    GX_WRITE_XF_REG_F(26, sx);
+    GX_WRITE_XF_REG_F(27, sy);
+    GX_WRITE_XF_REG_F(28, sz);
+    GX_WRITE_XF_REG_F(29, ox);
+    GX_WRITE_XF_REG_F(30, oy);
+    GX_WRITE_XF_REG_F(31, oz);
+#else
     if (field == 0) {
         top -= 0.5f;
     }
@@ -211,10 +279,16 @@ void GXSetViewportJitter(f32 left, f32 top, f32 wd, f32 ht, f32 nearz, f32 farz,
     gx->vpFarz = farz;
 
     __GXSetViewport();
-    gx->bpSentNot = 1;
+    gx->bpSentNot = GX_TRUE;
+#endif
+
+    NO_INLINE();
 }
 
 void GXSetViewport(f32 left, f32 top, f32 width, f32 height, f32 nearZ, f32 farZ) {
+#if IS_MQ
+    GXSetViewportJitter(left, top, width, height, nearZ, farZ, 1);
+#else
     gx->vpLeft = left;
     gx->vpTop = top;
     gx->vpWd = width;
@@ -223,6 +297,7 @@ void GXSetViewport(f32 left, f32 top, f32 width, f32 height, f32 nearZ, f32 farZ
     gx->vpFarz = farZ;
     __GXSetViewport();
     gx->bpSentNot = GX_TRUE;
+#endif
 }
 
 void GXSetScissor(u32 left, u32 top, u32 width, u32 height) {
