@@ -122,7 +122,6 @@ s32 WriteUARTN(const void* buf, u32 len) {
 #if IS_CE
     bool interrupt;
 #endif
-
     int qLen;
     long xLen;
     char* ptr;

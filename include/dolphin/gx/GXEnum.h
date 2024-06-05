@@ -1795,23 +1795,23 @@ typedef enum _GXBPIndTevStage {
 // BP locators for top-left scissor.
 typedef enum _GXBPScissorTL {
     // Top component [21-31]
-    GX_BP_SCISSORTL_TOP_ST = /* IS_MQ ? 11 : */ 21,
-    GX_BP_SCISSORTL_TOP_END = /* IS_MQ ? 0 : */ 31,
+    GX_BP_SCISSORTL_TOP_ST = 21,
+    GX_BP_SCISSORTL_TOP_END = 31,
 
     // Left component [9-19]
-    GX_BP_SCISSORTL_LEFT_ST = /* IS_MQ ? 11 : */ 9,
-    GX_BP_SCISSORTL_LEFT_END = /* IS_MQ ? 12 : */ 19,
+    GX_BP_SCISSORTL_LEFT_ST = 9,
+    GX_BP_SCISSORTL_LEFT_END = 19,
 } GXBPScissorTL;
 
 // BP locators for bottom-right scissor.
 typedef enum _GXBPScissorBR {
     // Bottom component [21-31]
-    GX_BP_SCISSORBR_BOT_ST = /* IS_MQ ? 11 : */ 21,
-    GX_BP_SCISSORBR_BOT_END = /* IS_MQ ? 0 : */ 31,
+    GX_BP_SCISSORBR_BOT_ST = 21,
+    GX_BP_SCISSORBR_BOT_END = 31,
 
     // Right component [9-19]
-    GX_BP_SCISSORBR_RIGHT_ST = /* IS_MQ ? 11 : */ 9,
-    GX_BP_SCISSORBR_RIGHT_END = /* IS_MQ ? 12 : */ 19,
+    GX_BP_SCISSORBR_RIGHT_ST = 9,
+    GX_BP_SCISSORBR_RIGHT_END = 19,
 } GXBPScissorBR;
 
 // BP locators for line and point settings.
@@ -2019,12 +2019,12 @@ typedef enum _GXBPFieldMask {
 // BP locators for scissor offset.
 typedef enum _GXBPScissorOffset {
     // X offset [22-31]
-    GX_BP_SCISSOROFS_OX_ST = /* IS_MQ ? 10 : */ 22,
-    GX_BP_SCISSOROFS_OX_END = /* IS_MQ ? 0 : */ 31,
+    GX_BP_SCISSOROFS_OX_ST = 22,
+    GX_BP_SCISSOROFS_OX_END = 31,
 
     // Y offset [12-21]
-    GX_BP_SCISSOROFS_OY_ST = /* IS_MQ ? 10 : */ 12,
-    GX_BP_SCISSOROFS_OY_END = /* IS_MQ ? 10 : */ 21,
+    GX_BP_SCISSOROFS_OY_ST = 12,
+    GX_BP_SCISSOROFS_OY_END = 21,
 } GXBPScissorOffset;
 
 // BP locators for field mode.
