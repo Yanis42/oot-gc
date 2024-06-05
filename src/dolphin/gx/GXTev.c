@@ -147,13 +147,13 @@ void GXSetTevColor(GXTevRegID reg, GXColor color) {
     u32 bg = 0;
 
 #if IS_MQ
-    SET_REG_FIELD(ra, 11,  0, color.r);
+    SET_REG_FIELD(ra, 11, 0, color.r);
     SET_REG_FIELD(ra, 11, 12, color.a);
-    SET_REG_FIELD(ra,  8, 24, 224 + reg * 2);
+    SET_REG_FIELD(ra, 8, 24, 224 + reg * 2);
 
-    SET_REG_FIELD(bg, 11,  0, color.b);
+    SET_REG_FIELD(bg, 11, 0, color.b);
     SET_REG_FIELD(bg, 11, 12, color.g);
-    SET_REG_FIELD(bg,  8, 24, 225 + reg * 2);
+    SET_REG_FIELD(bg, 8, 24, 225 + reg * 2);
 #else
     GX_SET_REG(ra, color.r, 21, 31);
     GX_SET_REG(ra, color.a, 9, 19);

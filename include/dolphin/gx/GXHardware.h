@@ -7,12 +7,12 @@
 #include "macros.h"
 
 #if IS_MQ
-#define SET_REG_FIELD(reg, size, shift, val) \
-do { \
-    (reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)); \
-} while (0)
-#else
 #define SET_REG_FIELD(reg, size, shift, val)                                                \
+    do {                                                                                    \
+        (reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)); \
+    } while (0)
+#else
+#define SET_REG_FIELD(reg, size, shift, val)                                                      \
     do {                                                                                          \
         (reg) = ((u32)__rlwimi((u32)(reg), (val), (shift), 32 - (shift) - (size), 31 - (shift))); \
     } while (0)
@@ -28,8 +28,7 @@ do { \
 #define GX_GET_REG(reg, st, end) GX_BITGET((reg), (st), ((end) - (st) + 1))
 
 #if IS_MQ
-#define GX_SET_REG(reg, x, st, end) \
-    reg = (reg & ~(((1 << (end - st + 1)) - 1) << (31 - end))) | (x << (31 - end))
+#define GX_SET_REG(reg, x, st, end) reg = (reg & ~(((1 << (end - st + 1)) - 1) << (31 - end))) | (x << (31 - end))
 
 #define GX_SET_REG2(reg, x, st, end) GX_BITFIELD_SET((reg), (st), ((end) - (st) + 1), (x))
 #else
@@ -56,9 +55,9 @@ do { \
     } while (0)
 
 #define GX_WRITE_XF_REG_2(addr, value) \
-do { \
-    GX_WRITE_U32(value); \
-} while (0)
+    do {                               \
+        GX_WRITE_U32(value);           \
+    } while (0)
 
 #define __GX_FIFO_SET_LOAD_INDX_DST(reg, x) ((reg) = GX_BITFIELD_SET(reg, 20, 12, x))
 #define __GX_FIFO_SET_LOAD_INDX_NELEM(reg, x) ((reg) = GX_BITFIELD_SET(reg, 16, 4, x))

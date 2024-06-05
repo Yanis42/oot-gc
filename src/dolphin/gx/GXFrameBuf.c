@@ -345,13 +345,13 @@ void GXSetCopyFilter(GXBool useAA, u8 samplePattern[12][2], GXBool doVertFilt, u
         GX_SET_REG(unk2, vFilt[5], 20, 25);
         GX_SET_REG(unk2, vFilt[6], 14, 19);
     } else {
-        SET_REG_FIELD(unk1, 6,  0, 0);
-        SET_REG_FIELD(unk1, 6,  6, 0);
+        SET_REG_FIELD(unk1, 6, 0, 0);
+        SET_REG_FIELD(unk1, 6, 6, 0);
         SET_REG_FIELD(unk1, 6, 12, 21);
         SET_REG_FIELD(unk1, 6, 18, 22);
-        SET_REG_FIELD(unk2, 6,  0, 21);
-        SET_REG_FIELD(unk2, 6,  6,  0);
-        SET_REG_FIELD(unk2, 6, 12,  0);
+        SET_REG_FIELD(unk2, 6, 0, 21);
+        SET_REG_FIELD(unk2, 6, 6, 0);
+        SET_REG_FIELD(unk2, 6, 12, 0);
     }
 
     GX_BP_LOAD_REG(unk1);

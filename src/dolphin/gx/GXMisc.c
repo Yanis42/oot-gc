@@ -32,7 +32,6 @@ void GXSetMisc(GXMiscToken token, u32 val) {
             gx->abtWaitPECopy = (val != 0);
             break;
 #endif
-
     }
 }
 
