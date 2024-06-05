@@ -2,7 +2,6 @@
 #define _DOLPHIN_GX_GXENUM_H_
 
 #include "dolphin/types.h"
-#include "macros.h"
 
 typedef u8 GXBool;
 

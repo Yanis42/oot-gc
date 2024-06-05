@@ -344,7 +344,6 @@ void OSInit(void) {
             case OS_CONSOLE_DEVELOPMENT:
             case OS_CONSOLE_TDEV:
 #endif
-
                 switch (inputConsoleType & LO_MASK) { // if "first" byte is 2, check "the rest"
                     case OS_CONSOLE_EMULATOR:
                         OSReport("Mac Emulator\n");
