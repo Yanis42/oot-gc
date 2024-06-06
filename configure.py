@@ -105,6 +105,7 @@ config.versions = [
     "mq-u",
     "ce-j",
     "ce-u",
+    "mm-j",
 ]
 config.default_version = "ce-j"
 config.warn_missing_config = True
