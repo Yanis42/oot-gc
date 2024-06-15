@@ -29,15 +29,18 @@
 #include "gmesgOK.inc"
 // clang-format on
 
-#if VERSION == MQ_J
-#define DEFAULT_ROM_NAME "urazlj_f.n64"
-#elif VERSION == MQ_U
-#define DEFAULT_ROM_NAME "urazle_f.n64"
-#elif VERSION == CE_J
-#define DEFAULT_ROM_NAME "zlj_f.n64"
-#elif VERSION == CE_U
-#define DEFAULT_ROM_NAME "zle_f.n64"
-#endif
+// #if VERSION == MQ_J
+// #define DEFAULT_ROM_NAME "urazlj_f.n64"
+// #elif VERSION == MQ_U
+// #define DEFAULT_ROM_NAME "urazle_f.n64"
+// #elif VERSION == CE_J
+// #define DEFAULT_ROM_NAME "zlj_f.n64"
+// #elif VERSION == CE_U
+// #define DEFAULT_ROM_NAME "zle_f.n64"
+// #endif
+
+// I'm lazy
+#define DEFAULT_ROM_NAME "gz-oot-ce-j-vc.z64"
 
 s16 Vert_s16[12] ATTRIBUTE_ALIGN(32) = {
     0, 0, -1, 200, 0, -1, 200, 200, -1, 0, 200, -1,

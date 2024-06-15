@@ -834,3 +834,12 @@ debugger/DebuggerDriver.c:
 
 debugger/odenotstub.c:
 	.text       start:0x800D2F84 end:0x800D2F8C
+
+gz/card_io.c:
+	.text       start:0x800D2F8C end:0x800D2F8C
+
+gz/sdgecko.c:
+	.text       start:0x800D2F8C end:0x800D2F8C
+
+gz/sd.c:
+	.text       start:0x800D2F8C end:0x800D2F8C

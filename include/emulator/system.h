@@ -5,6 +5,7 @@
 #include "emulator/cpu.h"
 #include "emulator/mips.h"
 #include "emulator/xlObject.h"
+#include "gz/sd.h"
 
 #define N64_BTN_A (1 << 31)
 #define N64_BTN_B (1 << 30)
@@ -93,7 +94,8 @@ typedef enum SystemObjectType {
     SOT_LIBRARY = 13,
     SOT_PERIPHERAL = 14,
     SOT_RDB = 15,
-    SOT_COUNT = 16,
+    SOT_SD = 16,
+    SOT_COUNT = 17,
 } SystemObjectType;
 
 // __anon_0x3979C
@@ -178,6 +180,7 @@ typedef struct SystemRomConfig {
 #define SYSTEM_LIBRARY(pSystem) ((Library*)(((System*)(pSystem))->apObject[SOT_LIBRARY]))
 #define SYSTEM_PERIPHERAL(pSystem) ((Peripheral*)(((System*)(pSystem))->apObject[SOT_PERIPHERAL]))
 #define SYSTEM_RDB(pSystem) ((Rdb*)(((System*)(pSystem))->apObject[SOT_RDB]))
+#define SYSTEM_SD(pSystem) ((struct SD*)(((System*)(pSystem))->apObject[SOT_SD]))
 
 extern u32 nTickMultiplier;
 extern f32 fTickScale;

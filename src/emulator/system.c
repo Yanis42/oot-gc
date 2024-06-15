@@ -24,6 +24,7 @@
 #include "macros.h"
 #include "stdlib.h"
 #include "string.h"
+#include "gz/sd.h"
 
 #if VERSION == MQ_J
 #define MCARD_FILE_NAME "ZELDA"
@@ -112,12 +113,12 @@ static u32 contMap[4][GCN_BTN_COUNT] = {
         0x04000000,     // GCN_BTN_UNK9
         0x02000000,     // GCN_BTN_UNK10
         0x01000000,     // GCN_BTN_UNK11
-        N64_BTN_L,      // GCN_BTN_DPAD_UP
-        N64_BTN_L,      // GCN_BTN_DPAD_DOWN
-        N64_BTN_L,      // GCN_BTN_DPAD_LEFT
-        N64_BTN_L,      // GCN_BTN_DPAD_RIGHT
+        N64_BTN_DUP,    // GCN_BTN_DPAD_UP
+        N64_BTN_DDOWN,  // GCN_BTN_DPAD_DOWN
+        N64_BTN_DLEFT,  // GCN_BTN_DPAD_LEFT
+        N64_BTN_DRIGHT, // GCN_BTN_DPAD_RIGHT
         N64_BTN_CUP,    // GCN_BTN_CSTICK_UP
-        N64_BTN_CDOWN,  // GCN_BTN_CSTICK_DOWN
+        N64_BTN_L,      // GCN_BTN_CSTICK_DOWN
         N64_BTN_CLEFT,  // GCN_BTN_CSTICK_LEFT
         N64_BTN_CRIGHT, // GCN_BTN_CSTICK_RIGHT
     },
@@ -165,6 +166,7 @@ static bool systemSetupGameRAM(System* pSystem) {
     u32 nCode;
     u32 iCode;
     u32 anCode[0x100]; // size = 0x400
+    char* acNameFile;
 
     bExpansion = false;
     pROM = SYSTEM_ROM(pSystem);
@@ -281,6 +283,16 @@ static bool systemSetupGameRAM(System* pSystem) {
         nSizeCacheROM -= nSizeExtra;
     }
 
+    // Overrides for gz
+    acNameFile = SYSTEM_ROM(pSystem)->acNameFile;
+    if (strcmp(acNameFile, "zlj_f.n64") == 0) {
+        gnFlagZelda = 2;
+    } else if (strcmp(acNameFile, "urazlj_f.n64") == 0) {
+        gnFlagZelda = 4;
+    }
+    nSizeRAM = 0x800000; // 8 MiB
+    nSizeCacheROM = 0x500000; // 5 MiB
+
     if (!ramSetSize(SYSTEM_RAM(pSystem), nSizeRAM)) {
         return false;
     }
@@ -288,6 +300,9 @@ static bool systemSetupGameRAM(System* pSystem) {
     if (!romSetCacheSize(SYSTEM_ROM(pSystem), nSizeCacheROM)) {
         return false;
     }
+
+    OSReport("systemSetupGameRAM: filename=%s nCode=%08X gnFlagZelda=%d nSizeRAM=%08X nSizeCacheROM=%08X\n", acNameFile,
+             nCode, gnFlagZelda, nSizeRAM, nSizeCacheROM);
 
     return true;
 }
@@ -1744,6 +1759,7 @@ bool systemEvent(System* pSystem, s32 nEvent, void* pArgument) {
             pSystem->apObject[SOT_LIBRARY] = NULL;
             pSystem->apObject[SOT_PERIPHERAL] = NULL;
             pSystem->apObject[SOT_RDB] = NULL;
+            pSystem->apObject[SOT_SD] = NULL;
 #else
             for (eObject = 0; eObject < SOT_COUNT; eObject++) {
                 pSystem->apObject[eObject] = NULL;
@@ -1882,6 +1898,14 @@ bool systemEvent(System* pSystem, s32 nEvent, void* pArgument) {
                             return false;
                         }
                         if (!cpuMapObject(pCPU, pSystem->apObject[SOT_RDB], 0x04900000, 0x0490FFFF, 0)) {
+                            return false;
+                        }
+                        break;
+                    case SOT_SD:
+                        if (!xlObjectMake(&pSystem->apObject[SOT_SD], pSystem, &gClassSD)) {
+                            return false;
+                        }
+                        if (!cpuMapObject(pCPU, pSystem->apObject[SOT_SD], 0x04910000, 0x0494FFFF, 0)) {
                             return false;
                         }
                         break;

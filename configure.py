@@ -39,6 +39,7 @@ parser.add_argument(
     "--non-matching",
     action="store_true",
     help="create non-matching build for modding",
+    default=True
 )
 parser.add_argument(
     "--build-dir",
@@ -129,7 +130,7 @@ if args.no_asm:
 
 config.binutils_tag = "2.42-1"
 config.compilers_tag = "20231018"
-config.dtk_tag = "v0.8.3"
+config.dtk_tag = "v0.9.2"
 config.sjiswrap_tag = "v1.1.1"
 config.wibo_tag = "0.6.11"
 config.linker_version = "GC/1.1"
@@ -509,6 +510,14 @@ config.libs = [
             Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "debugger/odenotstub.c"),
         ]
     ),
+    EmulatorLib(
+        "gz",
+        [
+            Object(Matching, "gz/card_io.c"),
+            Object(Matching, "gz/sdgecko.c"),
+            Object(Matching, "gz/sd.c"),
+        ]
+    )
 ]
 
 ### Execute mode
