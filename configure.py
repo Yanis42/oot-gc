@@ -100,14 +100,23 @@ args = parser.parse_args()
 ### Project configuration
 
 config = ProjectConfig()
-config.versions = [
+
+# Only configure versions for which main.dol exists
+ALL_VERSIONS = [
     "mq-j",
     "mq-u",
     "ce-j",
     "ce-u",
     "mm-j",
 ]
-config.default_version = "ce-j"
+config.versions = [
+    version
+    for version in ALL_VERSIONS
+    if (Path("orig") / version / "main.dol").exists()
+]
+if "ce-j" in config.versions:
+    config.default_version = "ce-j"
+
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.progress_all = False
@@ -327,19 +336,19 @@ config.libs = [
     DolphinLib(
         "gx",
         [
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXInit.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXFifo.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXAttr.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXMisc.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXGeometry.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXFrameBuf.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXInit.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXFifo.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXAttr.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXMisc.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXGeometry.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXFrameBuf.c"),
             Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXLight.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXTexture.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXBump.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXTev.c"),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXPixel.c", extra_cflags=["-fp_contract off"]),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXTransform.c", extra_cflags=["-fp_contract off"]),
-            Object(MatchingFor("ce-j", "ce-u"), "dolphin/gx/GXPerf.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXTexture.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXBump.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXTev.c"),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXPixel.c", extra_cflags=["-fp_contract off"]),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXTransform.c", extra_cflags=["-fp_contract off"]),
+            Object(MatchingFor("mq-j", "mq-u", "ce-j", "ce-u"), "dolphin/gx/GXPerf.c"),
         ],
     ),
     DolphinLib(
