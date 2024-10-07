@@ -1,10 +1,11 @@
 #include "dolphin.h"
 #include "emulator/THPPlayer.h"
+#include "emulator/rsp.h"
 #include "emulator/simGCN.h"
 #include "emulator/system.h"
 #include "emulator/xlCoreGCN.h"
 
-#if VERSION == MQ_J || VERSION == MQ_U || VERSION == CE_J
+#if VERSION == MQ_J || VERSION == MQ_U || VERSION == CE_J || VERSION == MM_J
 #define MOVIE_FILENAME "final_zelda_credits_sound.thp"
 #elif VERSION == CE_U
 #define MOVIE_FILENAME "us_final_zelda_credits_sound.thp"
@@ -21,7 +22,21 @@ void MovieInit(void) {
     THPPlayerInit(false);
 
     if (!simulatorGetArgument(SAT_MOVIE, &szText)) {
+#if IS_OOT
         THPPlayerOpen(MOVIE_FILENAME, false);
+#else
+        switch (gpSystem->eTypeROM) {
+            case SRT_ZELDA1:
+                THPPlayerOpen(MOVIE_FILENAME, false);
+                break;
+            case SRT_ZELDA2:
+                THPPlayerOpen("final_cred_w_audio.thp", false);
+                break;
+            default:
+                THPPlayerOpen("fish.thp", false);
+                break;
+        }
+#endif
     } else {
         THPPlayerOpen(szText, false);
     }

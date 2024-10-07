@@ -88,6 +88,8 @@
 #define DEFAULT_ROM_NAME "zlj_f.n64"
 #elif VERSION == CE_U
 #define DEFAULT_ROM_NAME "zle_f.n64"
+#elif VERSION == MM_J
+#define DEFAULT_ROM_NAME "zelda2j.n64"
 #endif
 
 s16 Vert_s16[12] ATTRIBUTE_ALIGN(32) = {

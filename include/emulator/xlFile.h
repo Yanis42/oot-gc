@@ -4,7 +4,7 @@
 #include "dolphin.h"
 #include "emulator/xlFileGCN.h"
 
-#if IS_EU
+#if IS_EU || IS_MM
 typedef enum XlFileTokenType {
     XLFTT_NONE = -1,
     XLFTT_LABEL = 0,

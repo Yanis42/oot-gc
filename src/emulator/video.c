@@ -19,6 +19,12 @@ bool videoPut32(Video* pVideo, u32 nAddress, s32* pData) {
     Frame* pFrame;
     FrameBuffer* pBuffer;
 
+#if IS_OOT
+#define SIZE_X pVideo->nSizeX
+#else
+#define SIZE_X (pVideo->nScaleX * 320) / 512
+#endif
+
     switch (nAddress & 0x3F) {
         case 0x0:
             pVideo->nStatus = *pData & 0xFFFF;
@@ -84,13 +90,13 @@ bool videoPut32(Video* pVideo, u32 nAddress, s32* pData) {
             break;
         case 0x30:
             pVideo->nScaleX = *pData & 0xFFF;
-            if (!frameSetSize(SYSTEM_FRAME(pVideo->pHost), 0, pVideo->nSizeX, (s32)(pVideo->nScaleY * 240) / 1024)) {
+            if (!frameSetSize(SYSTEM_FRAME(pVideo->pHost), FS_SOURCE, SIZE_X, (s32)(pVideo->nScaleY * 240) / 1024)) {
                 return false;
             }
             break;
         case 0x34:
             pVideo->nScaleY = *pData & 0xFFF;
-            if (!frameSetSize(SYSTEM_FRAME(pVideo->pHost), 0, pVideo->nSizeX, (s32)(pVideo->nScaleY * 240) / 1024)) {
+            if (!frameSetSize(SYSTEM_FRAME(pVideo->pHost), FS_SOURCE, SIZE_X, (s32)(pVideo->nScaleY * 240) / 1024)) {
                 return false;
             }
             break;

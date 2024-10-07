@@ -26,7 +26,7 @@ static bool gbProgress;
 static void* gpImageBack;
 static s32 iImage;
 
-#if IS_EU
+#if IS_EU || IS_MM
 static bool romGetTagToken(Rom* pROM, tXL_FILE* pFile, RomTokenType* peToken, char* acData) {
     u32 nChecksum;
     XlFileTokenType eTypeToken;
@@ -660,7 +660,7 @@ static bool romCacheGame(Rom* pROM) {
     return true;
 }
 
-#elif IS_EU
+#elif IS_EU || IS_MM
 
 bool romCacheGame(Rom* pROM) {
     s32 blockCount;
@@ -685,26 +685,26 @@ bool romCacheGame(Rom* pROM) {
     bZeldaG = false;
     bZeldaF = false;
 
-    if (gLanguage == 1) {
-        bZeldaG = true;
-    } else if (gLanguage == 2) {
-        bZeldaF = true;
-    } else if (gLanguage == 3) {
-        bZeldaS = true;
-    } else if (gLanguage == 4) {
-        bZeldaI = true;
-    } else {
-        bZeldaE = true;
-    }
+    // if (gLanguage == 1) {
+    //     bZeldaG = true;
+    // } else if (gLanguage == 2) {
+    //     bZeldaF = true;
+    // } else if (gLanguage == 3) {
+    //     bZeldaS = true;
+    // } else if (gLanguage == 4) {
+    //     bZeldaI = true;
+    // } else {
+    //     bZeldaE = true;
+    // }
 
     if (bZeldaE || bZeldaJ || bZeldaF || bZeldaG || bZeldaI || bZeldaS) {
         if (gnFlagZelda & 2) {
             if (!bZeldaE && !bZeldaJ && (bZeldaE || bZeldaF || bZeldaG || bZeldaI || bZeldaS)) {
-                pROM->anOffsetBlock = ganOffsetBlock_ZLP;
+                // pROM->anOffsetBlock = ganOffsetBlock_ZLP;
                 pROM->nCountOffsetBlocks = 0xC6;
             }
         } else if (!bZeldaE && !bZeldaJ && (bZeldaE || bZeldaF || bZeldaG || bZeldaI || bZeldaS)) {
-            pROM->anOffsetBlock = ganOffsetBlock_URAZLP;
+            // pROM->anOffsetBlock = ganOffsetBlock_URAZLP;
             pROM->nCountOffsetBlocks = 0xC6;
         }
 
@@ -1078,7 +1078,7 @@ bool romGetCode(Rom* pROM, char* acCode) {
     return true;
 }
 
-#if IS_EU
+#if IS_EU || IS_MM
 bool romTestCode(Rom* pROM, char* acCode) {
     s32 iCode;
     int nCode1;
@@ -1469,7 +1469,7 @@ static inline void romOpen(Rom* pROM, char* szNameFile) {
 }
 
 bool romSetImage(Rom* pROM, char* szNameFile) {
-#if IS_EU
+#if IS_EU || IS_MM
     tXL_FILE* pFile;
     RomTokenType eToken;
     s32 iCode;
@@ -1506,7 +1506,7 @@ bool romSetImage(Rom* pROM, char* szNameFile) {
         return false;
     }
 
-#if IS_EU
+#if IS_EU || IS_MM
     if (!xlFileSetPosition(pFile, pROM->offsetToRom + 0x1000)) {
         return false;
     }
@@ -1520,7 +1520,7 @@ bool romSetImage(Rom* pROM, char* szNameFile) {
         return false;
     }
 
-#if IS_EU
+#if IS_EU || IS_MM
     for (pROM->nChecksum = 0, iCode = 0; iCode < ARRAY_COUNT(anData); iCode++) {
         pROM->nChecksum += anData[iCode];
     }
@@ -1528,7 +1528,7 @@ bool romSetImage(Rom* pROM, char* szNameFile) {
 
     romOpen(pROM, szNameFile);
 
-#if IS_EU
+#if IS_EU || IS_MM
     pROM->tagFile.nMode = 0;
     if (xlFileOpen(&pFile, XLFT_TEXT, "ROMS.TAG")) {
         while (romGetTagToken(pROM, pFile, &eToken, acToken)) {
@@ -1588,7 +1588,7 @@ bool romEvent(Rom* pROM, s32 nEvent, void* pArgument) {
             pROM->load.nOffset1 = 0;
             pROM->load.nOffset0 = 0;
             pROM->load.bDone = false;
-#if IS_EU
+#if IS_EU || IS_MM
             pROM->tagFile.nMode = 0;
 #endif
             pROM->nSizeCacheRAM = 0;

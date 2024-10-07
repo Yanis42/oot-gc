@@ -113,15 +113,18 @@ args = parser.parse_args()
 config = ProjectConfig()
 
 # Only configure versions for which main.dol exists
-ALL_VERSIONS = [
+OOT_VERSIONS = [
     "mq-j",
     "mq-u",
     "mq-e",
     "ce-j",
     "ce-u",
     "ce-e",
+]
+MM_VERSIONS = [
     "mm-j",
 ]
+ALL_VERSIONS = OOT_VERSIONS + MM_VERSIONS
 config.versions = [
     version
     for version in ALL_VERSIONS
@@ -252,10 +255,10 @@ config.libs = [
             Object(Linked, "emulator/xlCoreGCN.c"),
             Object(Linked, "emulator/xlPostGCN.c"),
             Object(Linked, "emulator/xlFileGCN.c"),
-            Object(LinkedFor("mq-e", "ce-e"), "emulator/xlText.c"),
+            Object(LinkedFor("mq-e", "ce-e", "mm-j"), "emulator/xlText.c"),
             Object(Linked, "emulator/xlList.c"),
             Object(Linked, "emulator/xlHeap.c"),
-            Object(LinkedFor("mq-e", "ce-e"), "emulator/xlFile.c"),
+            Object(LinkedFor("mq-e", "ce-e", "mm-j"), "emulator/xlFile.c"),
             Object(Linked, "emulator/xlObject.c"),
             Object(LinkedFor("mq-j", "mq-u", "ce-j", "ce-u"), "emulator/simGCN.c"),
             Object(Linked, "emulator/movie.c"),
@@ -269,12 +272,12 @@ config.libs = [
             Object(Linked, "emulator/codeGCN.c"),
             Object(Linked, "emulator/soundGCN.c"),
             Object(LinkedFor("ce-j"), "emulator/frame.c", asm_processor=True),
-            Object(Linked, "emulator/system.c"),
+            Object(OOT_VERSIONS, "emulator/system.c"),
             Object(LinkedFor("ce-j"), "emulator/cpu.c", asm_processor=True),
             Object(Linked, "emulator/pif.c"),
             Object(Linked, "emulator/ram.c"),
-            Object(Linked, "emulator/rom.c"),
-            Object(Linked, "emulator/rdp.c"),
+            Object(OOT_VERSIONS, "emulator/rom.c"),
+            Object(OOT_VERSIONS, "emulator/rdp.c"),
             Object(Linked, "emulator/rdb.c"),
             Object(LinkedFor("ce-j"), "emulator/rsp.c", asm_processor=True),
             Object(Linked, "emulator/mips.c"),
@@ -284,7 +287,7 @@ config.libs = [
             Object(Linked, "emulator/audio.c"),
             Object(Linked, "emulator/video.c"),
             Object(Linked, "emulator/serial.c"),
-            Object(Linked, "emulator/library.c"),
+            Object(OOT_VERSIONS, "emulator/library.c"),
             Object(Linked, "emulator/peripheral.c"),
             Object(LinkedFor("ce-j"), "emulator/_frameGCNcc.c", asm_processor=True),
             Object(LinkedFor("ce-j"), "emulator/_buildtev.c", asm_processor=True),

@@ -8,11 +8,14 @@
 #define CE_J 4
 #define CE_U 5
 #define CE_E 6
+#define MM_J 7
 #define IS_MQ (VERSION == MQ_J || VERSION == MQ_U || VERSION == MQ_E)
 #define IS_CE (VERSION == CE_J || VERSION == CE_U || VERSION == CE_E)
 #define IS_JP (VERSION == MQ_J || VERSION == CE_J)
 #define IS_US (VERSION == MQ_U || VERSION == CE_U)
 #define IS_EU (VERSION == MQ_E || VERSION == CE_E)
+#define IS_MM (VERSION == MM_J)
+#define IS_OOT (!IS_MM)
 
 #define ALIGN_PREV(X, N) ((X) & ~((N) - 1))
 #define ALIGN_NEXT(X, N) ALIGN_PREV(((X) + (N) - 1), N)

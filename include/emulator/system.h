@@ -71,7 +71,12 @@ typedef enum SystemRomType {
     SRT_MARIOPARTY2 = 9,
     SRT_MARIOPARTY3 = 10,
     SRT_DRMARIO = 11,
-    SRT_UNKNOWN = 12,
+#if IS_MM
+    SRT_KIRBY = 12,
+    SRT_PILOTWING = 13,
+    SRT_SLICRADIC = 14,
+#endif
+    SRT_UNKNOWN,
 } SystemRomType;
 
 // __anon_0x370F1

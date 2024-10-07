@@ -8,6 +8,16 @@
 
 #include "gTgPcTPL.inc"
 
+#if VERSION == MQ_E
+#define LINE_OFFSET 7
+#elif VERSION == CE_E
+#define LINE_OFFSET 16
+#elif VERSION == MM_J
+#define LINE_OFFSET 17
+#else
+#define LINE_OFFSET 0
+#endif
+
 static GXRenderModeObj rmodeobj;
 GXTexObj g_texMap[4];
 static s32 gnCountArgument;
@@ -67,7 +77,7 @@ static void xlCoreInitRenderMode(GXRenderModeObj* mode) {
         case 2:
             rmode = &GXMpal480IntDf;
             break;
-#if VERSION == MQ_E
+#if VERSION == MQ_E || IS_MM
         case 5:
             rmode = &GXEurgb60Hz480IntDf;
             rmode->viXOrigin -= 0x20;
@@ -75,7 +85,7 @@ static void xlCoreInitRenderMode(GXRenderModeObj* mode) {
             break;
 #endif
         default:
-            OSPanic("xlCoreGCN.c", VERSION == MQ_E ? 189 : 182, "DEMOInit: invalid TV format\n");
+            OSPanic("xlCoreGCN.c", 182 + LINE_OFFSET, "DEMOInit: invalid TV format\n");
             break;
     }
 #endif
@@ -120,9 +130,11 @@ static inline void xlCoreInitFilter(u8* pFilter, s32 size, f32 factor) {
 }
 
 void xlCoreInitGX(void) {
+#if IS_OOT
     s32 pad1;
     u8 newFilter[7];
     s32 pad2;
+#endif
 
     GXSetViewport(0.0f, 0.0f, rmode->fbWidth, rmode->efbHeight, 0.0f, 1.0f);
     GXSetScissor(0, 0, rmode->fbWidth, rmode->efbHeight);
@@ -130,14 +142,17 @@ void xlCoreInitGX(void) {
     GXSetDispCopyDst(rmode->fbWidth, rmode->xfbHeight);
     GXSetDispCopyYScale((f32)rmode->xfbHeight / (f32)rmode->efbHeight);
 
+#if IS_OOT
     xlCoreInitFilter(newFilter, ARRAY_COUNT(newFilter), 1.0f);
-
     GXSetCopyFilter(rmode->aa, rmode->sample_pattern, GX_TRUE, newFilter);
+#else
+    GXSetCopyFilter(rmode->aa, rmode->sample_pattern, GX_TRUE, rmode->vfilter);
+#endif
 
     if (rmode->aa != 0) {
-        GXSetPixelFmt(2, 0);
+        GXSetPixelFmt(GX_PF_RGB565_Z16, GX_ZC_LINEAR);
     } else {
-        GXSetPixelFmt(0, 0);
+        GXSetPixelFmt(GX_PF_RGB8_Z24, GX_ZC_LINEAR);
     }
 
     GXCopyDisp(DemoCurrentBuffer, GX_TRUE);
@@ -157,6 +172,11 @@ bool xlCoreGetArgument(s32 iArgument, char** pszArgument) {
 }
 
 bool xlCoreHiResolution(void) { return true; }
+
+#undef LINE_OFFSET
+#if VERSION == MM_J
+#define LINE_OFFSET 18
+#endif
 
 int main(int nCount, char** aszArgument) {
     void* pHeap;
@@ -183,6 +203,11 @@ int main(int nCount, char** aszArgument) {
     xlCoreInitRenderMode(NULL);
     xlCoreInitMem();
     VIConfigure(rmode);
+
+#if IS_MM
+    VIFlush();
+#endif
+
     DefaultFifo = OSAllocFromHeap(__OSCurrHeap, 0x40000);
     DefaultFifoObj = GXInit(DefaultFifo, 0x40000);
     xlCoreInitGX();
@@ -251,7 +276,7 @@ int main(int nCount, char** aszArgument) {
         return false;
     }
 
-    OSPanic("xlCoreGCN.c", VERSION == CE_E ? 593 : VERSION == MQ_E ? 584 : 577, "CORE DONE!");
+    OSPanic("xlCoreGCN.c", 577 + LINE_OFFSET, "CORE DONE!");
     return false;
 }
 
