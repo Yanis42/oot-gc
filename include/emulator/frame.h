@@ -221,7 +221,7 @@ typedef struct Tile {
     /* 0x1A */ s16 nModeT;
     /* 0x1C */ s16 nShiftS;
     /* 0x1E */ s16 nShiftT;
-    /* 0x20 */ s16 nX0;
+    /* 0x20 */ s16 nX0; // C368
     /* 0x22 */ s16 nY0;
     /* 0x24 */ s16 nX1;
     /* 0x26 */ s16 nY1;

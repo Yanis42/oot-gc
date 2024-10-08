@@ -496,7 +496,7 @@ bool simulatorDVDRead(DVDFileInfo* pFileInfo, void* anData, s32 nSizeRead, s32 n
 bool simulatorPlayMovie(void) {
 #if IS_OOT
     simulatorResetAndPlayMovie();
-#else
+#elif IS_MM
     switch (gpSystem->eTypeROM) {
         case SRT_ZELDA1:
             simulatorResetAndPlayMovie();

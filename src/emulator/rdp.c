@@ -20,7 +20,7 @@ _XL_OBJECTTYPE gClassRDP = {
 #define NOTE_COUNT_ADDR (0x00780000)
 #define BOMBER_ZBUFFER_CHECK (nAddress == 0x004096C0 || nAddress == 0x00383C80 || nAddress == 0x00383AC0)
 #define COMMAND_CODES_ADDR (0x00784600)
-#else
+#elif IS_MM
 #define BLUR_COUNT_CHECK (nAddress == 0x007B5000)
 #define NOTE_COUNT_ADDR (0x00780500)
 #define BOMBER_ZBUFFER_CHECK (nAddress == 0x0078F800)
@@ -553,9 +553,9 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
             pFrame->iTileDrawn = primitive.iTile;
             if (gpSystem->eTypeROM == SRT_ZELDA2 && rX0 == 0.0f && rX1 == N64_FRAME_WIDTH && rY0 == 0.0f &&
                 rY1 == N64_FRAME_HEIGHT && pFrame->bUsingLens) {
+#if IS_OOT
                 u32* pGBI = (u32*)pnGBI;
 
-#if IS_OOT
                 if (pGBI[4] == 0xF8000000) {
                     GXSetCopyFilter(GX_FALSE, NULL, GX_FALSE, NULL);
                     GXSetCopyFilter(rmode->aa, rmode->sample_pattern, GX_TRUE, rmode->vfilter);
@@ -601,6 +601,7 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
                 }
 #elif IS_MM
                 void* pBuffer = (void*)(((u32)SYSTEM_RAM(pRDP->pHost)->pBuffer) + 0x0069D800);
+                u32* pGBI = (u32*)pnGBI;
 
                 if (pGBI[4] == 0xF8000000) {
                     pFrame->bModifyZBuffer = true;
@@ -612,7 +613,7 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
 
                     frameCopyLensTexture(pFrame, &primitive);
                     pFrame->bModifyZBuffer = false;
-                } else if (pGBI[4] == 0xF7000000) {
+                } else if (pGBI[4] == 0xF9000000) {
                     primitive.nX0 = -1;
                     primitive.nX1 = -1;
                     primitive.nY0 = -1;
@@ -626,6 +627,8 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
                 } else if (!pFrame->aDraw[3](pFrame, &primitive)) {
                     return false;
                 }
+
+                break;
 #endif
             }
 

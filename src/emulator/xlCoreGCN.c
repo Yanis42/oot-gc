@@ -145,7 +145,7 @@ void xlCoreInitGX(void) {
 #if IS_OOT
     xlCoreInitFilter(newFilter, ARRAY_COUNT(newFilter), 1.0f);
     GXSetCopyFilter(rmode->aa, rmode->sample_pattern, GX_TRUE, newFilter);
-#else
+#elif IS_MM
     GXSetCopyFilter(rmode->aa, rmode->sample_pattern, GX_TRUE, rmode->vfilter);
 #endif
 

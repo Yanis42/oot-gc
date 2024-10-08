@@ -21,7 +21,7 @@ bool videoPut32(Video* pVideo, u32 nAddress, s32* pData) {
 
 #if IS_OOT
 #define SIZE_X pVideo->nSizeX
-#else
+#elif IS_MM
 #define SIZE_X (pVideo->nScaleX * 320) / 512
 #endif
 

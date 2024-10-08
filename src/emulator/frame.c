@@ -3113,7 +3113,7 @@ bool frameHackTIMG_Zelda(Frame* pFrame, u64** pnGBI, u32* pnCommandLo, u32* pnCo
 #define GBI_CHECK (pGBI[9] == 0x80383C80 || pGBI[9] == 0x80383AC0)
 #define ADDRESS_BUFFER_CHECK \
     ((pBuffer->nAddress == 0x42EEC0) || (pBuffer->nAddress == 0x3A9480) || (pBuffer->nAddress == 0x3A92C0))
-#else
+#elif IS_MM
 #define GBI_CHECK (pGBI[9] == 0x8078F800)
 #define ADDRESS_BUFFER_CHECK ((pBuffer->nAddress == 0x7B5000))
 #endif
@@ -3339,7 +3339,7 @@ static inline void ZeldaCopyCamera(u16* buffer) {
     GXSetTexCopyDst(ZELDA2_CAMERA_WIDTH, ZELDA2_CAMERA_HEIGHT, GX_TF_I8, GX_TRUE);
 #if IS_OOT
     DCInvalidateRange(buffer, ZELDA2_CAMERA_WIDTH * ZELDA2_CAMERA_HEIGHT * sizeof(u16));
-#else
+#elif IS_MM
     DCInvalidateRange(buffer, ZELDA2_CAMERA_WIDTH * ZELDA2_CAMERA_HEIGHT);
 #endif
     GXCopyTex(buffer, GX_FALSE);
@@ -3522,7 +3522,7 @@ bool frameGetDepth(Frame* pFrame, u16* pnData, s32 nAddress) {
 #else
 #if IS_OOT
 #define CAMERA_BUFFER_SIZE 0xA000
-#else
+#elif IS_MM
 #define CAMERA_BUFFER_SIZE 0x5000
 #endif
 
@@ -3568,7 +3568,7 @@ bool frameEvent(Frame* pFrame, s32 nEvent, void* pArgument) {
             pFrame->bFrameOn = false;
             pFrame->bModifyZBuffer = false;
             pFrame->bOverrideDepth = false;
-#else
+#elif IS_MM
             pFrame->bModifyZBuffer = false;
             pFrame->nZBufferSets = 0;
             pFrame->nLastFrameZSets = 0;

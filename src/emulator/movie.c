@@ -24,7 +24,7 @@ void MovieInit(void) {
     if (!simulatorGetArgument(SAT_MOVIE, &szText)) {
 #if IS_OOT
         THPPlayerOpen(MOVIE_FILENAME, false);
-#else
+#elif IS_MM
         switch (gpSystem->eTypeROM) {
             case SRT_ZELDA1:
                 THPPlayerOpen(MOVIE_FILENAME, false);
