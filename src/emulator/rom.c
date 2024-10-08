@@ -685,26 +685,32 @@ bool romCacheGame(Rom* pROM) {
     bZeldaG = false;
     bZeldaF = false;
 
-    // if (gLanguage == 1) {
-    //     bZeldaG = true;
-    // } else if (gLanguage == 2) {
-    //     bZeldaF = true;
-    // } else if (gLanguage == 3) {
-    //     bZeldaS = true;
-    // } else if (gLanguage == 4) {
-    //     bZeldaI = true;
-    // } else {
-    //     bZeldaE = true;
-    // }
+#if IS_EU
+    if (gLanguage == 1) {
+        bZeldaG = true;
+    } else if (gLanguage == 2) {
+        bZeldaF = true;
+    } else if (gLanguage == 3) {
+        bZeldaS = true;
+    } else if (gLanguage == 4) {
+        bZeldaI = true;
+    } else {
+        bZeldaE = true;
+    }
+#endif
 
     if (bZeldaE || bZeldaJ || bZeldaF || bZeldaG || bZeldaI || bZeldaS) {
         if (gnFlagZelda & 2) {
             if (!bZeldaE && !bZeldaJ && (bZeldaE || bZeldaF || bZeldaG || bZeldaI || bZeldaS)) {
-                // pROM->anOffsetBlock = ganOffsetBlock_ZLP;
+#if IS_EU
+                pROM->anOffsetBlock = ganOffsetBlock_ZLP;
+#endif
                 pROM->nCountOffsetBlocks = 0xC6;
             }
         } else if (!bZeldaE && !bZeldaJ && (bZeldaE || bZeldaF || bZeldaG || bZeldaI || bZeldaS)) {
-            // pROM->anOffsetBlock = ganOffsetBlock_URAZLP;
+#if IS_EU
+            pROM->anOffsetBlock = ganOffsetBlock_URAZLP;
+#endif
             pROM->nCountOffsetBlocks = 0xC6;
         }
 
