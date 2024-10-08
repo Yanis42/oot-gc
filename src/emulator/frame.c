@@ -34,9 +34,9 @@ static bool frameDrawTriangle_Setup(Frame* pFrame, Primitive* pPrimitive);
 static bool frameDrawRectTexture_Setup(Frame* pFrame, Rectangle* pRectangle);
 
 #if IS_OOT
-inline
+static inline
 #endif
-static void CopyCFB(u16* srcP);
+void CopyCFB(u16* srcP);
 
 static bool packTakeBlocks(s32* piPack, u32* anPack, s32 nPackCount, s32 nBlockCount);
 static bool packFreeBlocks(s32* piPack, u32* anPack, s32 nPackCount);
@@ -2573,7 +2573,7 @@ bool frameEnd(Frame* pFrame) {
             pFrame->bShrinking &= ~0xFFFF;
         }
         pFrame->bShrinking &= ~0xFF;
-        pFrame->bSnapShot = false;
+        pFrame->bSnapShot = 0;
     }
 
 #if IS_OOT
@@ -2771,9 +2771,9 @@ void ZeldaDrawFrame(Frame* pFrame, u16* pData) {
 #endif
 
 #if IS_OOT
-inline
+static inline
 #endif
-static void CopyCFB(u16* srcP) {
+void CopyCFB(u16* srcP) {
     GXSetTexCopySrc(0, 0, GC_FRAME_WIDTH, GC_FRAME_HEIGHT);
     GXSetTexCopyDst(N64_FRAME_WIDTH, N64_FRAME_HEIGHT, GX_TF_RGB565, GX_TRUE);
     DCInvalidateRange(srcP, N64_FRAME_WIDTH * N64_FRAME_HEIGHT * sizeof(u16));
@@ -3553,7 +3553,7 @@ bool frameEvent(Frame* pFrame, s32 nEvent, void* pArgument) {
             pFrame->bInBomberNotes = false;
             pFrame->bShrinking = 0;
 #if IS_MM
-            pFrame->bSnapShot = false;
+            pFrame->bSnapShot = 0;
 #endif
             pFrame->bUsingLens = false;
             pFrame->cBlurAlpha = 170;

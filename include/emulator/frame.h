@@ -267,7 +267,7 @@ typedef struct Frame {
     /* 0x00038 0x00038 */ bool bCameFromBomberNotes;
     /* 0x0003C 0x0003C */ bool bInBomberNotes;
     /* 0x00040 0x00040 */ s32 bShrinking; // bitfield (not a bool)
-    /* 0x00044 0x00044 */ bool bSnapShot;
+    /* 0x00044 0x00044 */ s32 bSnapShot; // bitfield (not a bool)
     /* 0x00048 0x00048 */ bool bUsingLens;
     /* 0x0004C 0x0004C */ u8 cBlurAlpha;
     /* 0x00050 0x00050 */ bool bBlurredThisFrame;
@@ -410,5 +410,11 @@ bool frameInvalidateCache(Frame* pFrame, s32 nOffset0, s32 nOffset1);
 void SetNumTexGensChans(Frame* pFrame, s32 numCycles);
 void SetTevStages(Frame* pFrame, s32 cycle, s32 numCycles);
 bool SetTevStageTable(Frame* pFrame, s32 numCycles);
+void CopyAndConvertCFB(u16* srcP);
+void CopyCFB(u16* srcP);
+void ZeldaDrawFrameBlur(Frame* pFrame, u16* pData);
+void CopyZValue(u32* ptr);
+void frameCopyLensTexture(Frame* pFrame, Rectangle* pRectangle);
+void WriteZValue(Frame* pFrame, u32* ptr);
 
 #endif
