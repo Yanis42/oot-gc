@@ -287,7 +287,7 @@ config.libs = [
             Object(Linked, "emulator/audio.c"),
             Object(Linked, "emulator/video.c"),
             Object(Linked, "emulator/serial.c"),
-            Object(OOT_VERSIONS, "emulator/library.c"),
+            Object(Linked, "emulator/library.c"),
             Object(Linked, "emulator/peripheral.c"),
             Object(LinkedFor("ce-j"), "emulator/_frameGCNcc.c", asm_processor=True),
             Object(LinkedFor("ce-j"), "emulator/_buildtev.c", asm_processor=True),
