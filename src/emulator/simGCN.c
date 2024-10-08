@@ -494,7 +494,20 @@ bool simulatorDVDRead(DVDFileInfo* pFileInfo, void* anData, s32 nSizeRead, s32 n
 }
 
 bool simulatorPlayMovie(void) {
+#if IS_OOT
     simulatorResetAndPlayMovie();
+#else
+    switch (gpSystem->eTypeROM) {
+        case SRT_ZELDA1:
+            simulatorResetAndPlayMovie();
+            break;
+        case SRT_ZELDA2:
+            InitDVDTrackList();
+            AddDVDTrack("majora_audio.adp");
+            PlayDVDTrack(0, -1, 0, 0);
+            break;
+    }
+#endif
     return true;
 }
 

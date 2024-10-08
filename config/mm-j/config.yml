@@ -111,3 +111,16 @@ block_relocations:
 - source: 0x8002FC8C
 - source: 0x8002FC98
 # cpuFindFunction
+- source: 0x80033234
+- source: 0x80033234
+- source: 0x8003323C
+- source: 0x80033248
+- source: 0x800339d8
+- source: 0x80033A08
+- source: 0x80033A0C
+- source: 0x80033A40
+- source: 0x80033A54
+- source: 0x80033A94
+- source: 0x80033A98
+- source: 0x80033ACC
+- source: 0x80033AE0
