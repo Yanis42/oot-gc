@@ -2973,9 +2973,7 @@ bool dmaSoundRomHandler_ZELDA1(Cpu* pCPU) {
 }
 
 #if IS_MM
-bool dmaSoundRomHandler_ZELDA2(Cpu* pCPU) {
-    return dmaSoundRomHandler_ZELDA1(pCPU);
-}
+bool dmaSoundRomHandler_ZELDA2(Cpu* pCPU) { return dmaSoundRomHandler_ZELDA1(pCPU); }
 #endif
 
 bool osViSwapBuffer_Entry(Cpu* pCPU) {
@@ -3670,7 +3668,7 @@ bool libraryTestFunction(Library* pLibrary, CpuFunction* pFunction) {
                     }
                     bFlag = MIPS_OP(pnCode[0]) == 0x1F ? 0 : 1;
                 }
-            } 
+            }
 #if IS_MM
             else if (gaFunction[iFunction].pfLibrary == (LibraryFuncImpl)osGetCount) {
                 if (MIPS_RD(nOpcode) != 0x09) {
