@@ -173,8 +173,8 @@ bool xlCoreGetArgument(s32 iArgument, char** pszArgument) {
 
 bool xlCoreHiResolution(void) { return true; }
 
-#undef LINE_OFFSET
 #if VERSION == MM_J
+#undef LINE_OFFSET
 #define LINE_OFFSET 18
 #endif
 

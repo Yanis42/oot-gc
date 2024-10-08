@@ -148,11 +148,13 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
                         frameHackCIMG_Panel(pRDP, pFrame, pBuffer, ppnGBI);
                     }
                     /* fallthrough */
+#if IS_OOT
                 case SRT_DRMARIO:
                     if (!(nAddress == 0x003B5000 || nAddress == 0x003DA800)) {
                         pFrame->bGrabbedFrame = true;
                     }
                     break;
+#endif
                 default:
                     break;
             }
@@ -546,7 +548,9 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
                     pFrame->aMode[FMT_GEOMETRY] = 0;
                     pFrame->aMode[FMT_TEXTURE1] = 0;
                     pFrame->aMode[FMT_TEXTURE2] = 0;
+#if IS_OOT
                     pFrame->bOverrideDepth = true;
+#endif
                     pFrame->bModifyZBuffer = true;
                     pFrame->nMode = 0x0C1203F0;
                 }
@@ -560,11 +564,13 @@ bool rdpParseGBI(Rdp* pRDP, u64** ppnGBI, RspUCodeType eTypeUCode) {
             if (gpSystem->eTypeROM == SRT_ZELDA2 && rX0 == 0.0f && rX1 == N64_FRAME_WIDTH && rY0 == 0.0f &&
                 rY1 == N64_FRAME_HEIGHT && pFrame->bUsingLens) {
 
+#if IS_OOT
                 if (pGBI[4] == 0xF8000000) {
                     pFrame->bOverrideDepth = false;
                 } else if (pGBI[4] == 0xF9000000) {
                     pFrame->bOverrideDepth = false;
                 }
+#endif
             }
             GXSetColorUpdate(GX_TRUE);
             break;

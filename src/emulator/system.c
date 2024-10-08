@@ -148,7 +148,8 @@ static u32 contMap[][GCN_BTN_COUNT] = {
         N64_BTN_CLEFT,  // GCN_BTN_CSTICK_LEFT
         N64_BTN_CRIGHT, // GCN_BTN_CSTICK_RIGHT
     },
-    // Controller Configuration No. 4
+#if IS_MM
+    // Controller Configuration No. 5
     {
         N64_BTN_A,      // GCN_BTN_A
         N64_BTN_B,      // GCN_BTN_B
@@ -171,6 +172,7 @@ static u32 contMap[][GCN_BTN_COUNT] = {
         N64_BTN_CLEFT,  // GCN_BTN_CSTICK_LEFT
         N64_BTN_CRIGHT, // GCN_BTN_CSTICK_RIGHT
     },
+#endif
 }; // size = 0x140
 // clang-format on
 

@@ -32,7 +32,12 @@ static bool frameDrawSetupDP(Frame* pFrame, s32* pnColors, bool* pbFlag, s32 nVe
 static bool frameDrawRectFill(Frame* pFrame, Rectangle* pRectangle);
 static bool frameDrawTriangle_Setup(Frame* pFrame, Primitive* pPrimitive);
 static bool frameDrawRectTexture_Setup(Frame* pFrame, Rectangle* pRectangle);
-static inline void CopyCFB(u16* srcP);
+
+#if IS_OOT
+inline
+#endif
+static void CopyCFB(u16* srcP);
+
 static bool packTakeBlocks(s32* piPack, u32* anPack, s32 nPackCount, s32 nBlockCount);
 static bool packFreeBlocks(s32* piPack, u32* anPack, s32 nPackCount);
 static inline bool frameTransposeMatrix(Mtx44 matrixTarget, Mtx44 matrixSource);
@@ -2159,6 +2164,7 @@ static bool frameDrawRectTexture(Frame* pFrame, Rectangle* pRectangle) {
     f32 rT1;
     s32 pad;
 
+#if IS_OOT
     if (gpSystem->eTypeROM == SRT_DRMARIO) {
         if (pRectangle->nX0 == 0 && pRectangle->nY0 == 0 && pRectangle->nX1 == 1208 && pRectangle->nY1 == 20) {
             if (pFrame->aBuffer[FBT_IMAGE].nAddress != 0x3B5000 && pFrame->aBuffer[FBT_IMAGE].nAddress != 0x3DA800 &&
@@ -2175,6 +2181,7 @@ static bool frameDrawRectTexture(Frame* pFrame, Rectangle* pRectangle) {
             }
         }
     }
+#endif
 
     if (sSpecialZeldaHackON) {
         return true;
@@ -2226,10 +2233,12 @@ static bool frameDrawRectTexture(Frame* pFrame, Rectangle* pRectangle) {
         rT1 += 1.0f;
     }
 
+#if IS_OOT
     rDepth = 0.0f;
     if (pFrame->bOverrideDepth) {
         rDepth = -1001.0;
     }
+#endif
 
     if (pFrame->nModeVtx != 0xF) {
         GXClearVtxDesc();
@@ -2529,11 +2538,13 @@ bool frameEnd(Frame* pFrame) {
         DCInvalidateRange(pData, N64_FRAME_WIDTH * N64_FRAME_HEIGHT * sizeof(u16));
     }
 
+#if IS_OOT
     if (gpSystem->eTypeROM == SRT_DRMARIO && pFrame->bGrabbedFrame) {
         pData = pFrame->nTempBuffer;
         CopyCFB(pData);
         pFrame->bGrabbedFrame = false;
     }
+#endif
 
     GXSetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
     GXSetColorUpdate(GX_TRUE);
@@ -2548,7 +2559,9 @@ bool frameEnd(Frame* pFrame) {
         pFrame->nFrameCIMGCalls = 0;
         pFrame->bUsingLens = false;
         pFrame->bModifyZBuffer = false;
+#if IS_OOT
         pFrame->bOverrideDepth = false;
+#endif
 
         pFrame->nLastFrameZSets = pFrame->nZBufferSets;
         pFrame->nZBufferSets = 0;
@@ -2563,9 +2576,11 @@ bool frameEnd(Frame* pFrame) {
         pFrame->bSnapShot = false;
     }
 
+#if IS_OOT
     if (gpSystem->eTypeROM == SRT_DRMARIO) {
         pFrame->bBackBufferDrawn = false;
     }
+#endif
 
     pCPU->gTree->kill_number = 0;
     return true;
@@ -2755,7 +2770,10 @@ void ZeldaDrawFrame(Frame* pFrame, u16* pData) {
 }
 #endif
 
-static inline void CopyCFB(u16* srcP) {
+#if IS_OOT
+inline
+#endif
+static void CopyCFB(u16* srcP) {
     GXSetTexCopySrc(0, 0, GC_FRAME_WIDTH, GC_FRAME_HEIGHT);
     GXSetTexCopyDst(N64_FRAME_WIDTH, N64_FRAME_HEIGHT, GX_TF_RGB565, GX_TRUE);
     DCInvalidateRange(srcP, N64_FRAME_WIDTH * N64_FRAME_HEIGHT * sizeof(u16));
@@ -2992,6 +3010,15 @@ void ZeldaDrawFrameShrink(Frame* pFrame, s32 posX, s32 posY, s32 size) {
 }
 #endif
 
+#if IS_MM
+void ZeldaEraseCamera(void) {
+    Frame* pFrame = SYSTEM_FRAME(gpSystem);
+
+    DCInvalidateRange(pFrame->nCameraBuffer, 0x5000);
+    memset(pFrame->nCameraBuffer, 0, 0x5000);
+}
+#endif
+
 // matches but data doesn't
 //! TODO: make sFrameObj a static variable in the function
 #ifndef NON_MATCHING
@@ -3080,6 +3107,15 @@ bool frameHackTIMG_Zelda(Frame* pFrame, u64** pnGBI, u32* pnCommandLo, u32* pnCo
     return true;
 }
 
+#if IS_OOT
+#define GBI_CHECK (pGBI[9] == 0x80383C80 || pGBI[9] == 0x80383AC0)
+#define ADDRESS_BUFFER_CHECK \
+    ((pBuffer->nAddress == 0x42EEC0) || (pBuffer->nAddress == 0x3A9480) || (pBuffer->nAddress == 0x3A92C0))
+#else
+#define GBI_CHECK (pGBI[9] == 0x8078F800)
+#define ADDRESS_BUFFER_CHECK ((pBuffer->nAddress == 0x7B5000))
+#endif
+
 bool frameHackCIMG_Zelda2(Frame* pFrame, FrameBuffer* pBuffer, u64* pnGBI, u32 nCommandLo, u32 nCommandHi) {
     u32 i;
     u32* pGBI;
@@ -3094,7 +3130,7 @@ bool frameHackCIMG_Zelda2(Frame* pFrame, FrameBuffer* pBuffer, u64* pnGBI, u32 n
     if ((s32)pFrame->nHackCount > 1) {
         pGBI = (u32*)&pnGBI[-5];
         for (i = 0; i < ARRAY_COUNT(sCommandCodes_1702); i++) {
-            if (pGBI[i] != sCommandCodes_1702[i] && !(i == 9 && (pGBI[9] == 0x80383C80 || pGBI[9] == 0x80383AC0))) {
+            if (pGBI[i] != sCommandCodes_1702[i] && !(i == 9 && GBI_CHECK)) {
                 break;
             }
         }
@@ -3117,11 +3153,13 @@ bool frameHackCIMG_Zelda2(Frame* pFrame, FrameBuffer* pBuffer, u64* pnGBI, u32 n
         }
 
         if (i == ARRAY_COUNT(sCommandCodes2)) {
+#if IS_OOT
             if (!pFrame->bHackPause) {
                 for (i = 0; i < N64_FRAME_WIDTH * N64_FRAME_HEIGHT; i++) {
                     pFrame->nCopyBuffer[i] = pFrame->nTempBuffer[i];
                 }
             }
+#endif
             pFrame->bHackPause = true;
             pFrame->nHackCount = 0;
             pFrame->bPauseThisFrame = 1;
@@ -3150,8 +3188,7 @@ bool frameHackCIMG_Zelda2(Frame* pFrame, FrameBuffer* pBuffer, u64* pnGBI, u32 n
         }
     }
 
-    if (((pBuffer->nAddress == 0x42EEC0) || (pBuffer->nAddress == 0x3A9480) || (pBuffer->nAddress == 0x3A92C0)) &&
-        pFrame->bBlurOn && !pFrame->bBlurredThisFrame) {
+    if (ADDRESS_BUFFER_CHECK && pFrame->bBlurOn && !pFrame->bBlurredThisFrame) {
         ZeldaDrawFrameBlur(pFrame, pFrame->nTempBuffer);
         CopyCFB(pFrame->nTempBuffer);
         pFrame->bBlurredThisFrame = true;
@@ -3272,7 +3309,10 @@ bool frameHackCIMG_Zelda2_Shrink(Rdp* pRDP, Frame* pFrame, u64** ppnGBI) {
                 pFrame->bShrinking |= 1;
                 pFrame->bShrinking |= 0x100;
 
-                if ((pFrame->bShrinking & 0xFFFF0000) == 0) {
+#if IS_OOT
+                if ((pFrame->bShrinking & 0xFFFF0000) == 0)
+#endif
+                {
                     pFrame->bShrinking |= bg.b.tmemW << 16;
                 }
                 ZeldaDrawFrameShrink(pFrame, bg.b.frameX >> 2, bg.b.frameY >> 2, bg.b.tmemW);
@@ -3295,17 +3335,23 @@ bool frameHackCIMG_Zelda2_Shrink(Rdp* pRDP, Frame* pFrame, u64** ppnGBI) {
 static inline void ZeldaCopyCamera(u16* buffer) {
     GXSetTexCopySrc(ZELDA2_CAMERA_WIDTH, ZELDA2_CAMERA_HEIGHT - 10, ZELDA2_CAMERA_WIDTH * 2, ZELDA2_CAMERA_HEIGHT * 2);
     GXSetTexCopyDst(ZELDA2_CAMERA_WIDTH, ZELDA2_CAMERA_HEIGHT, GX_TF_I8, GX_TRUE);
+#if IS_OOT
     DCInvalidateRange(buffer, ZELDA2_CAMERA_WIDTH * ZELDA2_CAMERA_HEIGHT * sizeof(u16));
+#else
+    DCInvalidateRange(buffer, ZELDA2_CAMERA_WIDTH * ZELDA2_CAMERA_HEIGHT);
+#endif
     GXCopyTex(buffer, GX_FALSE);
     GXPixModeSync();
 }
 
 bool frameHackCIMG_Zelda2_Camera(Frame* pFrame, FrameBuffer* pBuffer, u32 nCommandHi, u32 nCommandLo) {
     if (pBuffer != NULL) {
+#if IS_OOT
         if (pBuffer->nAddress == 0x00784600) {
             pFrame->bSnapShot |= 0x10;
             return true;
         }
+#endif
 
         if ((pFrame->bSnapShot & 0xF00) != 0) {
             ZeldaDrawFrameCamera(pFrame, pFrame->nCameraBuffer);
@@ -3393,16 +3439,21 @@ void PanelDrawFR3D(u16* FR, u16* LUT, u8* bitmap, s32 sizeX, s32 sizeY, s32 posX
 }
 
 bool frameHackTIMG_Panel(Frame* pFrame, FrameBuffer* pBuffer) {
+#if IS_OOT
     if (!pFrame->bFrameOn) {
         return false;
     }
+#endif
 
     if (pBuffer->nAddress >= 0x358800 && pBuffer->nAddress <= 0x37B800) {
         if (pBuffer->nFormat == 0 && pBuffer->nWidth == 1 && pBuffer->nSize == 2) {
             pBuffer->pData = pFrame->nTempBuffer + ((((s32)(pBuffer->nAddress + 0xFFCA7800) / 2) + 0x8C0));
             return true;
         }
+
+#if IS_OOT
         pFrame->bFrameOn = false;
+#endif
         return false;
     }
 
@@ -3467,6 +3518,12 @@ bool frameGetDepth(Frame* pFrame, u16* pnData, s32 nAddress) {
 // matches but data doesn't
 #pragma GLOBAL_ASM("asm/non_matchings/frame/frameEvent.s")
 #else
+#if IS_OOT
+#define CAMERA_BUFFER_SIZE 0xA000
+#else
+#define CAMERA_BUFFER_SIZE 0x5000
+#endif
+
 bool frameEvent(Frame* pFrame, s32 nEvent, void* pArgument) {
     s32 temp_r4;
 
@@ -3495,16 +3552,26 @@ bool frameEvent(Frame* pFrame, s32 nEvent, void* pArgument) {
             pFrame->bCameFromBomberNotes = false;
             pFrame->bInBomberNotes = false;
             pFrame->bShrinking = 0;
+#if IS_MM
+            pFrame->bSnapShot = false;
+#endif
             pFrame->bUsingLens = false;
             pFrame->cBlurAlpha = 170;
             pFrame->bBlurredThisFrame = false;
             pFrame->nFrameCIMGCalls = 0;
+#if IS_OOT
             pFrame->nZBufferSets = 0;
             pFrame->nLastFrameZSets = 0;
             pFrame->bPauseBGDrawn = false;
             pFrame->bFrameOn = false;
             pFrame->bModifyZBuffer = false;
             pFrame->bOverrideDepth = false;
+#else
+            pFrame->bModifyZBuffer = false;
+            pFrame->nZBufferSets = 0;
+            pFrame->nLastFrameZSets = 0;
+            pFrame->bPauseBGDrawn = false;
+#endif
             pFrame->viewport.rSizeX = GC_FRAME_WIDTH;
             pFrame->viewport.rSizeY = GC_FRAME_HEIGHT;
             pFrame->anSizeX[FS_SOURCE] = N64_FRAME_WIDTH;
@@ -3530,7 +3597,9 @@ bool frameEvent(Frame* pFrame, s32 nEvent, void* pArgument) {
         case 0x1003:
             pFrame->nTempBuffer = NULL;
             pFrame->nCopyBuffer = NULL;
+#if IS_OOT
             pFrame->nLensBuffer = NULL;
+#endif
             pFrame->nCameraBuffer = NULL;
             if (((gpSystem->eTypeROM == SRT_PANEL) || (gpSystem->eTypeROM == SRT_ZELDA2) ||
                  (gpSystem->eTypeROM == SRT_DRMARIO)) &&
@@ -3541,10 +3610,15 @@ bool frameEvent(Frame* pFrame, s32 nEvent, void* pArgument) {
                 !xlHeapTake(&pFrame->nCopyBuffer, 0x30000000 | (N64_FRAME_WIDTH * N64_FRAME_HEIGHT * sizeof(u16)))) {
                 return false;
             }
+
+#if IS_OOT
             if ((gpSystem->eTypeROM == SRT_ZELDA2) && !xlHeapTake(&pFrame->nLensBuffer, 0x30000000 | 0x4B000)) {
                 return false;
             }
-            if ((gpSystem->eTypeROM == SRT_ZELDA2) && !xlHeapTake(&pFrame->nCameraBuffer, 0x30000000 | 0xA000)) {
+#endif
+
+            if ((gpSystem->eTypeROM == SRT_ZELDA2) &&
+                !xlHeapTake(&pFrame->nCameraBuffer, 0x30000000 | CAMERA_BUFFER_SIZE)) {
                 return false;
             }
             break;
