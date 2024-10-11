@@ -460,7 +460,7 @@ config.libs = [
     ),
     GenericLib(
         "metrotrk",
-        cflags_base,
+        [*cflags_base],
         [
             Object(NotLinked, "metrotrk/mainloop.c"),
             Object(NotLinked, "metrotrk/nubevent.c"),
