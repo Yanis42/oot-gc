@@ -1976,6 +1976,9 @@ bool cpuMakeFunction(Cpu* pCPU, CpuFunction** ppFunction, s32 nAddressN64) {
         pFunction->callerID_flag = 0xB;
         pCPU->nOptimize.validCheck = 1;
         pCPU->nOptimize.checkNext = 0;
+#if IS_MM
+        gRegCount = 0;
+#endif
 
         iCode = 0;
         nAddress = pFunction->nAddress0;
@@ -2032,6 +2035,9 @@ bool cpuMakeFunction(Cpu* pCPU, CpuFunction** ppFunction, s32 nAddressN64) {
         pCPU->nOptimize.checkNext = 0;
         pCPU->nOptimize.destGPR_check = 0;
         pCPU->nOptimize.destFPR_check = 0;
+#if IS_MM
+        gRegCount = 0;
+#endif
 
         iCode = 0;
         nAddress = pFunction->nAddress0;
@@ -2040,6 +2046,11 @@ bool cpuMakeFunction(Cpu* pCPU, CpuFunction** ppFunction, s32 nAddressN64) {
                 return false;
             }
         }
+
+#if IS_MM
+        gRegCount = 0;
+#endif
+
         cpuCompileNOP(anCode, &iCode, iCode0);
 
         pFunction->callerID_flag = 0x21;
@@ -2226,11 +2237,15 @@ static bool cpuExecuteUpdate(Cpu* pCPU, s32* pnAddressGCN, u32 nCount) {
         return false;
     }
 
+#if IS_OOT
     if (pSystem->eTypeROM == SRT_DRMARIO) {
         eModeUpdate = pSystem->bException ? RUM_NONE : RUM_IDLE;
-    } else {
+    } else
+#endif
+    {
         eModeUpdate = ((pCPU->nMode & 0x80) && !pSystem->bException) ? RUM_IDLE : RUM_NONE;
     }
+
     if (!rspUpdate(SYSTEM_RSP(pSystem), eModeUpdate)) {
         return false;
     }
